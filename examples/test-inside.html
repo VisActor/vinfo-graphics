@@ -1,0 +1,24 @@
+const spec = {
+  type: 'bar',
+  direction: 'horizontal',
+  data: {
+    values: [
+      { platform: '微信', users: 1200 },
+      { platform: '抖音', users: 980 },
+      { platform: '微博', users: 650 },
+      { platform: '快手', users: 520 },
+      { platform: 'B站', users: 380 }
+    ]
+  },
+  xField: 'users',
+  yField: 'platform',
+
+  // 测试内标签 - 使用 inside
+  label: {
+    visible: true,
+    position: 'inside',
+    style: {
+      fill: '#fff'
+    }
+  }
+};

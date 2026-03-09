@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Bar Chart Diagnosis</title>
+  <script src="https://cdn.jsdelivr.net/npm/@visactor/vchart@2.0.18/dist/vchart.min.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .test-case { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+    .chart { width: 600px; height: 300px; }
+    h3 { margin-top: 0; }
+    pre { background: #f5f5f5; padding: 10px; overflow: auto; }
+  </style>
+</head>
+<body>
+  <h1>条形图诊断测试</h1>
+
+  <div class="test-case">
+    <h3>1. 内标签 (position: inside)</h3>
+    <div id="chart1" class="chart"></div>
+    <pre id="spec1"></pre>
+  </div>
+
+  <div class="test-case">
+    <h3>2. 自定义颜色 (palette)</h3>
+    <div id="chart2" class="chart"></div>
+    <pre id="spec2"></pre>
+  </div>
+
+  <div class="test-case">
+    <h3>3. 背景色</h3>
+    <div id="chart3" class="chart"></div>
+    <pre id="spec3"></pre>
+  </div>
+
+  <div class="test-case">
+    <h3>4. 渐变填充</h3>
+    <div id="chart4" class="chart"></div>
+    <pre id="spec4"></pre>
+  </div>
+
+  <div class="test-case">
+    <h3>5. 排名标签</h3>
+    <div id="chart5" class="chart"></div>
+    <pre id="spec5"></pre>
+  </div>
+
+  <div class="test-case">
+    <h3>6. 背景图</h3>
+    <div id="chart6" class="chart"></div>
+    <pre id="spec6"></pre>
+  </div>
+
+  <script>
+    const data = [
+      { platform: '微信', users: 1200 },
+      { platform: '抖音', users: 980 },
+      { platform: '微博', users: 650 },
+      { platform: '快手', users: 520 }
+    ];
+
+    // Test 1: 内标签
+    const spec1 = {
+      type: 'bar',
+      direction: 'horizontal',
+      data: { values: data },
+      xField: 'users',
+      yField: 'platform',
+      label: {
+        visible: true,
+        position: 'inside',
+        style: { fill: '#fff' }
+      }
+    };
+    document.getElementById('spec1').textContent = JSON.stringify(spec1, null, 2);
+    new VChart(spec1, { dom: 'chart1' }).renderSync();
+
+    // Test 2: 自定义颜色
+    const spec2 = {
+      type: 'bar',
+      direction: 'horizontal',
+      data: { values: data },
+      xField: 'users',
+      yField: 'platform',
+      color: { palette: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4'] }
+    };
+    document.getElementById('spec2').textContent = JSON.stringify(spec2, null, 2);
+    new VChart(spec2, { dom: 'chart2' }).renderSync();
+
+    // Test 3: 背景色
+    const spec3 = {
+      type: 'bar',
+      direction: 'horizontal',
+      data: { values: data },
+      xField: 'users',
+      yField: 'platform',
+      background: { color: '#f0f5ff' }
+    };
+    document.getElementById('spec3').textContent = JSON.stringify(spec3, null, 2);
+    new VChart(spec3, { dom: 'chart3' }).renderSync();
+
+    // Test 4: 渐变填充
+    const spec4 = {
+      type: 'bar',
+      direction: 'horizontal',
+      data: { values: data },
+      xField: 'users',
+      yField: 'platform',
+      bar: {
+        style: {
+          fill: {
+            type: 'linear',
+            x: 1, y: 0,
+            stops: [
+              { offset: 0, color: '#FF6B6B' },
+              { offset: 1, color: '#4ECDC4' }
+            ]
+          }
+        }
+      }
+    };
+    document.getElementById('spec4').textContent = JSON.stringify(spec4, null, 2);
+    new VChart(spec4, { dom: 'chart4' }).renderSync();
+
+    // Test 5: 排名标签
+    const spec5 = {
+      type: 'bar',
+      direction: 'horizontal',
+      data: { values: data },
+      xField: 'users',
+      yField: 'platform',
+      label: {
+        visible: true,
+        position: 'start',
+        style: { fill: '#fff', fontWeight: 'bold' },
+        formatMethod: (datum, index) => '#' + (index + 1)
+      }
+    };
+    document.getElementById('spec5').textContent = JSON.stringify(spec5, null, 2);
+    new VChart(spec5, { dom: 'chart5' }).renderSync();
+
+    // Test 6: 背景图 - 使用 barBackground
+    const spec6 = {
+      type: 'bar',
+      direction: 'horizontal',
+      data: { values: data },
+      xField: 'users',
+      yField: 'platform',
+      barBackground: {
+        visible: true,
+        style: { fill: '#f5f5f5' }
+      }
+    };
+    document.getElementById('spec6').textContent = JSON.stringify(spec6, null, 2);
+    new VChart(spec6, { dom: 'chart6' }).renderSync();
+  </script>
+</body>
+</html>

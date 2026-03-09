@@ -1,0 +1,73 @@
+{
+  "name": "vinfo-graphics",
+  "version": "1.0.0",
+  "description": "A simplified, LLM-friendly chart library for infographics based on VChart",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "test:screenshot": "playwright test",
+    "test:screenshot:update": "playwright test --update-snapshots",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "typecheck": "tsc --noEmit",
+    "dev:examples": "cd examples && npm run dev"
+  },
+  "keywords": [
+    "chart",
+    "infographic",
+    "vchart",
+    "visualization",
+    "llm",
+    "ai",
+    "schema"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src/zod",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "zod": "^3.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.5",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "@visactor/vchart": "^2.0.18",
+    "eslint": "^10.0.2",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.4.0",
+    "playwright": "^1.58.2",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  },
+  "dependencies": {
+    "zod": "^3.23.0"
+  }
+}

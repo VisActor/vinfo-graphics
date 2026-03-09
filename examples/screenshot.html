@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" name="viewport" />
+    <meta content="width=device-width, initial-scale=1.0" />
+    <title>VInfo Graphics - Screenshot Test</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: #fff;
+        padding: 20px;
+      }
+      #chart {
+        width: 800px;
+        height: 450px;
+      }
+      #status {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        display: none;
+      }
+      #status.success {
+        display: block;
+        background: #d4edda;
+        color: #155724;
+      }
+      #status.error {
+        display: block;
+        background: #f8d7da;
+        color: #721c24;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="status"></div>
+    <div id="chart"></div>
+
+    <script type="module" src="/src/screenshot-test.ts"></script>
+  </body>
+</html>
