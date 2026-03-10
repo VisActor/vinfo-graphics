@@ -107,25 +107,23 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
     // 计算位置的基础函数
     const getBaseX = (align: 'left' | 'center' | 'right') => {
       return (datum: any, ctx: any) => {
-        const region = ctx.chart.getAllRegions()[0];
-        const paddding = ctx.chart.padding;
-        const regionStart = region.getLayoutStartPoint().x;
-        const regionWidth = region.getLayoutRect().width;
+        const rect = ctx.chart.getLayoutRect();
 
         if (align === 'left') {
-          return paddding.left;
+          return rect.x;
         }
         if (align === 'center') {
-          return paddding.left + (regionStart + regionWidth) / 2;
+          return rect.x + rect.width / 2;
         }
-        return paddding.left + (regionStart + regionWidth);
+        return rect.x + rect.width;
       };
     };
 
     const getBaseY = () => {
       return (datum: any, ctx: any) => {
-        const region = ctx.chart.getAllRegions()[0];
-        return region.getLayoutStartPoint().y + region.getLayoutRect().height + offset;
+        const rect = ctx.chart.getLayoutRect();
+
+        return rect.y + rect.height + offset;
       };
     };
 
@@ -213,7 +211,7 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
 
     return {
       marks,
-      size: Math.max(imageWidth, fontSize) + offset, // 预留空间，避免与图表重叠
+      size: Math.max(imageHeight, fontSize) + offset, // 预留空间，避免与图表重叠
     };
   }
 

@@ -1,3 +1,4 @@
+import { isNil } from '../utils/isNil';
 import type { TreemapChartSchema } from '../types/treemap';
 import type { ValidationResult } from './base';
 import { BaseConverter } from './base';
@@ -15,9 +16,10 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
     const hierarchyData = this.buildHierarchy(schema);
 
     const spec: Record<string, unknown> = {
+      ...this.initSpec(schema),
       type: 'treemap',
       data: {
-        values: [hierarchyData],
+        values: hierarchyData,
       },
       categoryField: schema.categoryField,
       valueField: schema.valueField,
@@ -34,64 +36,30 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
     }
 
     // 颜色
-    if (schema.colors) {
-      spec.color = {
-        range: schema.colors,
-      };
-    }
+    this.processColors(schema, spec);
 
     // 节点样式
-    if (schema.node) {
-      if (schema.node.gap !== undefined) {
-        spec.gapWidth = schema.node.gap;
-      }
-      if (schema.node.padding !== undefined) {
-        spec.nodePadding = schema.node.padding;
-      }
-      if (schema.node.cornerRadius !== undefined) {
-        spec.leaf = {
-          style: {
-            cornerRadius: schema.node.cornerRadius,
-          },
-        };
-        spec.nonLeaf = {
-          style: {
-            cornerRadius: schema.node.cornerRadius,
-          },
-        };
-      }
-    }
+    this.processNodeStyle(schema, spec);
 
     // 标签
-    if (schema.label?.visible !== false) {
-      const labelSpec: Record<string, unknown> = {
-        visible: true,
-      };
-      if (schema.label?.format) {
-        labelSpec.formatMethod = (datum: any) => {
-          return this.formatLabel(schema.label!.format!, datum, schema.categoryField, schema.valueField);
-        };
-      }
-      if (schema.label?.minVisible !== undefined) {
-        labelSpec.minVisible = schema.label.minVisible;
-      }
-      spec.label = labelSpec;
-    }
+    this.processLabel(schema, spec);
 
     // 图例
     spec.legends = this.processLegend(schema.legend ?? false);
 
     // Icon 配置（通过 extensionMark 实现）
     if (schema.icon?.field && schema.icon?.map) {
-      spec.extensionMark = this.createIconMarks(schema);
+      this.processIcon(schema, spec);
     }
 
-    // 背景图映射（通过 extensionMark 实现）
-    if (schema.backgroundMap?.field && schema.backgroundMap?.map) {
-      spec.extensionMark = [
-        ...((spec.extensionMark as any[]) || []),
-        ...this.createBackgroundMarks(schema),
-      ];
+    // 节点背景图配置（通过 extensionMark 实现）
+    if (schema.nodeBackground?.field && schema.nodeBackground?.map) {
+      this.processNodeBackground(schema, spec);
+    }
+
+    // 排名标签（仅单层模式有效）
+    if (!schema.groupField && schema.rank?.visible !== false) {
+      this.processRank(schema, spec);
     }
 
     return spec;
@@ -125,99 +93,437 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
       },
       label: {
         visible: true,
+        showPercent: true,
+      },
+      icon: {
+        visible: true,
+        position: 'top-left',
+        offset: 8,
+      },
+      rank: {
+        visible: true,
+        position: 'top-left',
       },
       legend: false,
     };
   }
 
+  // ==================== 私有方法 ====================
+
+  /**
+   * 处理颜色配置
+   */
+  private processColors(schema: TreemapChartSchema, spec: Record<string, unknown>): void {
+    if (schema.colors) {
+      spec.color = {
+        range: schema.colors,
+      };
+    }
+  }
+
+  /**
+   * 处理节点样式
+   */
+  private processNodeStyle(schema: TreemapChartSchema, spec: Record<string, unknown>): void {
+    if (!isNil(schema.groupField)) {
+      spec.nonLeaf = {
+        visible: true,
+        style: {},
+      };
+    }
+
+    if (schema.node) {
+      if (schema.node.gap !== undefined) {
+        spec.gapWidth = schema.node.gap;
+      }
+      if (schema.node.padding !== undefined) {
+        spec.nodePadding = schema.node.padding;
+      }
+      if (schema.node.cornerRadius !== undefined) {
+        spec.leaf = {
+          style: {
+            cornerRadius: schema.node.cornerRadius,
+          },
+        };
+
+        if (spec.nonLeaf) {
+          (spec.nonLeaf as any).style.cornerRadius = schema.node.cornerRadius;
+        }
+      }
+    }
+
+    if (!isNil(schema.groupField)) {
+      if (isNil(spec.nodePadding)) {
+        spec.nodePadding = 5;
+      }
+    }
+  }
+
+  /**
+   * 处理标签配置
+   */
+  private processLabel(schema: TreemapChartSchema, spec: Record<string, unknown>): void {
+    if (schema.label?.visible === false) return;
+
+    const labelSpec: Record<string, unknown> = {
+      visible: true,
+      style: {
+        fill: '#fff',
+        fontSize: 14,
+        fontWeight: 'bold',
+      },
+    };
+
+    // 单层模式支持百分比显示
+    if (!schema.groupField && schema.label?.showPercent !== false) {
+      labelSpec.formatMethod = (text: string, datum: any, ctx: any) => {
+        const originalDatum = datum.datum[datum.datum.length - 1];
+
+        const name = originalDatum[schema.categoryField] ?? '';
+        const value = originalDatum[schema.valueField] ?? 0;
+        // 计算百分比
+        const total = this.calculateTotal(schema.data, schema.valueField);
+
+        const percent = total > 0 ? ((value / total) * 100).toFixed(0) : '0';
+
+        if (schema.label?.format) {
+          return schema.label.format
+            .replace(/{name}/g, String(name))
+            .replace(/{value}/g, String(value))
+            .replace(/{percent}/g, `${percent}%`);
+        }
+        return `${name}\n${percent}%`;
+      };
+    } else if (schema.label?.format) {
+      labelSpec.formatMethod = (text: string, datum: any) => {
+        const originalDatum = datum.datum[datum.datum.length - 1];
+        return schema
+          .label!.format!.replace(/{name}/g, String(originalDatum[schema.categoryField] ?? ''))
+          .replace(/{value}/g, String(originalDatum[schema.valueField] ?? ''));
+      };
+    }
+
+    if (schema.groupField) {
+      spec.nonLeafLabel = {
+        visible: true,
+        position: 'top',
+        padding: 30,
+      };
+    }
+
+    if (schema.label?.minVisible !== undefined) {
+      labelSpec.minVisible = schema.label.minVisible;
+    }
+
+    spec.label = labelSpec;
+  }
+
+  /**
+   * 计算数据总和
+   */
+  private calculateTotal(data: Record<string, unknown>[], valueField: string): number {
+    return data.reduce((sum, item) => {
+      const value = Number(item[valueField] ?? 0);
+      return sum + (isNaN(value) ? 0 : value);
+    }, 0);
+  }
+
   /**
    * 将扁平数据构建为层级结构
    */
-  private buildHierarchy(schema: TreemapChartSchema): Record<string, unknown> {
-    return {
-      name: 'root',
-      children: schema.data.map(item => ({
-        name: String(item[schema.categoryField]),
-        value: Number(item[schema.valueField]) || 0,
+  private buildHierarchy(schema: TreemapChartSchema): Record<string, unknown>[] {
+    const { categoryField, groupField, data } = schema;
+
+    if (!groupField) {
+      // 单层模式：直接构建叶子节点
+      return data;
+    }
+
+    // 分组模式：按 groupField 分组
+    const groups: Record<string, Record<string, unknown>[]> = {};
+
+    data.forEach((item) => {
+      const groupKey = String(item[groupField]);
+      if (!groups[groupKey]) {
+        groups[groupKey] = [];
+      }
+      groups[groupKey].push(item);
+    });
+
+    // 构建层级结构
+    const children = Object.entries(groups).map(([groupName, items]) => ({
+      [categoryField]: groupName,
+      children: items.map((item) => ({
         ...item,
       })),
-    };
+    }));
+
+    return children;
   }
 
   /**
-   * 创建 Icon marks
+   * 处理 Icon 配置（使用 extensionMark）
    */
-  private createIconMarks(schema: TreemapChartSchema): Record<string, unknown>[] {
-    if (!schema.icon?.field || !schema.icon?.map) {
-      return [];
+  private processIcon(schema: TreemapChartSchema, spec: Record<string, unknown>): void {
+    if (!schema.icon?.field || !schema.icon?.map) return;
+
+    const iconSize = schema.icon.size ?? 24;
+    const position = schema.icon.position ?? 'top-left';
+    const offset = schema.icon.offset ?? 8;
+
+    if (!spec.extensionMark) {
+      spec.extensionMark = [];
     }
 
-    const size = schema.icon.size ?? 24;
-    const marks: Record<string, unknown>[] = [];
-
-    schema.data.forEach((item) => {
-      const iconKey = String(item[schema.icon!.field!]);
-      const iconUrl = schema.icon!.map![iconKey];
-
-      if (!iconUrl) return;
-
-      marks.push({
-        type: 'image',
-        data: { values: [item] },
-        style: {
-          width: size,
-          height: size,
-          src: iconUrl,
+    (spec.extensionMark as Record<string, unknown>[]).push({
+      type: 'symbol',
+      dataIndex: 0,
+      style: {
+        ...schema.icon.style,
+        symbolType: 'circle',
+        size: iconSize,
+        visible: (datum: any) => {
+          // 分组模式下，只显示叶子节点的 icon
+          if (datum.isLeaf === false) {
+            return false;
+          }
+          const originalDatum = datum.datum[datum.datum.length - 1];
+          const iconKey = String(originalDatum[schema.icon!.field!] ?? '');
+          return !!iconKey && !!schema.icon!.map![iconKey];
         },
-      });
-    });
+        x: (datum: any, ctx: any) => {
+          const bounds = this.getNodeBounds(datum, ctx);
+          if (!bounds) return 0;
 
-    return marks;
+          switch (position) {
+            case 'top-left':
+            case 'bottom-left':
+              return bounds.x + offset + iconSize / 2;
+            case 'top-right':
+            case 'bottom-right':
+              return bounds.x + bounds.width - offset - iconSize / 2;
+            case 'center':
+            default:
+              return bounds.x + bounds.width / 2;
+          }
+        },
+        y: (datum: any, ctx: any) => {
+          const bounds = this.getNodeBounds(datum, ctx);
+          if (!bounds) return 0;
+
+          switch (position) {
+            case 'top-left':
+            case 'top-right':
+              return bounds.y + offset + iconSize / 2;
+            case 'bottom-left':
+            case 'bottom-right':
+              return bounds.y + bounds.height - offset - iconSize / 2;
+            case 'center':
+            default:
+              return bounds.y + bounds.height / 2;
+          }
+        },
+        background: (datum: any) => {
+          const originalDatum = datum.datum[datum.datum.length - 1];
+
+          const iconKey = String(originalDatum[schema.icon!.field!] ?? '');
+          return schema.icon!.map![iconKey] ?? '';
+        },
+      },
+    });
   }
 
   /**
-   * 创建背景图 marks
+   * 处理节点背景图配置（使用 extensionMark）
    */
-  private createBackgroundMarks(schema: TreemapChartSchema): Record<string, unknown>[] {
-    if (!schema.backgroundMap?.field || !schema.backgroundMap?.map) {
-      return [];
+  private processNodeBackground(schema: TreemapChartSchema, spec: Record<string, unknown>): void {
+    if (!schema.nodeBackground?.field || !schema.nodeBackground?.map) return;
+
+    const opacity = schema.nodeBackground.opacity ?? 0.3;
+
+    if (!spec.extensionMark) {
+      spec.extensionMark = [];
     }
 
-    const opacity = schema.backgroundMap.opacity ?? 0.5;
-    const marks: Record<string, unknown>[] = [];
-
-    schema.data.forEach((item) => {
-      const bgKey = String(item[schema.backgroundMap!.field!]);
-      const bgUrl = schema.backgroundMap!.map![bgKey];
-
-      if (!bgUrl) return;
-
-      marks.push({
-        type: 'image',
-        data: { values: [item] },
-        style: {
-          width: '100%',
-          height: '100%',
-          src: bgUrl,
-          opacity: opacity,
+    // 背景图需要在底层，使用 unshift 添加到数组开头
+    (spec.extensionMark as Record<string, unknown>[]).unshift({
+      type: 'image',
+      dataIndex: 0,
+      style: {
+        visible: (datum: any) => {
+          // 分组模式下，只显示叶子节点的背景
+          if (datum.isLeaf === false) {
+            return false;
+          }
+          const originalDatum = datum.datum[datum.datum.length - 1];
+          const bgKey = String(originalDatum[schema.nodeBackground!.field!] ?? '');
+          return !!bgKey && !!schema.nodeBackground!.map![bgKey];
         },
-      });
+        x: (datum: any, ctx: any) => {
+          const bounds = this.getNodeBounds(datum, ctx);
+          return bounds ? bounds.x : 0;
+        },
+        y: (datum: any, ctx: any) => {
+          const bounds = this.getNodeBounds(datum, ctx);
+          return bounds ? bounds.y : 0;
+        },
+        width: (datum: any, ctx: any) => {
+          const bounds = this.getNodeBounds(datum, ctx);
+          return bounds ? bounds.width : 0;
+        },
+        height: (datum: any, ctx: any) => {
+          const bounds = this.getNodeBounds(datum, ctx);
+          return bounds ? bounds.height : 0;
+        },
+        image: (datum: any) => {
+          const originalDatum = datum.datum[datum.datum.length - 1];
+          const bgKey = String(originalDatum[schema.nodeBackground!.field!] ?? '');
+          return schema.nodeBackground!.map![bgKey] ?? '';
+        },
+        cornerRadius: schema.node?.cornerRadius ?? 0,
+        opacity,
+      },
     });
-
-    return marks;
   }
 
   /**
-   * 格式化标签
+   * 处理排���标签（仅单层模式）
    */
-  private formatLabel(
-    format: string,
-    datum: Record<string, unknown>,
-    categoryField: string,
-    valueField: string
-  ): string {
-    return format
-      .replace(/{name}/g, String(datum[categoryField] ?? ''))
-      .replace(/{value}/g, String(datum[valueField] ?? ''));
+  private processRank(schema: TreemapChartSchema, spec: Record<string, unknown>): void {
+    if (schema.groupField) return;
+
+    const rankStyle = schema.rank?.style ?? {};
+    const fontSize = rankStyle.fontSize ?? 12;
+    const position = schema.rank?.position ?? 'top-left';
+
+    // 按值排序数据
+    const sortedData = [...schema.data].sort((a, b) => {
+      const aVal = Number(a[schema.valueField]) || 0;
+      const bVal = Number(b[schema.valueField]) || 0;
+      return bVal - aVal;
+    });
+
+    // 创建排名映射
+    const rankMap = new Map<string, number>();
+    sortedData.forEach((item, index) => {
+      const key = String(item[schema.categoryField]);
+      rankMap.set(key, index + 1);
+    });
+
+    if (!spec.extensionMark) {
+      spec.extensionMark = [];
+    }
+
+    // 背景圆圈
+    if (rankStyle.backgroundColor) {
+      const symbolSize = Math.floor(fontSize * 1.8);
+      (spec.extensionMark as Record<string, unknown>[]).push({
+        type: 'symbol',
+        dataIndex: 0,
+        style: {
+          symbolType: 'circle',
+          size: symbolSize,
+          visible: (datum: any) => {
+            const originalDatum = datum.datum[datum.datum.length - 1];
+            const name = String(originalDatum[schema.categoryField]);
+            return rankMap.has(name);
+          },
+          x: (datum: any, ctx: any) => {
+            const bounds = this.getNodeBounds(datum, ctx);
+            if (!bounds) return 0;
+            const offset = 8;
+            switch (position) {
+              case 'top-right':
+              case 'bottom-right':
+                return bounds.x + bounds.width - offset - symbolSize / 2;
+              default:
+                return bounds.x + offset + symbolSize / 2;
+            }
+          },
+          y: (datum: any, ctx: any) => {
+            const bounds = this.getNodeBounds(datum, ctx);
+            if (!bounds) return 0;
+            const offset = 8;
+            switch (position) {
+              case 'bottom-left':
+              case 'bottom-right':
+                return bounds.y + bounds.height - offset - symbolSize / 2;
+              default:
+                return bounds.y + offset + symbolSize / 2;
+            }
+          },
+          fill: rankStyle.backgroundColor,
+        },
+      });
+    }
+
+    // 排名文字
+    (spec.extensionMark as Record<string, unknown>[]).push({
+      type: 'text',
+      dataIndex: 0,
+      style: {
+        text: (datum: any) => {
+          const originalDatum = datum.datum[datum.datum.length - 1];
+          const name = String(originalDatum[schema.categoryField]);
+          const rank = rankMap.get(name);
+          return rank ? String(rank) : '';
+        },
+        visible: (datum: any) => {
+          const originalDatum = datum.datum[datum.datum.length - 1];
+          const name = String(originalDatum[schema.categoryField]);
+          return rankMap.has(name);
+        },
+        x: (datum: any, ctx: any) => {
+          const bounds = this.getNodeBounds(datum, ctx);
+          if (!bounds) return 0;
+          const offset = 8;
+          const symbolSize = rankStyle.backgroundColor ? Math.floor(fontSize * 1.8) : 0;
+          switch (position) {
+            case 'top-right':
+            case 'bottom-right':
+              return bounds.x + bounds.width - offset - symbolSize / 2;
+            default:
+              return bounds.x + offset + symbolSize / 2;
+          }
+        },
+        y: (datum: any, ctx: any) => {
+          const bounds = this.getNodeBounds(datum, ctx);
+          if (!bounds) return 0;
+          const offset = 8;
+          const symbolSize = rankStyle.backgroundColor ? Math.floor(fontSize * 1.8) : 0;
+          switch (position) {
+            case 'bottom-left':
+            case 'bottom-right':
+              return bounds.y + bounds.height - offset - symbolSize / 2;
+            default:
+              return bounds.y + offset + symbolSize / 2;
+          }
+        },
+        fill: rankStyle.fill ?? '#fff',
+        fontSize,
+        fontWeight: rankStyle.fontWeight ?? 'bold',
+        textAlign: 'center',
+        textBaseline: 'middle',
+      },
+    });
+  }
+
+  /**
+   * 获取节点边界（VChart treemap 在 datum 上存储位置信息）
+   */
+  private getNodeBounds(
+    datum: any,
+    ctx: any
+  ): { x: number; y: number; width: number; height: number } | null {
+    // VChart 在 datum 上存储了节点的位置信息
+    const { x0, x1, y0, y1 } = datum;
+    const width = Math.abs(x1 - x0);
+    const height = Math.abs(y1 - y0);
+
+    if (width <= 0 || height <= 0) {
+      return null;
+    }
+
+    return { x: Math.min(x0, x1), y: Math.min(y0, y1), width, height };
   }
 }

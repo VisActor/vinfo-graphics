@@ -11,14 +11,61 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
         { dept: '市场部', budget: 180 },
         { dept: '运营部', budget: 150 },
         { dept: '人力部', budget: 80 },
-        { dept: '财务部', budget: 60 }
+        { dept: '财务部', budget: 60 },
       ],
       categoryField: 'dept',
-      valueField: 'budget'
-    }
+      valueField: 'budget',
+    },
   },
   {
-    name: '带间距',
+    name: '带百分比标签',
+    schema: {
+      chartType: 'treemap',
+      title: '部门预算分布（百分比）',
+      data: [
+        { dept: '技术部', budget: 250 },
+        { dept: '市场部', budget: 180 },
+        { dept: '运营部', budget: 150 },
+        { dept: '人力部', budget: 80 },
+        { dept: '财务部', budget: 60 },
+      ],
+      categoryField: 'dept',
+      valueField: 'budget',
+      label: {
+        visible: true,
+        showPercent: true,
+        format: '{name}\n{percent}',
+      },
+    },
+  },
+  {
+    name: '带排名标签',
+    schema: {
+      chartType: 'treemap',
+      title: '部门预算分布（带排名）',
+      data: [
+        { dept: '技术部', budget: 250 },
+        { dept: '市场部', budget: 180 },
+        { dept: '运营部', budget: 150 },
+        { dept: '人力部', budget: 80 },
+        { dept: '财务部', budget: 60 },
+      ],
+      categoryField: 'dept',
+      valueField: 'budget',
+      rank: {
+        visible: true,
+        position: 'top-left',
+        style: {
+          fontSize: 12,
+          fill: '#fff',
+          fontWeight: 'bold',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        },
+      },
+    },
+  },
+  {
+    name: '带间距和圆角',
     schema: {
       chartType: 'treemap',
       title: '部门预算分布（带间距）',
@@ -27,16 +74,16 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
         { dept: '市场部', budget: 180 },
         { dept: '运营部', budget: 150 },
         { dept: '人力部', budget: 80 },
-        { dept: '财务部', budget: 60 }
+        { dept: '财务部', budget: 60 },
       ],
       categoryField: 'dept',
       valueField: 'budget',
       node: {
         gap: 4,
         padding: 8,
-        cornerRadius: 4
-      }
-    }
+        cornerRadius: 8,
+      },
+    },
   },
   {
     name: '自定义颜色',
@@ -48,11 +95,205 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
         { dept: '市场部', budget: 180 },
         { dept: '运营部', budget: 150 },
         { dept: '人力部', budget: 80 },
-        { dept: '财务部', budget: 60 }
+        { dept: '财务部', budget: 60 },
       ],
       categoryField: 'dept',
       valueField: 'budget',
-      colors: ['#5B8FF9', '#5AD8A6', '#F6BD16', '#E86452', '#6DC8EC']
-    }
-  }
+      colors: ['#5B8FF9', '#5AD8A6', '#F6BD16', '#E86452', '#6DC8EC'],
+    },
+  },
+  {
+    name: '带图标',
+    schema: {
+      chartType: 'treemap',
+      title: '社交媒体市场份额',
+      data: [
+        { platform: '微信', users: 1200, icon: 'wechat' },
+        { platform: '抖音', users: 800, icon: 'douyin' },
+        { platform: '微博', users: 600, icon: 'weibo' },
+        { platform: '小红书', users: 400, icon: 'xiaohongshu' },
+        { platform: '其他', users: 200, icon: 'other' },
+      ],
+      categoryField: 'platform',
+      valueField: 'users',
+      icon: {
+        visible: true,
+        field: 'icon',
+        position: 'top-left',
+        size: 28,
+        offset: 10,
+        map: {
+          wechat: 'https://api.iconify.design/simple-icons/wechat.svg?color=%2307C160',
+          douyin: 'https://api.iconify.design/simple-icons/tiktok.svg?color=%23000000',
+          weibo: 'https://api.iconify.design/simple-icons/sinaweibo.svg?color=%23E6162D',
+          xiaohongshu: 'https://api.iconify.design/simple-icons/xiaohongshu.svg?color=%23FF2442',
+          other:
+            'https://api.iconify.design/material-symbols/add-circle-outline-rounded.svg?color=%23666',
+        },
+      },
+    },
+  },
+  {
+    name: '分组模式',
+    schema: {
+      chartType: 'treemap',
+      title: '公司预算分布（按公司分组）',
+      data: [
+        { dept: '前端组', company: 'A公司', budget: 100 },
+        { dept: '后端组', company: 'A公司', budget: 150 },
+        { dept: '测试组', company: 'A公司', budget: 80 },
+        { dept: '前端组', company: 'B公司', budget: 90 },
+        { dept: '后端组', company: 'B公司', budget: 120 },
+        { dept: '设计组', company: 'B公司', budget: 60 },
+        { dept: '前端组', company: 'C公司', budget: 70 },
+        { dept: '后端组', company: 'C公司', budget: 100 },
+      ],
+      categoryField: 'dept',
+      valueField: 'budget',
+      groupField: 'company',
+      node: {
+        gap: 2,
+        cornerRadius: 4,
+      },
+    },
+  },
+  {
+    name: '分组模式带颜色',
+    schema: {
+      chartType: 'treemap',
+      title: '季度销售分布（按季度分组）',
+      data: [
+        { product: '产品A', quarter: 'Q1', sales: 100 },
+        { product: '产品B', quarter: 'Q1', sales: 80 },
+        { product: '产品C', quarter: 'Q1', sales: 60 },
+        { product: '产品A', quarter: 'Q2', sales: 120 },
+        { product: '产品B', quarter: 'Q2', sales: 90 },
+        { product: '产品C', quarter: 'Q2', sales: 70 },
+        { product: '产品A', quarter: 'Q3', sales: 140 },
+        { product: '产品B', quarter: 'Q3', sales: 100 },
+        { product: '产品C', quarter: 'Q3', sales: 80 },
+      ],
+      categoryField: 'product',
+      valueField: 'sales',
+      groupField: 'quarter',
+      colors: [
+        '#5B8FF9',
+        '#5AD8A6',
+        '#F6BD16',
+        '#E86452',
+        '#6DC8EC',
+        '#945FB9',
+        '#FF9D6D',
+        '#FFCC45',
+        '#47B7E8',
+      ],
+      node: {
+        gap: 3,
+        cornerRadius: 6,
+      },
+    },
+  },
+  {
+    name: '综合示例',
+    schema: {
+      chartType: 'treemap',
+      title: '手机品牌市场份额',
+      data: [
+        { brand: 'Apple', share: 25, icon: 'apple' },
+        { brand: 'Samsung', share: 22, icon: 'samsung' },
+        { brand: 'Xiaomi', share: 18, icon: 'xiaomi' },
+        { brand: 'OPPO', share: 12, icon: 'oppo' },
+        { brand: 'vivo', share: 10, icon: 'vivo' },
+        { brand: '其他', share: 13, icon: 'other' },
+      ],
+      categoryField: 'brand',
+      valueField: 'share',
+      node: {
+        gap: 3,
+        cornerRadius: 8,
+      },
+      label: {
+        visible: true,
+        showPercent: true,
+      },
+      rank: {
+        visible: true,
+        position: 'top-left',
+        style: {
+          fontSize: 14,
+          fill: '#fff',
+          fontWeight: 'bold',
+          backgroundColor: 'rgba(0,0,0,0.6)',
+        },
+      },
+      icon: {
+        visible: true,
+        field: 'icon',
+        position: 'bottom-right',
+        size: 40,
+        offset: 0,
+        map: {
+          apple: 'https://api.iconify.design/simple-icons/apple.svg?color=%23000000',
+          samsung: 'https://api.iconify.design/simple-icons/samsung.svg?color=%23000000',
+          xiaomi: 'https://api.iconify.design/simple-icons/xiaomi.svg?color=%23000000',
+          oppo: 'https://api.iconify.design/simple-icons/oppo.svg?color=%23000000',
+          vivo: 'https://api.iconify.design/simple-icons/vivo.svg?color=%23000000',
+          other: 'https://api.iconify.design/material-symbols/add-circle.svg?color=%23000000',
+        },
+      },
+      colors: ['#333333', '#1428A0', '#FF6900', '#1AAD19', '#415FFF', '#9AA3AD'],
+    },
+  },
+
+  {
+    name: '图片背景节点',
+    schema: {
+      chartType: 'treemap',
+      title: '旅行主题热度（图片背景）',
+      data: [
+        { place: '海边', score: 35, icon: 'beach', bg: 'beach' },
+        { place: '雪山', score: 25, icon: 'mountain', bg: 'mountain' },
+        { place: '森林', score: 20, icon: 'forest', bg: 'forest' },
+        { place: '城市', score: 12, icon: 'city', bg: 'city' },
+        { place: '沙漠', score: 8, icon: 'desert', bg: 'desert' },
+      ],
+      categoryField: 'place',
+      valueField: 'score',
+      node: {
+        gap: 4,
+        padding: 8,
+        cornerRadius: 8,
+      },
+      label: {
+        visible: true,
+        showPercent: true,
+      },
+      icon: {
+        visible: true,
+        field: 'icon',
+        position: 'top-left',
+        size: 20,
+        offset: 8,
+        map: {
+          beach: 'https://api.iconify.design/material-symbols/beach-access.svg?color=%23ffffff',
+          mountain: 'https://api.iconify.design/material-symbols/landscape.svg?color=%23ffffff',
+          forest: 'https://api.iconify.design/material-symbols/forest.svg?color=%23ffffff',
+          city: 'https://api.iconify.design/material-symbols/location-city.svg?color=%23ffffff',
+          desert: 'https://api.iconify.design/material-symbols/wb-sunny.svg?color=%23ffffff',
+        },
+      },
+      nodeBackground: {
+        field: 'bg',
+        opacity: 0.28,
+        map: {
+          beach: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800',
+          mountain: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800',
+          forest: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800',
+          city: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800',
+          desert: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800',
+        },
+      },
+      colors: ['#1f3b5c', '#2f4f6f', '#3d6b57', '#545e75', '#7a6a4f'],
+    },
+  },
 ];

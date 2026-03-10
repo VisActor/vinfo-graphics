@@ -1,5 +1,7 @@
 node_modules
 
+./examples/assets/
+
 # LLM 相关
 .agents
 .claude

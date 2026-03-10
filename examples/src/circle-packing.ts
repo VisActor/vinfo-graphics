@@ -11,11 +11,58 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
         { product: '电脑', sales: 800 },
         { product: '平板', sales: 600 },
         { product: '手表', sales: 400 },
-        { product: '耳机', sales: 300 }
+        { product: '耳机', sales: 300 },
       ],
       categoryField: 'product',
-      valueField: 'sales'
-    }
+      valueField: 'sales',
+    },
+  },
+  {
+    name: '带百分比标签',
+    schema: {
+      chartType: 'circlePacking',
+      title: '产品销售分布（百分比）',
+      data: [
+        { product: '手机', sales: 1200 },
+        { product: '电脑', sales: 800 },
+        { product: '平板', sales: 600 },
+        { product: '手表', sales: 400 },
+        { product: '耳机', sales: 300 },
+      ],
+      categoryField: 'product',
+      valueField: 'sales',
+      label: {
+        visible: true,
+        showPercent: true,
+        format: '{name}\n{percent}',
+      },
+    },
+  },
+  {
+    name: '带排名标签',
+    schema: {
+      chartType: 'circlePacking',
+      title: '产品销售分布（带排名）',
+      data: [
+        { product: '手机', sales: 1200 },
+        { product: '电脑', sales: 800 },
+        { product: '平板', sales: 600 },
+        { product: '手表', sales: 400 },
+        { product: '耳机', sales: 300 },
+      ],
+      categoryField: 'product',
+      valueField: 'sales',
+      rank: {
+        visible: true,
+        position: 'top-left',
+        style: {
+          fontSize: 12,
+          fill: '#fff',
+          fontWeight: 'bold',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        },
+      },
+    },
   },
   {
     name: '带间距',
@@ -27,16 +74,16 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
         { product: '电脑', sales: 800 },
         { product: '平板', sales: 600 },
         { product: '手表', sales: 400 },
-        { product: '耳机', sales: 300 }
+        { product: '耳机', sales: 300 },
       ],
       categoryField: 'product',
       valueField: 'sales',
       circle: {
         padding: 10,
         strokeWidth: 2,
-        strokeColor: '#fff'
-      }
-    }
+        strokeColor: '#fff',
+      },
+    },
   },
   {
     name: '自定义颜色',
@@ -48,11 +95,206 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
         { product: '电脑', sales: 800 },
         { product: '平板', sales: 600 },
         { product: '手表', sales: 400 },
-        { product: '耳机', sales: 300 }
+        { product: '耳机', sales: 300 },
       ],
       categoryField: 'product',
       valueField: 'sales',
-      colors: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7']
-    }
-  }
+      colors: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7'],
+    },
+  },
+  {
+    name: '带图标',
+    schema: {
+      chartType: 'circlePacking',
+      title: '社交媒体用户分布',
+      data: [
+        { platform: '微信', users: 1200, icon: 'wechat' },
+        { platform: '抖音', users: 800, icon: 'douyin' },
+        { platform: '微博', users: 600, icon: 'weibo' },
+        { platform: '小红书', users: 400, icon: 'xiaohongshu' },
+        { platform: '其他', users: 200, icon: 'other' },
+      ],
+      categoryField: 'platform',
+      valueField: 'users',
+      icon: {
+        visible: true,
+        field: 'icon',
+        position: 'center',
+        size: 32,
+        offset: 0,
+        map: {
+          wechat: 'https://api.iconify.design/simple-icons/wechat.svg?color=%2307C160',
+          douyin: 'https://api.iconify.design/simple-icons/tiktok.svg?color=%23000000',
+          weibo: 'https://api.iconify.design/simple-icons/sinaweibo.svg?color=%23E6162D',
+          xiaohongshu: 'https://api.iconify.design/simple-icons/xiaohongshu.svg?color=%23FF2442',
+          other:
+            'https://api.iconify.design/material-symbols/add-circle-outline-rounded.svg?color=%23666',
+        },
+      },
+    },
+  },
+  {
+    name: '分组模式',
+    schema: {
+      chartType: 'circlePacking',
+      title: '公司销售分布（按公司分组）',
+      data: [
+        { product: '手机', company: 'A公司', sales: 1000 },
+        { product: '电脑', company: 'A公司', sales: 800 },
+        { product: '平板', company: 'A公司', sales: 600 },
+        { product: '手机', company: 'B公司', sales: 700 },
+        { product: '电脑', company: 'B公司', sales: 500 },
+        { product: '平板', company: 'B公司', sales: 400 },
+        { product: '手机', company: 'C公司', sales: 500 },
+        { product: '电脑', company: 'C公司', sales: 300 },
+      ],
+      categoryField: 'product',
+      valueField: 'sales',
+      groupField: 'company',
+      circle: {
+        padding: 8,
+        strokeWidth: 2,
+        strokeColor: '#fff',
+      },
+    },
+  },
+  {
+    name: '分组模式带图标',
+    schema: {
+      chartType: 'circlePacking',
+      title: '季度销售分布（按季度分组）',
+      data: [
+        { product: '产品A', quarter: 'Q1', sales: 100, icon: 'p1' },
+        { product: '产品B', quarter: 'Q1', sales: 80, icon: 'p2' },
+        { product: '产品C', quarter: 'Q1', sales: 60, icon: 'p3' },
+        { product: '产品A', quarter: 'Q2', sales: 120, icon: 'p1' },
+        { product: '产品B', quarter: 'Q2', sales: 90, icon: 'p2' },
+        { product: '产品C', quarter: 'Q2', sales: 70, icon: 'p3' },
+        { product: '产品A', quarter: 'Q3', sales: 140, icon: 'p1' },
+        { product: '产品B', quarter: 'Q3', sales: 100, icon: 'p2' },
+        { product: '产品C', quarter: 'Q3', sales: 80, icon: 'p3' },
+      ],
+      categoryField: 'product',
+      valueField: 'sales',
+      groupField: 'quarter',
+      icon: {
+        visible: true,
+        field: 'icon',
+        position: 'center',
+        size: 24,
+        offset: 0,
+        map: {
+          p1: 'https://api.iconify.design/material-symbols/circle.svg?color=%235B8FF9',
+          p2: 'https://api.iconify.design/material-symbols/circle.svg?color=%235AD8A6',
+          p3: 'https://api.iconify.design/material-symbols/circle.svg?color=%23F6BD16',
+        },
+      },
+      colors: ['#5B8FF9', '#5AD8A6', '#F6BD16', '#E86452', '#6DC8EC'],
+    },
+  },
+  {
+    name: '综合示例',
+    schema: {
+      chartType: 'circlePacking',
+      title: '手机品牌市场份额',
+      data: [
+        { brand: 'Apple', share: 25, icon: 'apple' },
+        { brand: 'Samsung', share: 22, icon: 'samsung' },
+        { brand: 'Xiaomi', share: 18, icon: 'xiaomi' },
+        { brand: 'OPPO', share: 12, icon: 'oppo' },
+        { brand: 'vivo', share: 10, icon: 'vivo' },
+        { brand: '其他', share: 13, icon: 'other' },
+      ],
+      categoryField: 'brand',
+      valueField: 'share',
+      circle: {
+        padding: 6,
+        strokeWidth: 2,
+        strokeColor: '#fff',
+      },
+      label: {
+        visible: true,
+        showPercent: true,
+      },
+      rank: {
+        visible: true,
+        position: 'top-left',
+        style: {
+          fontSize: 14,
+          fill: '#fff',
+          fontWeight: 'bold',
+          backgroundColor: 'rgba(0,0,0,0.6)',
+        },
+      },
+      icon: {
+        visible: true,
+        field: 'icon',
+        position: 'center',
+        size: 40,
+        offset: 0,
+        map: {
+          apple: 'https://api.iconify.design/simple-icons/apple.svg?color=%23000000',
+          samsung: 'https://api.iconify.design/simple-icons/samsung.svg?color=%23000000',
+          xiaomi: 'https://api.iconify.design/simple-icons/xiaomi.svg?color=%23000000',
+          oppo: 'https://api.iconify.design/simple-icons/oppo.svg?color=%23000000',
+          vivo: 'https://api.iconify.design/simple-icons/vivo.svg?color=%23000000',
+          other: 'https://api.iconify.design/material-symbols/add-circle.svg?color=%23000000',
+        },
+      },
+      colors: ['#333333', '#1428A0', '#FF6900', '#1AAD19', '#415FFF', '#9AA3AD'],
+    },
+  },
+
+  {
+    name: '图片背景圆形闭包图',
+    schema: {
+      chartType: 'circlePacking',
+      title: '旅行主题热度（CirclePacking）',
+      data: [
+        { place: '海边', score: 35, icon: 'beach', bg: 'beach' },
+        { place: '雪山', score: 25, icon: 'mountain', bg: 'mountain' },
+        { place: '森林', score: 20, icon: 'forest', bg: 'forest' },
+        { place: '城市', score: 12, icon: 'city', bg: 'city' },
+        { place: '沙漠', score: 8, icon: 'desert', bg: 'desert' },
+      ],
+      categoryField: 'place',
+      valueField: 'score',
+      circle: {
+        padding: 6,
+        strokeWidth: 1,
+        strokeColor: '#fff',
+      },
+      label: {
+        visible: true,
+        showPercent: true,
+        format: '{name}\n{percent}',
+      },
+      icon: {
+        visible: true,
+        field: 'icon',
+        position: 'top-left',
+        size: 18,
+        offset: 8,
+        map: {
+          beach: 'https://api.iconify.design/material-symbols/beach-access.svg?color=%23ffffff',
+          mountain: 'https://api.iconify.design/material-symbols/landscape.svg?color=%23ffffff',
+          forest: 'https://api.iconify.design/material-symbols/forest.svg?color=%23ffffff',
+          city: 'https://api.iconify.design/material-symbols/location-city.svg?color=%23ffffff',
+          desert: 'https://api.iconify.design/material-symbols/wb-sunny.svg?color=%23ffffff',
+        },
+      },
+      circleBackground: {
+        field: 'bg',
+        opacity: 0.28,
+        map: {
+          beach: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800',
+          mountain: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800',
+          forest: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800',
+          city: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800',
+          desert: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800',
+        },
+      },
+      colors: ['#1f3b5c', '#2f4f6f', '#3d6b57', '#545e75', '#7a6a4f'],
+    },
+  },
 ];

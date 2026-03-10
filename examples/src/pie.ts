@@ -2,6 +2,73 @@ import type { PieChartSchema } from '../../src/types/pie';
 
 export const pieExamples: { name: string; schema: PieChartSchema }[] = [
   {
+    name: '环形图带中心图片',
+    schema: {
+      chartType: 'pie',
+      title: '用户分布',
+      data: [
+        { name: '00后', value: 15 },
+        { name: '90后', value: 35 },
+        { name: '80后', value: 30 },
+        { name: '70后', value: 15 },
+        { name: '其他', value: 5 },
+      ],
+      categoryField: 'name',
+      valueField: 'value',
+      innerRadius: 0.5,
+      outerRadius: 0.8,
+      centerImage: {
+        visible: true,
+        url: 'https://lf-dp.bytetos.com/obj/dp-open-internet-cn/visactor-site/bytedance/client/img/vchart/galleryStreamGraph.png',
+        width: 50,
+        height: 50,
+      },
+    },
+  },
+  {
+    name: '环形图带扇区图标和中心图片',
+    schema: {
+      chartType: 'pie',
+      title: '社交媒体市场份额',
+      data: [
+        { platform: '微信', value: 35, icon: 'wechat' },
+        { platform: '抖音', value: 28, icon: 'douyin' },
+        { platform: '微博', value: 18, icon: 'weibo' },
+        { platform: '小红书', value: 12, icon: 'xiaohongshu' },
+        { platform: '其他', value: 7, icon: 'other' },
+      ],
+      categoryField: 'platform',
+      valueField: 'value',
+      innerRadius: 0.55,
+      outerRadius: 0.85,
+      colors: ['#07C160', '#000000', '#E6162D', '#FF2442', '#9AA3AD'],
+      icon: {
+        visible: true,
+        field: 'icon',
+        size: 20,
+        map: {
+          wechat: 'https://img.icons8.com/color/96/video.png',
+          douyin: 'https://img.icons8.com/color/96/video.png',
+          weibo: 'https://img.icons8.com/color/96/video.png',
+          xiaohongshu: 'https://img.icons8.com/color/96/video.png',
+          other: 'https://img.icons8.com/color/96/video.png',
+        },
+      },
+      centerImage: {
+        visible: true,
+        url: 'https://lf-dp.bytetos.com/obj/dp-open-internet-cn/visactor-site/bytedance/client/img/vchart/galleryStreamGraph.png',
+        width: 60,
+        height: 60,
+      },
+      label: {
+        visible: true,
+        position: 'outside',
+        format: '{name}: {value}%',
+      },
+      legend: false,
+    },
+  },
+  {
     name: '基础饼图',
     schema: {
       chartType: 'pie',
@@ -11,11 +78,11 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
         { name: '产品B', value: 25 },
         { name: '产品C', value: 20 },
         { name: '产品D', value: 15 },
-        { name: '其他', value: 10 }
+        { name: '其他', value: 10 },
       ],
       categoryField: 'name',
-      valueField: 'value'
-    }
+      valueField: 'value',
+    },
   },
   {
     name: '环形图',
@@ -27,13 +94,13 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
         { name: '90后', value: 35 },
         { name: '80后', value: 30 },
         { name: '70后', value: 15 },
-        { name: '其他', value: 5 }
+        { name: '其他', value: 5 },
       ],
       categoryField: 'name',
       valueField: 'value',
       innerRadius: 0.5,
-      outerRadius: 0.8
-    }
+      outerRadius: 0.8,
+    },
   },
   {
     name: '带外标签',
@@ -45,15 +112,15 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
         { name: '产品B', value: 25 },
         { name: '产品C', value: 20 },
         { name: '产品D', value: 15 },
-        { name: '其他', value: 10 }
+        { name: '其他', value: 10 },
       ],
       categoryField: 'name',
       valueField: 'value',
       label: {
         visible: true,
-        position: 'outside'
-      }
-    }
+        position: 'outside',
+      },
+    },
   },
   {
     name: '带内标签',
@@ -65,16 +132,16 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
         { name: '产品B', value: 25 },
         { name: '产品C', value: 20 },
         { name: '产品D', value: 15 },
-        { name: '其他', value: 10 }
+        { name: '其他', value: 10 },
       ],
       categoryField: 'name',
       valueField: 'value',
       innerRadius: 0.4,
       label: {
         visible: true,
-        position: 'inside'
-      }
-    }
+        position: 'inside',
+      },
+    },
   },
   {
     name: '自定义颜色',
@@ -86,12 +153,12 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
         { name: '产品B', value: 25 },
         { name: '产品C', value: 20 },
         { name: '产品D', value: 15 },
-        { name: '其他', value: 10 }
+        { name: '其他', value: 10 },
       ],
       categoryField: 'name',
       valueField: 'value',
-      colors: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7']
-    }
+      colors: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7'],
+    },
   },
   {
     name: '标题在右侧',
@@ -99,17 +166,106 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
       chartType: 'pie',
       title: {
         text: '市场份额',
-        position: 'right'
+        position: 'right',
       },
       data: [
         { name: '产品A', value: 30 },
         { name: '产品B', value: 25 },
         { name: '产品C', value: 20 },
         { name: '产品D', value: 15 },
-        { name: '其他', value: 10 }
+        { name: '其他', value: 10 },
       ],
       categoryField: 'name',
-      valueField: 'value'
-    }
-  }
+      valueField: 'value',
+    },
+  },
+  {
+    name: '印度国内航司份额（复刻简化版）',
+    schema: {
+      chartType: 'pie',
+      title: {
+        text: 'INDIAN DOMESTIC AIRLINE MARKET LEADERS',
+        subtext: 'Share of domestic market (%)',
+        position: 'center',
+      },
+      data: [
+        { airline: 'IndiGo', share: 65.2 },
+        { airline: 'Air India', share: 27.2 },
+        { airline: 'Akasa Air', share: 5 },
+        { airline: 'SpiceJet', share: 2.6 },
+      ],
+      categoryField: 'airline',
+      valueField: 'share',
+      innerRadius: 0.72,
+      outerRadius: 0.9,
+      colors: ['#0F2AA6', '#D6003A', '#6C2BD9', '#F39C12'],
+      background: {
+        color: '#EEF2F7',
+      },
+      label: {
+        visible: true,
+        position: 'inside',
+        format: '{value}%',
+      },
+      legend: false,
+    },
+  },
+  {
+    name: 'Oracle Q4 2025 组合（复刻简化版）',
+    schema: {
+      chartType: 'pie',
+      title: {
+        text: "THE ORACLE'S ALLOCATION: Q4 2025 PORTFOLIO SNAPSHOT",
+        subtext: 'Top positions percentage distribution',
+        position: 'center',
+      },
+      data: [
+        { holding: 'Apple', weight: 22.6 },
+        { holding: 'American Express', weight: 20.46 },
+        { holding: 'Bank of America', weight: 10.38 },
+        { holding: 'Coca-Cola', weight: 10.2 },
+        { holding: 'Chevron', weight: 7.24 },
+        { holding: "Moody's", weight: 4.6 },
+        { holding: 'Occidental Petroleum', weight: 3.97 },
+        { holding: 'Chubb Limited', weight: 3.9 },
+        { holding: 'The Kraft Heinz Company', weight: 2.88 },
+        { holding: 'Alphabet', weight: 2.04 },
+        { holding: 'DaVita', weight: 1.32 },
+        { holding: 'Kroger', weight: 1.14 },
+        { holding: 'Visa', weight: 1.06 },
+        { holding: 'Sirius XM', weight: 0.91 },
+        { holding: 'Others', weight: 7.3 },
+      ],
+      categoryField: 'holding',
+      valueField: 'weight',
+      innerRadius: 0.48,
+      outerRadius: 0.86,
+      colors: [
+        '#1E5AA8',
+        '#E7C143',
+        '#C7164F',
+        '#D9222A',
+        '#0EA86D',
+        '#6E3CB6',
+        '#F08A29',
+        '#47B7E8',
+        '#8C6B3E',
+        '#3E7EEA',
+        '#EF3F2A',
+        '#0FA27A',
+        '#4EAE50',
+        '#D4A92C',
+        '#9AA3AD',
+      ],
+      background: {
+        color: '#F8F7F3',
+      },
+      label: {
+        visible: true,
+        position: 'spider',
+        format: '{name} ({value}%)',
+      },
+      legend: false,
+    },
+  },
 ];
