@@ -33,6 +33,7 @@ export interface ValidationResult {
 }
 
 const defaultThemeConfig: ThemeConfig = {
+  name: 'light',
   type: 'light',
   colors: [
     '#1664FF',
@@ -91,13 +92,19 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
   ): Record<string, unknown> | undefined {
     if (!title) return undefined;
 
+    const themeConfig = this.getThemeConfig();
+
     if (typeof title === 'string') {
-      return { text: title };
+      return { text: title, textStyle: { fill: themeConfig.textColor } };
     }
 
-    const result: Record<string, unknown> = { text: title.text };
+    const result: Record<string, unknown> = {
+      text: title.text,
+      textStyle: { fill: themeConfig.textColor },
+    };
     if (title.subtext) {
       result.subtext = title.subtext;
+      result.subtextStyle = { fill: themeConfig.secondaryTextColor };
     }
     if (title.position) {
       result.align = title.position;
