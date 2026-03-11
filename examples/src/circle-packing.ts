@@ -15,6 +15,7 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
       ],
       categoryField: 'product',
       valueField: 'sales',
+      theme: 'categorical',
     },
   },
   {

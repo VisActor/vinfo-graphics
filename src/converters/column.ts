@@ -29,9 +29,7 @@ export class ColumnChartConverter extends BaseConverter<ColumnChartSchema> {
     }
 
     // 背景
-    if (schema.background) {
-      spec.background = this.processBackground(schema.background);
-    }
+    spec.background = this.processBackground(schema.background);
 
     // 颜色
     this.processColors(schema, spec);
@@ -69,9 +67,6 @@ export class ColumnChartConverter extends BaseConverter<ColumnChartSchema> {
         (spec.customMark as Record<string, unknown>[]).push(...res.marks);
       }
     }
-
-    // 主题配置
-    this.processTheme(schema.theme, spec);
 
     return spec;
   }
@@ -119,8 +114,11 @@ export class ColumnChartConverter extends BaseConverter<ColumnChartSchema> {
    * 处理颜色配置
    */
   private processColors(schema: ColumnChartSchema, spec: Record<string, unknown>): void {
-    if (schema.colors) {
-      spec.color = schema.colors;
+    // 颜色
+    const colors = schema.colors ?? this.getThemeConfig().colors;
+
+    if (colors) {
+      spec.color = colors;
       spec.seriesField = schema.categoryField;
     }
   }
@@ -173,10 +171,12 @@ export class ColumnChartConverter extends BaseConverter<ColumnChartSchema> {
     const labelSpec: Record<string, unknown> = {
       visible: true,
       position: labelPosition,
-      style: {
-        fill: '#333',
-      },
+      style: {},
     };
+
+    if (this.getThemeConfig().secondaryTextColor) {
+      (labelSpec.style as any).fill = this.getThemeConfig()!.secondaryTextColor;
+    }
 
     // 内标签用白色文字
     if (labelPosition?.startsWith('inside')) {

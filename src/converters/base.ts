@@ -6,6 +6,7 @@ import type {
   LegendConfig,
   LinearGradientConfig,
   Theme,
+  ThemeConfig,
 } from '../types/base';
 import { resolveTheme, isDarkTheme, vchartThemeMap } from '../themes';
 
@@ -31,6 +32,25 @@ export interface ValidationResult {
   errors: string[];
 }
 
+const defaultThemeConfig: ThemeConfig = {
+  type: 'light',
+  colors: [
+    '#1664FF',
+    '#1AC6FF',
+    '#FF8A00',
+    '#3CC780',
+    '#7442D4',
+    '#FFC400',
+    '#304D77',
+    '#B48DEB',
+    '#009488',
+    '#FF7DDA',
+  ],
+  backgroundColor: '#fff',
+  textColor: '#21252c',
+  secondaryTextColor: '#606773',
+};
+
 /**
  * 转换器基类
  */
@@ -54,9 +74,13 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
   abstract getDefaults(): Partial<T>;
 
   protected initSpec(schema: T): Record<string, unknown> {
-    return {
+    const spec = {
       padding: { top: 20, right: 20, bottom: 20, left: 20 },
     };
+    // 主题配置
+    this.processTheme(schema.theme, spec);
+
+    return spec;
   }
 
   /**
@@ -100,7 +124,7 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
     const marks: Record<string, unknown>[] = [];
     const layout = footnote.layout ?? 'left';
     const fontSize = footnote.fontSize ?? 12;
-    const fill = footnote.fill ?? '#999';
+    const fill = footnote.fill ?? this.getThemeConfig().secondaryTextColor;
     const imageWidth = footnote.imageWidth ?? 16;
     const imageHeight = footnote.imageHeight ?? 16;
     const gap = footnote.gap ?? 8;
@@ -231,7 +255,7 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
   protected processBackground(
     background: BackgroundConfig | undefined
   ): Record<string, unknown> | string | undefined {
-    if (!background) return undefined;
+    if (!background) return this.getThemeConfig().backgroundColor;
 
     if (background.color) {
       return background.color;
@@ -305,17 +329,20 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
     };
   }
 
+  private _themeConfig: ThemeConfig = defaultThemeConfig;
+  getThemeConfig(): ThemeConfig {
+    return this._themeConfig;
+  }
+
   /**
    * 处理主题配置
    * @param theme 主题配置
    * @param spec VChart spec 对象
    * @param forceBackground 是否强制应用背景色（用于暗色主题）
    */
-  protected processTheme(
-    theme: Theme | undefined,
-    spec: Record<string, unknown>,
-    forceBackground: boolean = false
-  ): void {
+  protected processTheme(theme: Theme | undefined, spec: Record<string, unknown>): void {
+    this._themeConfig = defaultThemeConfig; // 重置主题配置
+
     if (!theme) return;
 
     const resolvedTheme = resolveTheme(theme);
@@ -326,19 +353,8 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
       spec.theme = vchartThemeMap[resolvedTheme.type];
     }
 
-    // 如果是暗色主题，或者没有自定义背景，则应用主题背景色
-    const isDark = isDarkTheme(resolvedTheme);
-    if (isDark || forceBackground || !spec.background) {
-      if (resolvedTheme.backgroundColor) {
-        spec.background = resolvedTheme.backgroundColor;
-      }
-    }
-
-    // 应用自定义颜色（如果没有单独指定 colors）
-    if (resolvedTheme.colors && !spec.color) {
-      spec.color = {
-        range: resolvedTheme.colors,
-      };
+    if (resolvedTheme) {
+      this._themeConfig = resolvedTheme;
     }
   }
 

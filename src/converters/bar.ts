@@ -29,9 +29,8 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
     }
 
     // 背景
-    if (schema.background) {
-      spec.background = this.processBackground(schema.background);
-    }
+
+    spec.background = this.processBackground(schema.background);
 
     // 颜色
     this.processColors(schema, spec);
@@ -74,9 +73,6 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
         (spec.customMark as Record<string, unknown>[]).push(...res.marks);
       }
     }
-
-    // 主题配置
-    this.processTheme(schema.theme, spec);
 
     return spec;
   }
@@ -124,8 +120,10 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
    * 处理颜色配置
    */
   private processColors(schema: BarChartSchema, spec: Record<string, unknown>): void {
-    if (schema.colors) {
-      spec.color = schema.colors;
+    const colors = schema.colors ?? this.getThemeConfig().colors;
+
+    if (colors && colors.length > 0) {
+      spec.color = colors;
       spec.seriesField = schema.categoryField;
     }
   }
@@ -178,10 +176,12 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
     const labelSpec: Record<string, unknown> = {
       visible: true,
       position: labelPosition,
-      style: {
-        fill: '#333',
-      },
+      style: {},
     };
+
+    if (this.getThemeConfig().secondaryTextColor) {
+      (labelSpec.style as any).fill = this.getThemeConfig()!.secondaryTextColor;
+    }
 
     // 内标签用白色文字
     if (labelPosition?.startsWith('inside')) {
@@ -239,31 +239,31 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
     const offset = 8;
 
     // 背景圆圈
-    if (rankStyle.backgroundColor) {
-      const bgMark: Record<string, unknown> = {
-        type: 'symbol',
-        dataIndex: 0,
-        style: {
-          symbolType: 'circle',
-          size: symbolSize,
-          x: (datum: any, ctx: any) => {
-            return ctx.chart.padding.left - symbolSize / 2 - offset;
-          },
-          y: (datum: any, ctx: any) => {
-            const series = ctx.chart.getAllSeries()[0];
-            const seriesCtx = series._markAttributeContext;
-            const region = ctx.chart.getAllRegions()[0];
-            return (
-              seriesCtx.valueToY(datum[schema.categoryField]) +
-              seriesCtx.yBandwidth() / 2 +
-              region.getLayoutStartPoint().y
-            );
-          },
-          fill: rankStyle.backgroundColor,
+    const bgMark: Record<string, unknown> = {
+      type: 'symbol',
+      dataIndex: 0,
+      style: {
+        symbolType: 'circle',
+        size: symbolSize,
+        x: (datum: any, ctx: any) => {
+          return ctx.chart.padding.left - symbolSize / 2 - offset;
         },
-      };
-      (spec.customMark as Record<string, unknown>[]).push(bgMark);
-    }
+        y: (datum: any, ctx: any) => {
+          const series = ctx.chart.getAllSeries()[0];
+          const seriesCtx = series._markAttributeContext;
+          const region = ctx.chart.getAllRegions()[0];
+          return (
+            seriesCtx.valueToY(datum[schema.categoryField]) +
+            seriesCtx.yBandwidth() / 2 +
+            region.getLayoutStartPoint().y
+          );
+        },
+        fill: (datum: any, ctx: any) => {
+          return rankStyle.backgroundColor ?? ctx.globalScale('color', datum[schema.categoryField]);
+        },
+      },
+    };
+    (spec.customMark as Record<string, unknown>[]).push(bgMark);
 
     // 排名文字
     const rankMark: Record<string, unknown> = {
@@ -310,26 +310,24 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
     }
 
     // 背景圆圈
-    if (rankStyle.backgroundColor) {
-      const bgMark: Record<string, unknown> = {
-        type: 'symbol',
-        dataIndex: 0,
-        style: {
-          symbolType: 'circle',
-          size: Math.floor(fontSize * 1.8),
-          x: (datum: any, ctx: any) => {
-            return rankPosition === 'end'
-              ? ctx.valueToX(datum[schema.valueField]) - ctx.yBandwidth() / 2
-              : ctx.yBandwidth() / 2;
-          },
-          y: (datum: any, ctx: any) => {
-            return ctx.valueToY(datum[schema.categoryField]) + ctx.yBandwidth() / 2;
-          },
-          fill: rankStyle.backgroundColor,
+    const bgMark: Record<string, unknown> = {
+      type: 'symbol',
+      dataIndex: 0,
+      style: {
+        symbolType: 'circle',
+        size: Math.floor(fontSize * 1.8),
+        x: (datum: any, ctx: any) => {
+          return rankPosition === 'end'
+            ? ctx.valueToX(datum[schema.valueField]) - ctx.yBandwidth() / 2
+            : ctx.yBandwidth() / 2;
         },
-      };
-      (spec.extensionMark as Record<string, unknown>[]).push(bgMark);
-    }
+        y: (datum: any, ctx: any) => {
+          return ctx.valueToY(datum[schema.categoryField]) + ctx.yBandwidth() / 2;
+        },
+        fill: rankStyle.backgroundColor ?? this.getThemeConfig().backgroundColor,
+      },
+    };
+    (spec.extensionMark as Record<string, unknown>[]).push(bgMark);
 
     // 排名文字
     const rankMark: Record<string, unknown> = {
@@ -345,7 +343,7 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
         y: (datum: any, ctx: any) => {
           return ctx.valueToY(datum[schema.categoryField]) + ctx.yBandwidth() / 2;
         },
-        fill: rankStyle.fill ?? '#fff',
+        fill: rankStyle.fill ?? this.getThemeConfig().secondaryTextColor,
         fontSize,
         fontWeight: rankStyle.fontWeight ?? 'bold',
         textAlign: 'center',
@@ -521,7 +519,7 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
         dataIndex: 0,
         style: {
           fontSize: 12,
-          fill: '#333',
+          fill: this.getThemeConfig().secondaryTextColor,
           textBaseline: 'middle',
           ...style,
           visible: (datum: any) => {

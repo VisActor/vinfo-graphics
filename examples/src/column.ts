@@ -15,6 +15,7 @@ export const columnExamples: { name: string; schema: ColumnChartSchema }[] = [
       ],
       categoryField: 'month',
       valueField: 'sales',
+      theme: 'ats',
     },
   },
   {

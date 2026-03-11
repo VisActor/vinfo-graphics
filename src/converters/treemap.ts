@@ -31,9 +31,7 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
     }
 
     // 背景
-    if (schema.background) {
-      spec.background = this.processBackground(schema.background);
-    }
+    spec.background = this.processBackground(schema.background);
 
     // 颜色
     this.processColors(schema, spec);
@@ -61,9 +59,6 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
     if (!schema.groupField && schema.rank?.visible !== false) {
       this.processRank(schema, spec);
     }
-
-    // 主题配置
-    this.processTheme(schema.theme, spec);
 
     return spec;
   }
@@ -117,10 +112,10 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
    * 处理颜色配置
    */
   private processColors(schema: TreemapChartSchema, spec: Record<string, unknown>): void {
-    if (schema.colors) {
-      spec.color = {
-        range: schema.colors,
-      };
+    // 颜色
+    const colors = schema.colors ?? this.getThemeConfig().colors;
+    if (colors) {
+      spec.color = colors;
     }
   }
 
@@ -171,7 +166,6 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
     const labelSpec: Record<string, unknown> = {
       visible: true,
       style: {
-        fill: '#fff',
         fontSize: 14,
         fontWeight: 'bold',
       },

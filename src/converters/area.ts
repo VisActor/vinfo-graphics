@@ -27,15 +27,13 @@ export class AreaChartConverter extends BaseConverter<AreaChartSchema> {
     }
 
     // 背景
-    if (schema.background) {
-      spec.background = this.processBackground(schema.background);
-    }
+    spec.background = this.processBackground(schema.background);
 
     // 颜色
-    if (schema.colors) {
-      spec.color = {
-        range: schema.colors,
-      };
+    const colors = schema.colors ?? this.getThemeConfig().colors;
+
+    if (colors) {
+      spec.color = colors;
     }
 
     // 面积样式
@@ -132,9 +130,6 @@ export class AreaChartConverter extends BaseConverter<AreaChartSchema> {
         (spec.customMark as Record<string, unknown>[]).push(...res.marks);
       }
     }
-
-    // 主题配置
-    this.processTheme(schema.theme, spec);
 
     return spec;
   }

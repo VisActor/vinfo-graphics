@@ -15,6 +15,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
       ],
       categoryField: 'platform',
       valueField: 'users',
+      theme: 'tiktok',
     },
   },
   {
@@ -587,12 +588,12 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
       rank: {
         visible: true,
         position: 'yAxis',
-        style: {
-          fontSize: 14,
-          fill: '#F4C52A',
-          fontWeight: 'bold',
-          backgroundColor: 'white',
-        },
+        // style: {
+        //   fontSize: 14,
+        //   fill: '#F4C52A',
+        //   fontWeight: 'bold',
+        //   backgroundColor: 'white',
+        // },
       },
       label: {
         visible: true,
@@ -648,13 +649,13 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
       rank: {
         visible: true,
         position: 'start',
-        style: {
-          fontSize: 12,
-          fill: '#fff',
-          fontWeight: 'bold',
-          backgroundColor: '#003D7A',
-          cornerRadius: 12,
-        },
+        // style: {
+        //   fontSize: 12,
+        //   fill: '#fff',
+        //   fontWeight: 'bold',
+        //   backgroundColor: '#003D7A',
+        //   cornerRadius: 12,
+        // },
       },
       label: {
         visible: true,

@@ -16,6 +16,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
       ],
       categoryField: 'month',
       valueField: 'users',
+      theme: 'apparel',
     },
   },
   {

@@ -229,14 +229,7 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
   airline: {
     type: 'light',
     name: 'airline',
-    colors: [
-      '#0D23A8',
-      '#D80038',
-      '#F39A17',
-      '#6A1FD1',
-      '#23415F',
-      '#A9B7C7',
-    ],
+    colors: ['#0D23A8', '#D80038', '#F39A17', '#6A1FD1', '#23415F', '#A9B7C7'],
     backgroundColor: '#E9EDF2',
     textColor: '#203B5A',
     secondaryTextColor: '#61748A',
@@ -263,6 +256,254 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
     textColor: '#F4F6FB',
     secondaryTextColor: '#A8B1CC',
   },
+
+  /**
+   * 加密货币信息图 - 矩形热力高对比配色
+   * 适合：treemap、矩形分块、深色信息图
+   */
+  crypto: {
+    type: 'dark',
+    name: 'crypto',
+    colors: [
+      '#F79700',
+      '#3F78D6',
+      '#1C2D88',
+      '#16C7C8',
+      '#A88C2A',
+      '#2DAF8F',
+      '#6BA6F2',
+      '#7A5AF8',
+      '#1F9ED8',
+      '#2DCCB7',
+    ],
+    backgroundColor: '#0500A7',
+    textColor: '#F7FBFF',
+    secondaryTextColor: '#70E7F0',
+  },
+
+  /**
+   * 加密货币信息图 - 浅色矩形高对比配色
+   * 适合：浅底 treemap、文档图表、报告场景
+   */
+  'crypto-light': {
+    type: 'light',
+    name: 'crypto-light',
+    colors: [
+      '#F59E0B',
+      '#4D7CFE',
+      '#243C9F',
+      '#17BFC8',
+      '#B08A1E',
+      '#2AA889',
+      '#7CAAF7',
+      '#8B6AF8',
+      '#2498CF',
+      '#4CCCB8',
+    ],
+    backgroundColor: '#F6F8FF',
+    textColor: '#172554',
+    secondaryTextColor: '#2563EB',
+  },
+
+  /**
+   * 原油出口信息图 - 深色矩形高冲突配色
+   * 适合：treemap、占比矩形、深色信息图
+   */
+  oil: {
+    type: 'dark',
+    name: 'oil',
+    colors: [
+      '#F10A0A',
+      '#1D33E6',
+      '#11C84A',
+      '#D6B21B',
+      '#8B140B',
+      '#0F8F36',
+      '#5160F0',
+      '#F5D55A',
+    ],
+    backgroundColor: '#180B02',
+    textColor: '#FFF4E8',
+    secondaryTextColor: '#FFC44A',
+  },
+
+  /**
+   * 裁员信息图 - 浅底矩形高对比配色
+   * 适合：treemap、占比矩形、信息图式分类对比
+   */
+  layoffs: {
+    type: 'light',
+    name: 'layoffs',
+    colors: [
+      '#0407B8',
+      '#84D8F8',
+      '#39A877',
+      '#D7E3FF',
+      '#FF6900',
+      '#E4BE53',
+      '#F3B5D7',
+      '#0E5AA8',
+      '#D23145',
+      '#6B28B9',
+      '#9D8520',
+      '#7D60C7',
+      '#2DA9B2',
+      '#4B9B46',
+    ],
+    backgroundColor: '#EAE4CF',
+    textColor: '#141414',
+    secondaryTextColor: '#5F5645',
+  },
+
+  /**
+   * 铀供应信息图 - 深色矩形荧光配色
+   * 适合：treemap、来源占比矩形、深色信息图
+   */
+  uranium: {
+    type: 'dark',
+    name: 'uranium',
+    colors: [
+      '#EE120D',
+      '#F3B7D6',
+      '#95E5F7',
+      '#D9EA7A',
+      '#C7B1F9',
+      '#F1EA67',
+      '#B6FF18',
+      '#F2D8C3',
+    ],
+    backgroundColor: '#090909',
+    textColor: '#F7F2E8',
+    secondaryTextColor: '#BFFF2A',
+  },
+
+  /**
+   * 服装制造信息图 - 深色成本柱形配色
+   * 适合：柱状图、堆叠柱图、制造成本类信息图
+   */
+  apparel: {
+    type: 'dark',
+    name: 'apparel',
+    colors: [
+      '#5A45FF',
+      '#CF280F',
+      '#D46C95',
+      '#E39419',
+      '#46B93C',
+      '#8A7BFF',
+      '#F0613B',
+      '#E5A1BD',
+      '#F0B24A',
+      '#76D45D',
+    ],
+    backgroundColor: '#0F0F10',
+    textColor: '#F6F1E8',
+    secondaryTextColor: '#BFB7AA',
+  },
+
+  /**
+   * 投资组合信息图 - 饼图暖金配色
+   * 适合：饼图、环图、资产配置类图表
+   */
+  portfolio: {
+    type: 'light',
+    name: 'portfolio',
+    colors: [
+      '#E9BC51',
+      '#C79F3F',
+      '#F0AA5B',
+      '#D6944D',
+      '#F56D22',
+      '#D45E10',
+      '#D13C57',
+      '#B81F63',
+      '#8D0C4C',
+      '#5A0A2B',
+    ],
+    backgroundColor: '#E5D4AA',
+    textColor: '#1F1B1A',
+    secondaryTextColor: '#6E5640',
+  },
+
+  /**
+   * 新能源信息图 - 深色高对比配色
+   * 适合：环图、柱图、深色信息图和能源主题图表
+   */
+  renewables: {
+    type: 'dark',
+    name: 'renewables',
+    colors: [
+      '#FF5143',
+      '#F2D548',
+      '#7379CF',
+      '#18AFC0',
+      '#E8E8E8',
+      '#A6A6A6',
+      '#1B1B1B',
+      '#A56EEA',
+      '#FF6B5E',
+      '#5A66C9',
+    ],
+    backgroundColor: '#121315',
+    textColor: '#F5F5F5',
+    secondaryTextColor: '#B9BCC3',
+  },
+
+  /**
+   * 社媒用户信息图 - 深色环图高对比配色
+   * 适合：环图、饼图、用户分布与平台主题图表
+   */
+  tiktok: {
+    type: 'dark',
+    name: 'tiktok',
+    colors: [
+      '#990028',
+      '#B21E56',
+      '#E54584',
+      '#EC73AF',
+      '#F1B9D8',
+      '#15A4BF',
+      '#B7892E',
+      '#7470CB',
+      '#18A86C',
+      '#D15B6E',
+      '#1E9EE5',
+      '#8A9E25',
+      '#B96ED4',
+      '#19B6B2',
+      '#B56C35',
+      '#6A8FDE',
+      '#A3A3A3',
+      '#F7924A',
+    ],
+    backgroundColor: '#232323',
+    textColor: '#F4F4F4',
+    secondaryTextColor: '#F7924A',
+  },
+
+  /**
+   * 招聘系统信息图 - 科技蓝环图配色
+   * 适合：环图、科技主题饼图、市场份额图
+   */
+  ats: {
+    type: 'dark',
+    name: 'ats',
+    colors: [
+      '#69D6FF',
+      '#5CCEFF',
+      '#55C8FF',
+      '#4FC3FF',
+      '#49BCFF',
+      '#43B4FF',
+      '#3CACFF',
+      '#7AE3FF',
+      '#58B9FF',
+      '#8BE9FF',
+    ],
+    backgroundColor: '#042E63',
+    textColor: '#EAF9FF',
+    secondaryTextColor: '#7ADFFF',
+  },
 };
 
 /**
@@ -276,7 +517,9 @@ export const vchartThemeMap: Record<Exclude<ThemeConfig['type'], undefined>, str
 /**
  * 获取解析后的主题配置
  */
-export function resolveTheme(theme: ThemeConfig | PresetThemeName | undefined): ThemeConfig | undefined {
+export function resolveTheme(
+  theme: ThemeConfig | PresetThemeName | undefined
+): ThemeConfig | undefined {
   if (!theme) return undefined;
 
   // 如果是预设主题名称，直接返回预设

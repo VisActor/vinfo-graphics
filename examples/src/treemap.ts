@@ -15,6 +15,7 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
       ],
       categoryField: 'dept',
       valueField: 'budget',
+      theme: 'airline',
     },
   },
   {

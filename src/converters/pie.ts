@@ -12,6 +12,7 @@ export class PieChartConverter extends BaseConverter<PieChartSchema> {
 
   convert(schema: PieChartSchema): Record<string, unknown> {
     const spec: Record<string, unknown> = {
+      ...this.initSpec(schema),
       type: 'pie',
       data: {
         values: schema.data,
@@ -38,15 +39,12 @@ export class PieChartConverter extends BaseConverter<PieChartSchema> {
     }
 
     // 背景
-    if (schema.background) {
-      spec.background = this.processBackground(schema.background);
-    }
+    spec.background = this.processBackground(schema.background);
 
-    // 颜��
-    if (schema.colors) {
-      spec.color = {
-        range: schema.colors,
-      };
+    // 颜色
+    const colors = schema.colors ?? this.getThemeConfig().colors;
+    if (colors) {
+      spec.color = colors;
     }
 
     // 图例
@@ -88,9 +86,6 @@ export class PieChartConverter extends BaseConverter<PieChartSchema> {
 
     // 中心图片
     this.processCenterImage(schema, spec);
-
-    // 主题配置
-    this.processTheme(schema.theme, spec);
 
     return spec;
   }

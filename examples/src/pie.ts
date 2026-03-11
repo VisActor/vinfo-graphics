@@ -23,6 +23,7 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
         width: 50,
         height: 50,
       },
+      theme: 'uranium',
     },
   },
   {
