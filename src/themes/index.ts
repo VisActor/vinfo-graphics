@@ -6,6 +6,32 @@ import type { ThemeConfig, PresetThemeName } from '../types/base';
  */
 export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
   /**
+   * 浅色主题 - 默认白底
+   * VChart 内置 light 主题
+   */
+  light: {
+    type: 'light',
+    name: 'light',
+    colors: ['#5B8FF9', '#5AD8A6', '#5D7092', '#F6BD16', '#E86452', '#6DC8EC', '#945FB9', '#FF9D4D', '#6C8AB7', '#FF99C3'],
+    backgroundColor: '#FFFFFF',
+    textColor: '#333333',
+    secondaryTextColor: '#666666',
+  },
+
+  /**
+   * 深色主题 - 默认黑底
+   * VChart 内置 dark 主题
+   */
+  dark: {
+    type: 'dark',
+    name: 'dark',
+    colors: ['#5B8FF9', '#5AD8A6', '#5D7092', '#F6BD16', '#E86452', '#6DC8EC', '#945FB9', '#FF9D4D', '#6C8AB7', '#FF99C3'],
+    backgroundColor: '#1F1F1F',
+    textColor: '#FFFFFF',
+    secondaryTextColor: '#AAAAAA',
+  },
+
+  /**
    * 清新现代 - 蓝绿色系
    * 适合：现代、简约、科技风格
    */
