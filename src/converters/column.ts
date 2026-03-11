@@ -70,6 +70,9 @@ export class ColumnChartConverter extends BaseConverter<ColumnChartSchema> {
       }
     }
 
+    // 主题配置
+    this.processTheme(schema.theme, spec);
+
     return spec;
   }
 

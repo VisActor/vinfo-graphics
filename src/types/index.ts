@@ -12,6 +12,10 @@ export type {
   IconConfig,
   ImageMapConfig,
   BaseChartSchema,
+  ThemeType,
+  PresetThemeName,
+  ThemeConfig,
+  Theme,
 } from './base';
 
 // 图表 Schema 类型

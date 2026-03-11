@@ -44,6 +44,12 @@ export type {
   ImageMapConfig,
   BaseChartSchema,
 
+  // 主题类型
+  ThemeType,
+  PresetThemeName,
+  ThemeConfig,
+  Theme,
+
   // 图表 Schema 类型
   PieChartSchema,
   BarChartSchema,
@@ -55,6 +61,9 @@ export type {
   // 联合类型
   ChartSchema,
 } from './types';
+
+// 主题导出
+export { presetThemes, resolveTheme, isDarkTheme } from './themes';
 
 // 转换器导出
 export {

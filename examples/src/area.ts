@@ -343,4 +343,63 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
       ],
     },
   },
+  {
+    name: '清新主题 (fresh)',
+    schema: {
+      chartType: 'area',
+      title: '用户增长趋势（清新主题）',
+      data: [
+        { month: '1月', users: 1000 },
+        { month: '2月', users: 1200 },
+        { month: '3月', users: 1500 },
+        { month: '4月', users: 1800 },
+        { month: '5月', users: 2200 },
+        { month: '6月', users: 2600 },
+      ],
+      categoryField: 'month',
+      valueField: 'users',
+      area: {
+        smooth: true,
+        linearGradient: {
+          direction: 'bottom-top',
+          colors: ['#36C9C6', '#6DD8D2'],
+        },
+      },
+      point: {
+        visible: true,
+        size: 6,
+      },
+      theme: 'fresh',
+    },
+  },
+  {
+    name: '海洋主题 (ocean)',
+    schema: {
+      chartType: 'area',
+      title: '网站流量趋势（海洋主题）',
+      data: [
+        { day: '周一', pv: 5000 },
+        { day: '周二', pv: 6200 },
+        { day: '周三', pv: 5800 },
+        { day: '周四', pv: 7000 },
+        { day: '周五', pv: 8500 },
+        { day: '周六', pv: 9200 },
+        { day: '周日', pv: 7800 },
+      ],
+      categoryField: 'day',
+      valueField: 'pv',
+      area: {
+        smooth: true,
+        linearGradient: {
+          direction: 'bottom-top',
+          colors: ['#2193B0', '#6DD5ED'],
+        },
+      },
+      point: {
+        visible: true,
+        size: 6,
+      },
+      theme: 'ocean',
+    },
+  },
 ];

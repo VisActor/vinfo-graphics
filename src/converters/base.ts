@@ -5,7 +5,9 @@ import type {
   BackgroundConfig,
   LegendConfig,
   LinearGradientConfig,
+  Theme,
 } from '../types/base';
+import { resolveTheme, isDarkTheme, vchartThemeMap } from '../themes';
 
 /**
  * 转换结果
@@ -301,5 +303,50 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
         color,
       })),
     };
+  }
+
+  /**
+   * 处理主题配置
+   * @param theme 主题配置
+   * @param spec VChart spec 对象
+   * @param forceBackground 是否强制应用背景色（用于暗色主题）
+   */
+  protected processTheme(
+    theme: Theme | undefined,
+    spec: Record<string, unknown>,
+    forceBackground: boolean = false
+  ): void {
+    if (!theme) return;
+
+    const resolvedTheme = resolveTheme(theme);
+    if (!resolvedTheme) return;
+
+    // 应用 VChart 内置主题
+    if (resolvedTheme.type && vchartThemeMap[resolvedTheme.type]) {
+      spec.theme = vchartThemeMap[resolvedTheme.type];
+    }
+
+    // 如果是暗色主题，或者没有自定义背景，则应用主题背景色
+    const isDark = isDarkTheme(resolvedTheme);
+    if (isDark || forceBackground || !spec.background) {
+      if (resolvedTheme.backgroundColor) {
+        spec.background = resolvedTheme.backgroundColor;
+      }
+    }
+
+    // 应用自定义颜色（如果没有单独指定 colors）
+    if (resolvedTheme.colors && !spec.color) {
+      spec.color = {
+        range: resolvedTheme.colors,
+      };
+    }
+  }
+
+  /**
+   * 检查主题是否为暗色
+   */
+  protected isDarkTheme(theme: Theme | undefined): boolean {
+    const resolved = resolveTheme(theme);
+    return isDarkTheme(resolved);
   }
 }

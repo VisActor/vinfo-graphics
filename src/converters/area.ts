@@ -133,6 +133,9 @@ export class AreaChartConverter extends BaseConverter<AreaChartSchema> {
       }
     }
 
+    // 主题配置
+    this.processTheme(schema.theme, spec);
+
     return spec;
   }
 

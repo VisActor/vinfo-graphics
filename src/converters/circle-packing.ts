@@ -62,6 +62,9 @@ export class CirclePackingChartConverter extends BaseConverter<CirclePackingChar
       this.processRank(schema, spec);
     }
 
+    // 主题配置
+    this.processTheme(schema.theme, spec);
+
     return spec;
   }
 

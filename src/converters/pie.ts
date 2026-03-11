@@ -89,6 +89,9 @@ export class PieChartConverter extends BaseConverter<PieChartSchema> {
     // 中心图片
     this.processCenterImage(schema, spec);
 
+    // 主题配置
+    this.processTheme(schema.theme, spec);
+
     return spec;
   }
 
