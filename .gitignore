@@ -10,9 +10,9 @@ skills
 
 # build
 dist
+esm
+cjs
 build
-playwright-report
-test-results
 coverage
 
 
@@ -27,6 +27,8 @@ lerna-debug.log*
 
 node_modules
 dist
+esm
+cjs
 dist-ssr
 *.local
 
@@ -40,4 +42,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# AI
+skills-lock.json
 

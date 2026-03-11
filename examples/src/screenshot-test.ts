@@ -13,10 +13,10 @@ const examples = {
         { product: '电脑', sales: 800 },
         { product: '平板', sales: 600 },
         { product: '手表', sales: 400 },
-        { product: '耳机', sales: 300 }
+        { product: '耳机', sales: 300 },
       ],
       categoryField: 'product',
-      valueField: 'sales'
+      valueField: 'sales',
     },
     donut: {
       chartType: 'pie',
@@ -26,14 +26,14 @@ const examples = {
         { product: '电脑', sales: 800 },
         { product: '平板', sales: 600 },
         { product: '手表', sales: 400 },
-        { product: '耳机', sales: 300 }
+        { product: '耳机', sales: 300 },
       ],
       categoryField: 'product',
       valueField: 'sales',
       pie: {
-        innerRadius: 0.5
-      }
-    }
+        innerRadius: 0.5,
+      },
+    },
   },
 
   // 条形图
@@ -46,10 +46,10 @@ const examples = {
         { month: '2月', sales: 150 },
         { month: '3月', sales: 180 },
         { month: '4月', sales: 160 },
-        { month: '5月', sales: 200 }
+        { month: '5月', sales: 200 },
       ],
       categoryField: 'month',
-      valueField: 'sales'
+      valueField: 'sales',
     },
     horizontal: {
       chartType: 'bar',
@@ -59,14 +59,14 @@ const examples = {
         { month: '2月', sales: 150 },
         { month: '3月', sales: 180 },
         { month: '4月', sales: 160 },
-        { month: '5月', sales: 200 }
+        { month: '5月', sales: 200 },
       ],
       categoryField: 'month',
       valueField: 'sales',
       bar: {
-        orientation: 'horizontal'
-      }
-    }
+        orientation: 'horizontal',
+      },
+    },
   },
 
   // 柱图
@@ -79,10 +79,10 @@ const examples = {
         { month: '2月', sales: 150 },
         { month: '3月', sales: 180 },
         { month: '4月', sales: 160 },
-        { month: '5月', sales: 200 }
+        { month: '5月', sales: 200 },
       ],
       categoryField: 'month',
-      valueField: 'sales'
+      valueField: 'sales',
     },
     withLabel: {
       chartType: 'column',
@@ -92,16 +92,16 @@ const examples = {
         { month: '2月', sales: 150 },
         { month: '3月', sales: 180 },
         { month: '4月', sales: 160 },
-        { month: '5月', sales: 200 }
+        { month: '5月', sales: 200 },
       ],
       categoryField: 'month',
       valueField: 'sales',
       label: {
         visible: true,
         position: 'top',
-        format: '{value}万'
-      }
-    }
+        format: '{value}万',
+      },
+    },
   },
 
   // 面积图
@@ -115,10 +115,10 @@ const examples = {
         { month: '3月', users: 1500 },
         { month: '4月', users: 1800 },
         { month: '5月', users: 2200 },
-        { month: '6月', users: 2600 }
+        { month: '6月', users: 2600 },
       ],
       categoryField: 'month',
-      valueField: 'users'
+      valueField: 'users',
     },
     smooth: {
       chartType: 'area',
@@ -129,15 +129,15 @@ const examples = {
         { month: '3月', users: 1500 },
         { month: '4月', users: 1800 },
         { month: '5月', users: 2200 },
-        { month: '6月', users: 2600 }
+        { month: '6月', users: 2600 },
       ],
       categoryField: 'month',
       valueField: 'users',
       area: {
         smooth: true,
-        opacity: 0.6
-      }
-    }
+        opacity: 0.6,
+      },
+    },
   },
 
   // 矩阵树图
@@ -150,10 +150,10 @@ const examples = {
         { dept: '市场部', budget: 180 },
         { dept: '运营部', budget: 150 },
         { dept: '人力部', budget: 80 },
-        { dept: '财务部', budget: 60 }
+        { dept: '财务部', budget: 60 },
       ],
       categoryField: 'dept',
-      valueField: 'budget'
+      valueField: 'budget',
     },
     withGap: {
       chartType: 'treemap',
@@ -163,16 +163,16 @@ const examples = {
         { dept: '市场部', budget: 180 },
         { dept: '运营部', budget: 150 },
         { dept: '人力部', budget: 80 },
-        { dept: '财务部', budget: 60 }
+        { dept: '财务部', budget: 60 },
       ],
       categoryField: 'dept',
       valueField: 'budget',
       node: {
         gap: 4,
         padding: 8,
-        cornerRadius: 4
-      }
-    }
+        cornerRadius: 4,
+      },
+    },
   },
 
   // 圆形闭包图
@@ -185,10 +185,10 @@ const examples = {
         { product: '电脑', sales: 800 },
         { product: '平板', sales: 600 },
         { product: '手表', sales: 400 },
-        { product: '耳机', sales: 300 }
+        { product: '耳机', sales: 300 },
       ],
       categoryField: 'product',
-      valueField: 'sales'
+      valueField: 'sales',
     },
     withPadding: {
       chartType: 'circlePacking',
@@ -198,23 +198,23 @@ const examples = {
         { product: '电脑', sales: 800 },
         { product: '平板', sales: 600 },
         { product: '手表', sales: 400 },
-        { product: '耳机', sales: 300 }
+        { product: '耳机', sales: 300 },
       ],
       categoryField: 'product',
       valueField: 'sales',
       circle: {
         padding: 10,
         strokeWidth: 2,
-        strokeColor: '#fff'
-      }
-    }
-  }
+        strokeColor: '#fff',
+      },
+    },
+  },
 };
 
 let currentChart: VChart | null = null;
 
-// 全局 API，供 Playwright 调用
-(window as any).renderChart = async function(type: string, variant: string) {
+// 全局 API，供自动化渲染调用
+(window as any).renderChart = async function (type: string, variant: string) {
   const status = document.getElementById('status')!;
   const chartContainer = document.getElementById('chart')!;
 
@@ -236,12 +236,12 @@ let currentChart: VChart | null = null;
 
     // 创建新图表
     currentChart = new VChart(vchartSpec, {
-      dom: chartContainer
+      dom: chartContainer,
     });
     currentChart.renderSync();
 
     // 等待渲染完成
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     status.className = 'success';
     status.textContent = `Rendered: ${type}/${variant}`;

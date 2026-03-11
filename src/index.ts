@@ -28,8 +28,6 @@
  * ```
  */
 
-
-
 // 类型导出
 export type {
   // 公共类型
@@ -85,6 +83,8 @@ import { TreemapChartConverter } from './converters/treemap';
 import { CirclePackingChartConverter } from './converters/circle-packing';
 import type { BaseConverter } from './converters/base';
 import { PieChartConverter } from './converters/pie';
+
+export { validateWithZod } from './schemas';
 
 // 转换器映射
 const converters: Record<string, BaseConverter<any>> = {

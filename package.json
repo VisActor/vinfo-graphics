@@ -1,22 +1,33 @@
 {
-  "name": "vinfo-graphics",
-  "version": "1.0.0",
+  "name": "@visactor/vinfo-graphics",
+  "version": "0.0.1",
   "description": "A simplified, LLM-friendly chart library for infographics based on VChart",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
   "types": "dist/index.d.ts",
+  "unpkg": "dist/index.umd.js",
+  "jsdelivr": "dist/index.umd.js",
   "scripts": {
-    "build": "tsup",
+    "build": "npm run clean && npm run build:lib && npm run build:umd",
+    "clean": "node -e \"const fs=require('fs');['dist','esm','cjs'].forEach((d)=>fs.rmSync(d,{recursive:true,force:true}));\"",
+    "build:lib": "npm run build:esm && npm run build:cjs && npm run build:types && npm run build:cjs:pkg",
+    "build:esm": "tsc -p tsconfig.build.esm.json",
+    "build:cjs": "tsc -p tsconfig.build.cjs.json",
+    "build:types": "tsc -p tsconfig.build.types.json",
+    "build:cjs:pkg": "node -e \"const fs=require('fs');fs.mkdirSync('cjs',{recursive:true});fs.writeFileSync('cjs/package.json', JSON.stringify({type:'commonjs'}, null, 2));\"",
+    "build:umd": "rollup -c rollup.config.umd.mjs",
     "dev": "tsup --watch",
     "test": "vitest",
-    "test:screenshot": "playwright test",
-    "test:screenshot:update": "playwright test --update-snapshots",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "typecheck": "tsc --noEmit",
     "dev:examples": "cd examples && npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VisActor/vinfo-graphics"
   },
   "keywords": [
     "chart",
@@ -33,12 +44,21 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "default": "./dist/index.js"
-    }
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js",
+      "default": "./esm/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./esm/*.js",
+      "require": "./cjs/*.js"
+    },
+    "./umd": "./dist/index.umd.js"
   },
   "files": [
     "dist",
+    "esm",
+    "cjs",
     "src/zod",
     "README.md"
   ],
@@ -53,7 +73,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@playwright/test": "^1.58.2",
+    "@rollup/plugin-commonjs": "^28.0.8",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-typescript": "^12.1.4",
     "@types/node": "^25.3.5",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@typescript-eslint/parser": "^8.56.1",
@@ -61,13 +83,13 @@
     "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^16.4.0",
-    "playwright": "^1.58.2",
     "prettier": "^3.6.2",
-    "tsup": "^8.5.1",
+    "rollup": "^4.52.3",
+    "tslib": "^2.8.1",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },
   "dependencies": {
-    "zod": "^3.23.0"
+    "zod": "^3.0.0"
   }
 }
