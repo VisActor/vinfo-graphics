@@ -1,0 +1,8 @@
+export interface TreemapNodeConfig {
+  /** 节点间距 */
+  gap?: number;
+  /** 内边距 */
+  padding?: number;
+  /** 圆角 */
+  cornerRadius?: number;
+}

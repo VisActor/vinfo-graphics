@@ -16,7 +16,7 @@
     /* Paths */
     "baseUrl": ".",
     "paths": {
-      "vinfo-graphics": ["../src/index.ts"]
+      "@visactor/vinfo-graphics": ["../src/index.ts"]
     },
 
     /* Linting */

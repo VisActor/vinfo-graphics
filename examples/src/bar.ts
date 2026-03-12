@@ -1,11 +1,11 @@
-import type { BarChartSchema } from '../../src/types/bar';
+import type { BarChartSchema } from '@visactor/vinfo-graphics';
 
 export const barExamples: { name: string; schema: BarChartSchema }[] = [
   {
     name: '基础条形图',
     schema: {
       chartType: 'bar',
-      title: '各平台用户数',
+      title: { text: '各平台用户数' },
       data: [
         { platform: '微信', users: 1200 },
         { platform: '抖音', users: 980 },
@@ -22,7 +22,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
     name: '降序排列',
     schema: {
       chartType: 'bar',
-      title: '各平台用户数（降序）',
+      title: { text: '各平台用户数（降序）' },
       data: [
         { platform: '微信', users: 1200 },
         { platform: '抖音', users: 980 },
@@ -39,7 +39,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
     name: '带外标签',
     schema: {
       chartType: 'bar',
-      title: '各平台用户数（带标签）',
+      title: { text: '各平台用户数（带标签）' },
       data: [
         { platform: '微信', users: 1200 },
         { platform: '抖音', users: 980 },
@@ -61,7 +61,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
     name: '带内标签',
     schema: {
       chartType: 'bar',
-      title: '各平台用户数（内标签）',
+      title: { text: '各平台用户数（内标签）' },
       data: [
         { platform: '微信', users: 1200 },
         { platform: '抖音', users: 980 },
@@ -83,7 +83,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
     name: '圆角条形',
     schema: {
       chartType: 'bar',
-      title: '各平台用户数（圆角）',
+      title: { text: '各平台用户数（圆角）' },
       data: [
         { platform: '微信', users: 1200 },
         { platform: '抖音', users: 980 },
@@ -123,7 +123,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
     name: '自定义颜色',
     schema: {
       chartType: 'bar',
-      title: '各平台用户数',
+      title: { text: '各平台用户数' },
       data: [
         { platform: '微信', users: 1200 },
         { platform: '抖音', users: 980 },
@@ -141,7 +141,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
     name: '带背景',
     schema: {
       chartType: 'bar',
-      title: '各平台用户数',
+      title: { text: '各平台用户数' },
       data: [
         { platform: '微信', users: 1200 },
         { platform: '抖音', users: 980 },
@@ -161,7 +161,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
     name: '渐变填充',
     schema: {
       chartType: 'bar',
-      title: '各平台用户数（渐变）',
+      title: { text: '各平台用户数（渐变）' },
       data: [
         { platform: '微信', users: 1200 },
         { platform: '抖音', users: 980 },
@@ -184,7 +184,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
     name: '渐变+圆角+顶部标签',
     schema: {
       chartType: 'bar',
-      title: '各平台用户数',
+      title: { text: '各平台用户数' },
       data: [
         { platform: '微信', users: 1200 },
         { platform: '抖音', users: 980 },
@@ -213,7 +213,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
     name: '排名标签',
     schema: {
       chartType: 'bar',
-      title: '各平台用户数（排名）',
+      title: { text: '各平台用户数（排名）' },
       data: [
         { platform: '微信', users: 1200 },
         { platform: '抖音', users: 980 },
@@ -240,7 +240,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
     name: '渐变+排名',
     schema: {
       chartType: 'bar',
-      title: '各平台用户数',
+      title: { text: '各平台用户数' },
       data: [
         { platform: '微信', users: 1200 },
         { platform: '抖音', users: 980 },
@@ -274,7 +274,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
     name: '背景图标',
     schema: {
       chartType: 'bar',
-      title: '各平台用户数（背景图标）',
+      title: { text: '各平台用户数（背景图标）' },
       data: [
         { platform: '微信', users: 1200, bgIcon: 'wechat' },
         { platform: '抖音', users: 980, bgIcon: 'douyin' },
@@ -302,7 +302,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
     name: '工作年龄人口Top20（图像复刻）',
     schema: {
       chartType: 'bar',
-      title: 'Cities with the Largest Working-Age Populations (2024)',
+      title: { text: 'Cities with the Largest Working-Age Populations (2024)' },
       data: [
         { city: 'Shanghai', value: 18.4, flag: 'cn' },
         { city: 'Beijing', value: 16.5, flag: 'cn' },
@@ -386,7 +386,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
       yAxis: {
         visible: true,
       },
-      legend: false,
+      legend: { visible: false },
     },
   },
   {
@@ -447,7 +447,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
       yAxis: {
         visible: true,
       },
-      legend: false,
+      legend: { visible: false },
     },
   },
   {
@@ -535,7 +535,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
       yAxis: {
         visible: true,
       },
-      legend: false,
+      legend: { visible: false },
     },
   },
   {
@@ -606,7 +606,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
       yAxis: {
         visible: true,
       },
-      legend: false,
+      legend: { visible: false },
     },
   },
   {
@@ -668,7 +668,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
       yAxis: {
         visible: true,
       },
-      legend: false,
+      legend: { visible: false },
     },
   },
   {
@@ -745,7 +745,7 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
       yAxis: {
         visible: true,
       },
-      legend: false,
+      legend: { visible: false },
     },
   },
 ];

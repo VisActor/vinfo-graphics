@@ -1,5 +1,5 @@
 import { isNil } from '../utils/isNil';
-import type { TreemapChartSchema } from '../types/treemap';
+import type { TreemapChartSchema } from '../types/chart/treemap';
 import type { ValidationResult } from './base';
 import { BaseConverter } from './base';
 
@@ -102,7 +102,9 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
         visible: true,
         position: 'top-left',
       },
-      legend: false,
+      legend: {
+        visible: false,
+      },
     };
   }
 

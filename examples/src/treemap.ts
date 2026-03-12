@@ -1,11 +1,11 @@
-import type { TreemapChartSchema } from '../../src/types/treemap';
+import type { TreemapChartSchema } from '@visactor/vinfo-graphics';
 
 export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
   {
     name: '基础矩阵树图',
     schema: {
       chartType: 'treemap',
-      title: '部门预算分布',
+      title: { text: '部门预算分布' },
       data: [
         { dept: '技术部', budget: 250 },
         { dept: '市场部', budget: 180 },
@@ -22,7 +22,7 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
     name: '带百分比标签',
     schema: {
       chartType: 'treemap',
-      title: '部门预算分布（百分比）',
+      title: { text: '部门预算分布（百分比）' },
       data: [
         { dept: '技术部', budget: 250 },
         { dept: '市场部', budget: 180 },
@@ -43,7 +43,7 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
     name: '带排名标签',
     schema: {
       chartType: 'treemap',
-      title: '部门预算分布（带排名）',
+      title: { text: '部门预算分布（带排名）' },
       data: [
         { dept: '技术部', budget: 250 },
         { dept: '市场部', budget: 180 },
@@ -69,7 +69,7 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
     name: '带间距和圆角',
     schema: {
       chartType: 'treemap',
-      title: '部门预算分布（带间距）',
+      title: { text: '部门预算分布（带间距）' },
       data: [
         { dept: '技术部', budget: 250 },
         { dept: '市场部', budget: 180 },
@@ -90,7 +90,7 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
     name: '自定义颜色',
     schema: {
       chartType: 'treemap',
-      title: '部门预算分布（自定义颜色）',
+      title: { text: '部门预算分布（自定义颜色）' },
       data: [
         { dept: '技术部', budget: 250 },
         { dept: '市场部', budget: 180 },
@@ -107,7 +107,7 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
     name: '带图标',
     schema: {
       chartType: 'treemap',
-      title: '社交媒体市场份额',
+      title: { text: '社交媒体市场份额' },
       data: [
         { platform: '微信', users: 1200, icon: 'wechat' },
         { platform: '抖音', users: 800, icon: 'douyin' },
@@ -138,7 +138,7 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
     name: '分组模式',
     schema: {
       chartType: 'treemap',
-      title: '公司预算分布（按公司分组）',
+      title: { text: '公司预算分布（按公司分组）' },
       data: [
         { dept: '前端组', company: 'A公司', budget: 100 },
         { dept: '后端组', company: 'A公司', budget: 150 },
@@ -162,7 +162,7 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
     name: '分组模式带颜色',
     schema: {
       chartType: 'treemap',
-      title: '季度销售分布（按季度分组）',
+      title: { text: '季度销售分布（按季度分组）' },
       data: [
         { product: '产品A', quarter: 'Q1', sales: 100 },
         { product: '产品B', quarter: 'Q1', sales: 80 },
@@ -198,7 +198,7 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
     name: '综合示例',
     schema: {
       chartType: 'treemap',
-      title: '手机品牌市场份额',
+      title: { text: '手机品牌市场份额' },
       data: [
         { brand: 'Apple', share: 25, icon: 'apple' },
         { brand: 'Samsung', share: 22, icon: 'samsung' },
@@ -250,7 +250,7 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
     name: '图片背景节点',
     schema: {
       chartType: 'treemap',
-      title: '旅行主题热度（图片背景）',
+      title: { text: '旅行主题热度（图片背景）' },
       data: [
         { place: '海边', score: 35, icon: 'beach', bg: 'beach' },
         { place: '雪山', score: 25, icon: 'mountain', bg: 'mountain' },

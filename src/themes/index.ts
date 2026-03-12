@@ -1,4 +1,4 @@
-import type { ThemeConfig, PresetThemeName } from '../types/base';
+import type { ThemeConfig, PresetThemeName } from '../types/chart/base';
 
 /**
  * 预设主题配置
@@ -11,8 +11,18 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
    */
   light: {
     type: 'light',
-    name: 'light',
-    colors: ['#5B8FF9', '#5AD8A6', '#5D7092', '#F6BD16', '#E86452', '#6DC8EC', '#945FB9', '#FF9D4D', '#6C8AB7', '#FF99C3'],
+    colors: [
+      '#5B8FF9',
+      '#5AD8A6',
+      '#5D7092',
+      '#F6BD16',
+      '#E86452',
+      '#6DC8EC',
+      '#945FB9',
+      '#FF9D4D',
+      '#6C8AB7',
+      '#FF99C3',
+    ],
     backgroundColor: '#FFFFFF',
     textColor: '#333333',
     secondaryTextColor: '#666666',
@@ -24,8 +34,18 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
    */
   dark: {
     type: 'dark',
-    name: 'dark',
-    colors: ['#5B8FF9', '#5AD8A6', '#5D7092', '#F6BD16', '#E86452', '#6DC8EC', '#945FB9', '#FF9D4D', '#6C8AB7', '#FF99C3'],
+    colors: [
+      '#5B8FF9',
+      '#5AD8A6',
+      '#5D7092',
+      '#F6BD16',
+      '#E86452',
+      '#6DC8EC',
+      '#945FB9',
+      '#FF9D4D',
+      '#6C8AB7',
+      '#FF99C3',
+    ],
     backgroundColor: '#1F1F1F',
     textColor: '#FFFFFF',
     secondaryTextColor: '#AAAAAA',
@@ -37,7 +57,6 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
    */
   fresh: {
     type: 'light',
-    name: 'fresh',
     colors: ['#36C9C6', '#6DD8D2', '#9DEADC', '#B8F0ED', '#D8F7F5'],
     backgroundColor: '#FFFFFF',
     textColor: '#333333',
@@ -50,7 +69,6 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
    */
   sunset: {
     type: 'light',
-    name: 'sunset',
     colors: ['#FF7A45', '#FFAB4C', '#FFD680', '#FFE4A0', '#FFF2CC'],
     backgroundColor: '#FFFEF9',
     textColor: '#333333',
@@ -63,7 +81,6 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
    */
   romantic: {
     type: 'light',
-    name: 'romantic',
     colors: ['#F5576C', '#F78CA0', '#F98B8B', '#FDA085', '#FECFE0'],
     backgroundColor: '#FFF9FA',
     textColor: '#333333',
@@ -76,7 +93,6 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
    */
   dream: {
     type: 'light',
-    name: 'dream',
     colors: ['#667EEA', '#764BA2', '#9B72E8', '#B794F6', '#D6BCFA'],
     backgroundColor: '#FAF8FF',
     textColor: '#333333',
@@ -89,7 +105,6 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
    */
   ocean: {
     type: 'light',
-    name: 'ocean',
     colors: ['#2193B0', '#6DD5ED', '#4FACFE', '#00F2FE', '#A7ECEE'],
     backgroundColor: '#F0FCFF',
     textColor: '#333333',
@@ -102,7 +117,6 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
    */
   forest: {
     type: 'light',
-    name: 'forest',
     colors: ['#11998E', '#38EF7D', '#56AB2F', '#A8E063', '#C6F58C'],
     backgroundColor: '#F5FFF5',
     textColor: '#333333',
@@ -115,7 +129,6 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
    */
   neon: {
     type: 'light',
-    name: 'neon',
     colors: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7'],
     backgroundColor: '#FFFFFF',
     textColor: '#222222',
@@ -128,7 +141,6 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
    */
   pastel: {
     type: 'light',
-    name: 'pastel',
     colors: ['#FFB3BA', '#FFDFBA', '#FFFFBA', '#BAFFC9', '#BAE1FF'],
     backgroundColor: '#FFFFFF',
     textColor: '#444444',
@@ -141,7 +153,6 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
    */
   gradient: {
     type: 'light',
-    name: 'gradient',
     colors: ['#667EEA', '#764BA2', '#F5576C', '#F6D365', '#4FACFE'],
     backgroundColor: '#FFFFFF',
     textColor: '#333333',
@@ -154,7 +165,6 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
    */
   population: {
     type: 'light',
-    name: 'population',
     colors: [
       '#E23A4B',
       '#18B66A',
@@ -180,7 +190,6 @@ export const presetThemes: Record<PresetThemeName, ThemeConfig> = {
    */
   categorical: {
     type: 'light',
-    name: 'categorical',
     colors: [
       '#D62839',
       '#1B9E77',
@@ -551,17 +560,6 @@ export function resolveTheme(
   // 如果是预设主题名称，直接返回预设
   if (typeof theme === 'string') {
     return presetThemes[theme];
-  }
-
-  // 如果是 ThemeConfig，合并预设（如果有 name）
-  if (theme.name && presetThemes[theme.name]) {
-    const preset = presetThemes[theme.name];
-    return {
-      ...preset,
-      ...theme,
-      // 保留预设的 colors，除非用户明确指定了自定义 colors
-      colors: theme.colors ?? preset.colors,
-    };
   }
 
   return theme;

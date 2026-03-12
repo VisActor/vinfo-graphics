@@ -1,4 +1,4 @@
-import type { PieChartSchema } from '../types/pie';
+import type { PieChartSchema } from '../types/chart/pie';
 import type { ValidationResult } from './base';
 import { BaseConverter } from './base';
 
@@ -123,7 +123,9 @@ export class PieChartConverter extends BaseConverter<PieChartSchema> {
         visible: true,
         position: 'outside',
       },
-      legend: true,
+      legend: {
+        visible: true,
+      },
     };
   }
 

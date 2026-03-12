@@ -1,11 +1,11 @@
-import type { CirclePackingChartSchema } from '../../src/types/circle-packing';
+import type { CirclePackingChartSchema } from '@visactor/vinfo-graphics';
 
 export const circlePackingExamples: { name: string; schema: CirclePackingChartSchema }[] = [
   {
     name: '基础圆形闭包图',
     schema: {
       chartType: 'circlePacking',
-      title: '产品销售分布',
+      title: { text: '产品销售分布' },
       data: [
         { product: '手机', sales: 1200 },
         { product: '电脑', sales: 800 },
@@ -22,7 +22,7 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
     name: '带百分比标签',
     schema: {
       chartType: 'circlePacking',
-      title: '产品销售分布（百分比）',
+      title: { text: '产品销售分布（百分比）' },
       data: [
         { product: '手机', sales: 1200 },
         { product: '电脑', sales: 800 },
@@ -43,7 +43,7 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
     name: '带排名标签',
     schema: {
       chartType: 'circlePacking',
-      title: '产品销售分布（带排名）',
+      title: { text: '产品销售分布（带排名）' },
       data: [
         { product: '手机', sales: 1200 },
         { product: '电脑', sales: 800 },
@@ -69,7 +69,7 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
     name: '带间距',
     schema: {
       chartType: 'circlePacking',
-      title: '产品销售分布（带间距）',
+      title: { text: '产品销售分布（带间距）' },
       data: [
         { product: '手机', sales: 1200 },
         { product: '电脑', sales: 800 },
@@ -90,7 +90,7 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
     name: '自定义颜色',
     schema: {
       chartType: 'circlePacking',
-      title: '产品销售分布（自定义颜色）',
+      title: { text: '产品销售分布（自定义颜色）' },
       data: [
         { product: '手机', sales: 1200 },
         { product: '电脑', sales: 800 },
@@ -107,7 +107,7 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
     name: '带图标',
     schema: {
       chartType: 'circlePacking',
-      title: '社交媒体用户分布',
+      title: { text: '社交媒体用户分布' },
       data: [
         { platform: '微信', users: 1200, icon: 'wechat' },
         { platform: '抖音', users: 800, icon: 'douyin' },
@@ -138,7 +138,7 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
     name: '分组模式',
     schema: {
       chartType: 'circlePacking',
-      title: '公司销售分布（按公司分组）',
+      title: { text: '公司销售分布（按公司分组）' },
       data: [
         { product: '手机', company: 'A公司', sales: 1000 },
         { product: '电脑', company: 'A公司', sales: 800 },
@@ -163,7 +163,7 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
     name: '分组模式带图标',
     schema: {
       chartType: 'circlePacking',
-      title: '季度销售分布（按季度分组）',
+      title: { text: '季度销售分布（按季度分组）' },
       data: [
         { product: '产品A', quarter: 'Q1', sales: 100, icon: 'p1' },
         { product: '产品B', quarter: 'Q1', sales: 80, icon: 'p2' },
@@ -197,7 +197,7 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
     name: '综合示例',
     schema: {
       chartType: 'circlePacking',
-      title: '手机品牌市场份额',
+      title: { text: '手机品牌市场份额' },
       data: [
         { brand: 'Apple', share: 25, icon: 'apple' },
         { brand: 'Samsung', share: 22, icon: 'samsung' },
@@ -250,7 +250,7 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
     name: '图片背景圆形闭包图',
     schema: {
       chartType: 'circlePacking',
-      title: '旅行主题热度（CirclePacking）',
+      title: { text: '旅行主题热度（CirclePacking）' },
       data: [
         { place: '海边', score: 35, icon: 'beach', bg: 'beach' },
         { place: '雪山', score: 25, icon: 'mountain', bg: 'mountain' },

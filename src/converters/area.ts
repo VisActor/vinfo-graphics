@@ -1,4 +1,4 @@
-import type { AreaChartSchema } from '../types/area';
+import type { AreaChartSchema } from '../types/chart/area';
 import type { ValidationResult } from './base';
 import { BaseConverter } from './base';
 
@@ -170,7 +170,9 @@ export class AreaChartConverter extends BaseConverter<AreaChartSchema> {
       label: {
         visible: false,
       },
-      legend: true,
+      legend: {
+        visible: true,
+      },
     };
   }
 

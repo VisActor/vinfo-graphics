@@ -1,11 +1,11 @@
-import type { ColumnChartSchema } from '../../src/types/column';
+import type { ColumnChartSchema } from '@visactor/vinfo-graphics';
 
 export const columnExamples: { name: string; schema: ColumnChartSchema }[] = [
   {
     name: '基础柱图',
     schema: {
       chartType: 'column',
-      title: '月度销售额',
+      title: { text: '月度销售额' },
       data: [
         { month: '1月', sales: 120 },
         { month: '2月', sales: 150 },
@@ -22,7 +22,7 @@ export const columnExamples: { name: string; schema: ColumnChartSchema }[] = [
     name: '降序排列',
     schema: {
       chartType: 'column',
-      title: '月度销售额（降序）',
+      title: { text: '月度销售额（降序）' },
       data: [
         { month: '1月', sales: 120 },
         { month: '2月', sales: 150 },
@@ -39,7 +39,7 @@ export const columnExamples: { name: string; schema: ColumnChartSchema }[] = [
     name: '带标签',
     schema: {
       chartType: 'column',
-      title: '月度销售额（带标签）',
+      title: { text: '月度销售额（带标签）' },
       data: [
         { month: '1月', sales: 120 },
         { month: '2月', sales: 150 },
@@ -60,7 +60,7 @@ export const columnExamples: { name: string; schema: ColumnChartSchema }[] = [
     name: '圆角柱子',
     schema: {
       chartType: 'column',
-      title: '月度销售额（圆角）',
+      title: { text: '月度销售额（圆角）' },
       data: [
         { month: '1月', sales: 120 },
         { month: '2月', sales: 150 },
@@ -79,7 +79,7 @@ export const columnExamples: { name: string; schema: ColumnChartSchema }[] = [
     name: '自定义颜色',
     schema: {
       chartType: 'column',
-      title: '月度销售额（自定义颜色）',
+      title: { text: '月度销售额（自定义颜色）' },
       data: [
         { month: '1月', sales: 120 },
         { month: '2月', sales: 150 },
@@ -96,7 +96,7 @@ export const columnExamples: { name: string; schema: ColumnChartSchema }[] = [
     name: '渐变填充',
     schema: {
       chartType: 'column',
-      title: '月度销售额（渐变）',
+      title: { text: '月度销售额（渐变）' },
       data: [
         { month: '1月', sales: 120 },
         { month: '2月', sales: 150 },
@@ -119,7 +119,7 @@ export const columnExamples: { name: string; schema: ColumnChartSchema }[] = [
     name: '带图标（底部）',
     schema: {
       chartType: 'column',
-      title: '社交媒体用户数',
+      title: { text: '社交媒体用户数' },
       data: [
         { platform: '微信', users: 1200, icon: 'wechat' },
         { platform: '抖音', users: 800, icon: 'douyin' },
@@ -147,7 +147,7 @@ export const columnExamples: { name: string; schema: ColumnChartSchema }[] = [
     name: '带图标（顶部）',
     schema: {
       chartType: 'column',
-      title: '游戏下载量',
+      title: { text: '游戏下载量' },
       data: [
         { game: '王者荣耀', downloads: 150, icon: 'game1' },
         { game: '原神', downloads: 120, icon: 'game2' },
@@ -173,7 +173,7 @@ export const columnExamples: { name: string; schema: ColumnChartSchema }[] = [
     name: '带装饰图片',
     schema: {
       chartType: 'column',
-      title: '季度销售报告',
+      title: { text: '季度销售报告' },
       data: [
         { quarter: 'Q1', value: 450 },
         { quarter: 'Q2', value: 520 },
@@ -203,7 +203,7 @@ export const columnExamples: { name: string; schema: ColumnChartSchema }[] = [
     name: '带脚注',
     schema: {
       chartType: 'column',
-      title: '市场份额分析',
+      title: { text: '市场份额分析' },
       data: [
         { product: '产品A', share: 35 },
         { product: '产品B', share: 28 },

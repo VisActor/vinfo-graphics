@@ -1,4 +1,4 @@
-import type { BarChartSchema } from '../types/bar';
+import type { BarChartSchema } from '../types/chart/bar';
 import type { ValidationResult } from './base';
 import { BaseConverter } from './base';
 
@@ -110,7 +110,9 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
         position: 'outside',
       },
       sort: 'none',
-      legend: false,
+      legend: {
+        visible: false,
+      },
     };
   }
 

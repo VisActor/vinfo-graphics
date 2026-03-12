@@ -1,4 +1,9 @@
-import type { BaseChartSchema, LabelConfig, IconConfig, ImageMapConfig } from './base';
+import type { BaseChartSchema } from '../base';
+import type { CirclePackingBackgroundConfig } from './background';
+import type { CirclePackingCircleConfig } from './circle';
+import type { CirclePackingIconConfig } from './icon';
+import type { CirclePackingLabelConfig } from './label';
+import type { CirclePackingRankConfig } from './rank';
 
 /**
  * 圆形闭包图 Schema
@@ -59,67 +64,17 @@ export interface CirclePackingChartSchema extends BaseChartSchema {
   groupField?: string;
 
   /** 圆形配置 */
-  circle?: {
-    /** 圆形间距 */
-    padding?: number;
-    /** 描边宽度 */
-    strokeWidth?: number;
-    /** 描边颜色 */
-    strokeColor?: string;
-  };
+  circle?: CirclePackingCircleConfig;
 
   /** 标签配置 */
-  label?: LabelConfig & {
-    /** 是否显示百分比（仅单层模式有效） */
-    showPercent?: boolean;
-  };
+  label?: CirclePackingLabelConfig;
 
   /** 排名标签配置（仅单层模式有效） */
-  rank?: {
-    /** 是否显示排名 */
-    visible?: boolean;
-    /** 排名位置 */
-    position?: 'top-left' | 'top-right' | 'center';
-    /** 排名样式 */
-    style?: {
-      /** 字体大小 */
-      fontSize?: number;
-      /** 字体颜色 */
-      fill?: string;
-      /** 字体粗细 */
-      fontWeight?: number | string;
-      /** 背景色 */
-      backgroundColor?: string;
-    };
-  };
+  rank?: CirclePackingRankConfig;
 
   /** Icon 配置 */
-  icon?: IconConfig & {
-    /** 是否显示 icon */
-    visible?: boolean;
-    /**
-     * icon 位置
-     * - 'top-left': 左上角
-     * - 'top-right': 右上角
-     * - 'center': 中心
-     */
-    position?: 'top-left' | 'top-right' | 'center';
-    /** 偏移量 */
-    offset?: number;
-    /**
-     * 样式
-     */
-    style?: {
-      /** 描边宽度 */
-      lineWidth?: number;
-      /** 描边颜色 */
-      stroke?: string;
-    };
-  };
+  icon?: CirclePackingIconConfig;
 
   /** 圆形背景图片配置 */
-  circleBackground?: ImageMapConfig & {
-    /** 是否显示背景 */
-    visible?: boolean;
-  };
+  circleBackground?: CirclePackingBackgroundConfig;
 }

@@ -1,5 +1,5 @@
 import VChart from '@visactor/vchart';
-import { toVChartSpec } from 'vinfo-graphics';
+import { toVChartSpec } from '@visactor/vinfo-graphics';
 
 // 所有示例数据
 const examples = {
@@ -235,7 +235,7 @@ let currentChart: VChart | null = null;
     const vchartSpec = toVChartSpec(schema);
 
     // 创建新图表
-    currentChart = new VChart(vchartSpec, {
+    currentChart = new VChart(vchartSpec as any, {
       dom: chartContainer,
     });
     currentChart.renderSync();

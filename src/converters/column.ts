@@ -1,4 +1,4 @@
-import type { ColumnChartSchema } from '../types/column';
+import type { ColumnChartSchema } from '../types/chart/column';
 import type { ValidationResult } from './base';
 import { BaseConverter } from './base';
 
@@ -104,7 +104,9 @@ export class ColumnChartConverter extends BaseConverter<ColumnChartSchema> {
         position: 'top',
       },
       sort: 'none',
-      legend: false,
+      legend: {
+        visible: false,
+      },
     };
   }
 

@@ -1,11 +1,11 @@
-import type { PieChartSchema } from '../../src/types/pie';
+import type { PieChartSchema } from '@visactor/vinfo-graphics';
 
 export const pieExamples: { name: string; schema: PieChartSchema }[] = [
   {
     name: '环形图带中心图片',
     schema: {
       chartType: 'pie',
-      title: '用户分布',
+      title: { text: '用户分布' },
       data: [
         { name: '00后', value: 15 },
         { name: '90后', value: 35 },
@@ -30,7 +30,7 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
     name: '环形图带扇区图标和中心图片',
     schema: {
       chartType: 'pie',
-      title: '社交媒体市场份额',
+      title: { text: '社交媒体市场份额' },
       data: [
         { platform: '微信', value: 35, icon: 'wechat' },
         { platform: '抖音', value: 28, icon: 'douyin' },
@@ -66,14 +66,14 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
         position: 'outside',
         format: '{name}: {value}%',
       },
-      legend: false,
+      legend: { visible: false },
     },
   },
   {
     name: '基础饼图',
     schema: {
       chartType: 'pie',
-      title: '市场份额',
+      title: { text: '市场份额' },
       data: [
         { name: '产品A', value: 30 },
         { name: '产品B', value: 25 },
@@ -89,7 +89,7 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
     name: '环形图',
     schema: {
       chartType: 'pie',
-      title: '用户分布',
+      title: { text: '用户分布' },
       data: [
         { name: '00后', value: 15 },
         { name: '90后', value: 35 },
@@ -107,7 +107,7 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
     name: '带外标签',
     schema: {
       chartType: 'pie',
-      title: '市场份额（带标签）',
+      title: { text: '市场份额（带标签）' },
       data: [
         { name: '产品A', value: 30 },
         { name: '产品B', value: 25 },
@@ -127,7 +127,7 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
     name: '带内标签',
     schema: {
       chartType: 'pie',
-      title: '市场份额（内标签）',
+      title: { text: '市场份额（内标签）' },
       data: [
         { name: '产品A', value: 30 },
         { name: '产品B', value: 25 },
@@ -148,7 +148,7 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
     name: '自定义颜色',
     schema: {
       chartType: 'pie',
-      title: '自定义颜色',
+      title: { text: '自定义颜色' },
       data: [
         { name: '产品A', value: 30 },
         { name: '产品B', value: 25 },
@@ -208,7 +208,7 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
         position: 'inside',
         format: '{value}%',
       },
-      legend: false,
+      legend: { visible: false },
     },
   },
   {
@@ -266,14 +266,14 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
         position: 'spider',
         format: '{name} ({value}%)',
       },
-      legend: false,
+      legend: { visible: false },
     },
   },
   {
     name: '清新主题 (fresh)',
     schema: {
       chartType: 'pie',
-      title: '产品销售分布（清新主题）',
+      title: { text: '产品销售分布（清新主题）' },
       data: [
         { product: '手机', sales: 1200 },
         { product: '电脑', sales: 800 },
@@ -290,7 +290,7 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
     name: '暖阳主题 (sunset)',
     schema: {
       chartType: 'pie',
-      title: '产品销售分布（暖阳主题）',
+      title: { text: '产品销售分布（暖阳主题）' },
       data: [
         { product: '手机', sales: 1200 },
         { product: '电脑', sales: 800 },
@@ -307,7 +307,7 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
     name: '浪漫主题 (romantic)',
     schema: {
       chartType: 'pie',
-      title: '产品销售分布（浪漫主题）',
+      title: { text: '产品销售分布（浪漫主题）' },
       data: [
         { product: '手机', sales: 1200 },
         { product: '电脑', sales: 800 },
@@ -324,7 +324,7 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
     name: '梦幻主题 (dream)',
     schema: {
       chartType: 'pie',
-      title: '产品销售分布（梦幻主题）',
+      title: { text: '产品销售分布（梦幻主题）' },
       data: [
         { product: '手机', sales: 1200 },
         { product: '电脑', sales: 800 },
@@ -341,7 +341,7 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
     name: '霓虹主题 (neon)',
     schema: {
       chartType: 'pie',
-      title: '产品销售分布（霓虹主题）',
+      title: { text: '产品销售分布（霓虹主题）' },
       data: [
         { product: '手机', sales: 1200 },
         { product: '电脑', sales: 800 },
@@ -358,7 +358,7 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
     name: '自定义主题',
     schema: {
       chartType: 'pie',
-      title: '产品销售分布（自定义主题）',
+      title: { text: '产品销售分布（自定义主题）' },
       data: [
         { product: '手机', sales: 1200 },
         { product: '电脑', sales: 800 },
@@ -368,10 +368,12 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
       ],
       categoryField: 'product',
       valueField: 'sales',
-      theme: {
+      customizedTheme: {
         type: 'light',
         colors: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7'],
         backgroundColor: '#FFF5F5',
+        textColor: '#222222',
+        secondaryTextColor: '#666666',
       },
     },
   },

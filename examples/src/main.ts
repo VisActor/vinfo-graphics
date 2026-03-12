@@ -1,5 +1,5 @@
 import VChart from '@visactor/vchart';
-import { toVChartSpec } from 'vinfo-graphics';
+import { toVChartSpec } from '@visactor/vinfo-graphics';
 import { pieExamples } from './pie';
 import { barExamples } from './bar';
 import { columnExamples } from './column';
@@ -131,12 +131,12 @@ function renderChart(example: Example) {
   }
 
   // 创建新图表
-  currentChart = new VChart(vchartSpec, {
+  currentChart = new VChart(vchartSpec as any, {
     dom: document.getElementById('chart')!,
   });
   currentChart.renderSync();
 
-  window.vchart = currentChart; // 暴露到全局，方便调试
+  (window as any).vchart = currentChart; // 暴露到全局，方便调试
 }
 
 // 初始化

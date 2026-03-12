@@ -5,9 +5,10 @@ import type {
   BackgroundConfig,
   LegendConfig,
   LinearGradientConfig,
-  Theme,
   ThemeConfig,
-} from '../types/base';
+  PresetThemeName,
+  Theme,
+} from '../types/chart/base';
 import { resolveTheme, isDarkTheme, vchartThemeMap } from '../themes';
 
 /**
@@ -33,7 +34,6 @@ export interface ValidationResult {
 }
 
 const defaultThemeConfig: ThemeConfig = {
-  name: 'light',
   type: 'light',
   colors: [
     '#1664FF',
@@ -79,7 +79,7 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
       padding: { top: 20, right: 20, bottom: 20, left: 20 },
     };
     // 主题配置
-    this.processTheme(schema.theme, spec);
+    this.processTheme(schema.theme, schema.customizedTheme, spec);
 
     return spec;
   }
@@ -87,16 +87,10 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
   /**
    * 处理标题配置
    */
-  protected processTitle(
-    title: string | TitleConfig | undefined
-  ): Record<string, unknown> | undefined {
+  protected processTitle(title: TitleConfig | undefined): Record<string, unknown> | undefined {
     if (!title) return undefined;
 
     const themeConfig = this.getThemeConfig();
-
-    if (typeof title === 'string') {
-      return { text: title, textStyle: { fill: themeConfig.textColor } };
-    }
 
     const result: Record<string, unknown> = {
       text: title.text,
@@ -347,12 +341,16 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
    * @param spec VChart spec 对象
    * @param forceBackground 是否强制应用背景色（用于暗色主题）
    */
-  protected processTheme(theme: Theme | undefined, spec: Record<string, unknown>): void {
+  protected processTheme(
+    theme: PresetThemeName | undefined,
+    customizedTheme: ThemeConfig | undefined,
+    spec: Record<string, unknown>
+  ): void {
     this._themeConfig = defaultThemeConfig; // 重置主题配置
 
-    if (!theme) return;
+    if (!theme && !customizedTheme) return;
 
-    const resolvedTheme = resolveTheme(theme);
+    const resolvedTheme = resolveTheme(theme) ?? customizedTheme;
     if (!resolvedTheme) return;
 
     // 应用 VChart 内置主题

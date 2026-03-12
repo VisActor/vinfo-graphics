@@ -1,5 +1,5 @@
 import { isNil } from '../utils/isNil';
-import type { CirclePackingChartSchema } from '../types/circle-packing';
+import type { CirclePackingChartSchema } from '../types/chart/circle-packing';
 import type { ValidationResult } from './base';
 import { BaseConverter } from './base';
 
@@ -102,7 +102,9 @@ export class CirclePackingChartConverter extends BaseConverter<CirclePackingChar
         visible: true,
         position: 'top-left',
       },
-      legend: false,
+      legend: {
+        visible: false,
+      },
     };
   }
 

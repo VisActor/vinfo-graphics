@@ -1,11 +1,11 @@
-import type { AreaChartSchema } from '../../src/types/area';
+import type { AreaChartSchema } from '@visactor/vinfo-graphics';
 
 export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
   {
     name: '基础面积图',
     schema: {
       chartType: 'area',
-      title: '用户增长趋势',
+      title: { text: '用户增长趋势' },
       data: [
         { month: '1月', users: 1000 },
         { month: '2月', users: 1200 },
@@ -23,7 +23,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
     name: '平滑曲线',
     schema: {
       chartType: 'area',
-      title: '用户增长趋势（平滑）',
+      title: { text: '用户增长趋势（平滑）' },
       data: [
         { month: '1月', users: 1000 },
         { month: '2月', users: 1200 },
@@ -44,7 +44,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
     name: '带数据点',
     schema: {
       chartType: 'area',
-      title: '用户增长趋势（带数据点）',
+      title: { text: '用户增长趋势（带数据点）' },
       data: [
         { month: '1月', users: 1000 },
         { month: '2月', users: 1200 },
@@ -65,7 +65,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
     name: '自定义透明度',
     schema: {
       chartType: 'area',
-      title: '用户增长趋势（高透明度）',
+      title: { text: '用户增长趋势（高透明度）' },
       data: [
         { month: '1月', users: 1000 },
         { month: '2月', users: 1200 },
@@ -85,7 +85,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
     name: '渐变填充',
     schema: {
       chartType: 'area',
-      title: '用户增长趋势（渐变）',
+      title: { text: '用户增长趋势（渐变）' },
       data: [
         { month: '1月', users: 1000 },
         { month: '2月', users: 1200 },
@@ -109,7 +109,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
     name: '带图标',
     schema: {
       chartType: 'area',
-      title: 'APP下载量趋势',
+      title: { text: 'APP下载量趋势' },
       data: [
         { month: '1月', downloads: 1000, icon: 'android' },
         { month: '2月', downloads: 1200, icon: 'android' },
@@ -140,7 +140,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
     name: '带装饰图片',
     schema: {
       chartType: 'area',
-      title: '季度销售趋势',
+      title: { text: '季度销售趋势' },
       data: [
         { quarter: 'Q1', sales: 450 },
         { quarter: 'Q2', sales: 520 },
@@ -174,7 +174,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
     name: '带标注点',
     schema: {
       chartType: 'area',
-      title: '月度销售额',
+      title: { text: '月度销售额' },
       data: [
         { month: '1月', sales: 120 },
         { month: '2月', sales: 150 },
@@ -213,7 +213,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
     name: '带水平标注线',
     schema: {
       chartType: 'area',
-      title: '月度销售额（带均值线）',
+      title: { text: '月度销售额（带均值线）' },
       data: [
         { month: '1月', sales: 120 },
         { month: '2月', sales: 150 },
@@ -254,7 +254,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
     name: '带标注区域',
     schema: {
       chartType: 'area',
-      title: '月度销售额（带高亮区域）',
+      title: { text: '月度销售额（带高亮区域）' },
       data: [
         { month: '1月', sales: 120 },
         { month: '2月', sales: 150 },
@@ -293,7 +293,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
     name: '综合示例',
     schema: {
       chartType: 'area',
-      title: '网站流量趋势',
+      title: { text: '网站流量趋势' },
       data: [
         { day: '周一', pv: 5000 },
         { day: '周二', pv: 6200 },
@@ -317,7 +317,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
         size: 6,
       },
       colors: ['#4facfe'],
-      legend: true,
+      legend: { visible: true },
       annotationPoint: [
         {
           value: '周六',
@@ -348,7 +348,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
     name: '清新主题 (fresh)',
     schema: {
       chartType: 'area',
-      title: '用户增长趋势（清新主题）',
+      title: { text: '用户增长趋势（清新主题）' },
       data: [
         { month: '1月', users: 1000 },
         { month: '2月', users: 1200 },
@@ -377,7 +377,7 @@ export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
     name: '海洋主题 (ocean)',
     schema: {
       chartType: 'area',
-      title: '网站流量趋势（海洋主题）',
+      title: { text: '网站流量趋势（海洋主题）' },
       data: [
         { day: '周一', pv: 5000 },
         { day: '周二', pv: 6200 },

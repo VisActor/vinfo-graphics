@@ -1,4 +1,9 @@
-import type { BaseChartSchema, LabelConfig, IconConfig, ImageMapConfig } from './base';
+import type { BaseChartSchema } from '../base';
+import type { TreemapIconConfig } from './icon';
+import type { TreemapLabelConfig } from './label';
+import type { TreemapNodeBackgroundConfig } from './node-background';
+import type { TreemapNodeConfig } from './node';
+import type { TreemapRankConfig } from './rank';
 
 /**
  * 矩阵树图 Schema
@@ -59,69 +64,17 @@ export interface TreemapChartSchema extends BaseChartSchema {
   groupField?: string;
 
   /** 节点配置 */
-  node?: {
-    /** 节点间距 */
-    gap?: number;
-    /** 内边距 */
-    padding?: number;
-    /** 圆角 */
-    cornerRadius?: number;
-  };
+  node?: TreemapNodeConfig;
 
   /** 标签配置 */
-  label?: LabelConfig & {
-    /** 是否显示百分比（仅单层模式有效） */
-    showPercent?: boolean;
-  };
+  label?: TreemapLabelConfig;
 
   /** 排名标签配置（仅单层模式有效） */
-  rank?: {
-    /** 是否显示排名 */
-    visible?: boolean;
-    /** 排名位置 */
-    position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-    /** 排名样式 */
-    style?: {
-      /** 字体大小 */
-      fontSize?: number;
-      /** 字体颜色 */
-      fill?: string;
-      /** 字体粗细 */
-      fontWeight?: number | string;
-      /** 背景色 */
-      backgroundColor?: string;
-    };
-  };
+  rank?: TreemapRankConfig;
 
   /** Icon 配置 */
-  icon?: IconConfig & {
-    /** 是否显示 icon */
-    visible?: boolean;
-    /**
-     * icon 位置
-     * - 'top-left': 左上角
-     * - 'top-right': 右上角
-     * - 'center': 中心
-     * - 'bottom-left': 左下角
-     * - 'bottom-right': 右下角
-     */
-    position?: 'top-left' | 'top-right' | 'center' | 'bottom-left' | 'bottom-right';
-    /** 偏移量 */
-    offset?: number;
-    /**
-     * 样式
-     */
-    style?: {
-      /** 描边宽度 */
-      lineWidth?: number;
-      /** 描边颜色 */
-      stroke?: string;
-    };
-  };
+  icon?: TreemapIconConfig;
 
   /** 节点背景图片配置 */
-  nodeBackground?: ImageMapConfig & {
-    /** 是否显示背景 */
-    visible?: boolean;
-  };
+  nodeBackground?: TreemapNodeBackgroundConfig;
 }

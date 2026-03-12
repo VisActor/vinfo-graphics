@@ -7,7 +7,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      'vinfo-graphics': resolve(__dirname, '../src/index.ts'),
+      '@visactor/vinfo-graphics': resolve(__dirname, '../src/index.ts'),
     },
   },
   build: {
