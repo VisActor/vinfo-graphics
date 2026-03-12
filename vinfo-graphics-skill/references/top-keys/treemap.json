@@ -1,0 +1,122 @@
+[
+  {
+    "name": "title",
+    "type": "TitleConfig",
+    "isRequired": false,
+    "componentName": "TitleConfig",
+    "description": "图表标题配置"
+  },
+  {
+    "name": "footnote",
+    "type": "FootnoteConfig",
+    "isRequired": false,
+    "componentName": "FootnoteConfig",
+    "description": "脚注配置，支持图片和文字的多种布局"
+  },
+  {
+    "name": "data",
+    "type": "DataItem[]",
+    "isRequired": true,
+    "componentName": "DataItem",
+    "description": "数据（扁平数组），每条数据为一个对象，包含分类字段和数值字段"
+  },
+  {
+    "name": "width",
+    "type": "number",
+    "isRequired": false,
+    "description": "画布宽度"
+  },
+  {
+    "name": "height",
+    "type": "number",
+    "isRequired": false,
+    "description": "画布高度"
+  },
+  {
+    "name": "background",
+    "type": "BackgroundConfig",
+    "isRequired": false,
+    "componentName": "BackgroundConfig",
+    "description": "背景配置，支持背景图片、颜色等"
+  },
+  {
+    "name": "colors",
+    "type": "string[]",
+    "isRequired": false,
+    "description": "自定义颜色数组，覆盖主题默认颜色"
+  },
+  {
+    "name": "legend",
+    "type": "LegendConfig",
+    "isRequired": false,
+    "componentName": "LegendConfig",
+    "description": "图例配置"
+  },
+  {
+    "name": "theme",
+    "type": "PresetThemeName",
+    "isRequired": false,
+    "componentName": "PresetThemeName",
+    "description": "预设主题名称，如 light, dark, fresh, sunset 等"
+  },
+  {
+    "name": "customizedTheme",
+    "type": "ThemeConfig",
+    "isRequired": false,
+    "componentName": "ThemeConfig",
+    "description": "自定义主题配置，优先级高于 theme 中的预设主题名称"
+  },
+  {
+    "name": "categoryField",
+    "type": "string",
+    "isRequired": true,
+    "description": "分类字段名（叶子节点名称）"
+  },
+  {
+    "name": "valueField",
+    "type": "string",
+    "isRequired": true,
+    "description": "权重字段名"
+  },
+  {
+    "name": "groupField",
+    "type": "string",
+    "isRequired": false,
+    "description": "分组字段名（可选）\n- 不设置时：单层模式，数据直接展示为叶子节点\n- 设置时：分组模式，数据按 groupField 值分组，每组为一个父节点"
+  },
+  {
+    "name": "node",
+    "type": "TreemapNodeConfig",
+    "isRequired": false,
+    "description": "节点配置",
+    "componentName": "TreemapNodeConfig"
+  },
+  {
+    "name": "label",
+    "type": "TreemapLabelConfig",
+    "isRequired": false,
+    "description": "标签配置",
+    "componentName": "TreemapLabelConfig"
+  },
+  {
+    "name": "rank",
+    "type": "TreemapRankConfig",
+    "isRequired": false,
+    "description": "排名标签配置（仅单层模式有效）",
+    "componentName": "TreemapRankConfig"
+  },
+  {
+    "name": "icon",
+    "type": "TreemapIconConfig",
+    "isRequired": false,
+    "description": "Icon 配置",
+    "componentName": "TreemapIconConfig"
+  },
+  {
+    "name": "nodeBackground",
+    "type": "TreemapNodeBackgroundConfig",
+    "isRequired": false,
+    "description": "节点背景图片配置",
+    "componentName": "TreemapNodeBackgroundConfig"
+  }
+]

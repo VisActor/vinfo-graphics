@@ -1,0 +1,165 @@
+[
+  {
+    "name": "title",
+    "type": "TitleConfig",
+    "isRequired": false,
+    "componentName": "TitleConfig",
+    "description": "图表标题配置"
+  },
+  {
+    "name": "footnote",
+    "type": "FootnoteConfig",
+    "isRequired": false,
+    "componentName": "FootnoteConfig",
+    "description": "脚注配置，支持图片和文字的多种布局"
+  },
+  {
+    "name": "data",
+    "type": "DataItem[]",
+    "isRequired": true,
+    "componentName": "DataItem",
+    "description": "数据（扁平数组），每条数据为一个对象，包含分类字段和数值字段"
+  },
+  {
+    "name": "width",
+    "type": "number",
+    "isRequired": false,
+    "description": "画布宽度"
+  },
+  {
+    "name": "height",
+    "type": "number",
+    "isRequired": false,
+    "description": "画布高度"
+  },
+  {
+    "name": "background",
+    "type": "BackgroundConfig",
+    "isRequired": false,
+    "componentName": "BackgroundConfig",
+    "description": "背景配置，支持背景图片、颜色等"
+  },
+  {
+    "name": "colors",
+    "type": "string[]",
+    "isRequired": false,
+    "description": "自定义颜色数组，覆盖主题默认颜色"
+  },
+  {
+    "name": "legend",
+    "type": "LegendConfig",
+    "isRequired": false,
+    "componentName": "LegendConfig",
+    "description": "图例配置"
+  },
+  {
+    "name": "theme",
+    "type": "PresetThemeName",
+    "isRequired": false,
+    "componentName": "PresetThemeName",
+    "description": "预设主题名称，如 light, dark, fresh, sunset 等"
+  },
+  {
+    "name": "customizedTheme",
+    "type": "ThemeConfig",
+    "isRequired": false,
+    "componentName": "ThemeConfig",
+    "description": "自定义主题配置，优先级高于 theme 中的预设主题名称"
+  },
+  {
+    "name": "categoryField",
+    "type": "string",
+    "isRequired": true,
+    "description": "分类字段名（X轴，通常是时间）"
+  },
+  {
+    "name": "valueField",
+    "type": "string",
+    "isRequired": true,
+    "description": "数值字段名（Y轴）"
+  },
+  {
+    "name": "area",
+    "type": "AreaStyleConfig",
+    "isRequired": false,
+    "description": "面积样式",
+    "componentName": "AreaStyleConfig"
+  },
+  {
+    "name": "line",
+    "type": "AreaLineConfig",
+    "isRequired": false,
+    "description": "线条样式",
+    "componentName": "AreaLineConfig"
+  },
+  {
+    "name": "point",
+    "type": "AreaPointConfig",
+    "isRequired": false,
+    "description": "数据点样式",
+    "componentName": "AreaPointConfig"
+  },
+  {
+    "name": "label",
+    "type": "LabelConfig",
+    "isRequired": false,
+    "description": "标签配置",
+    "componentName": "LabelConfig"
+  },
+  {
+    "name": "icon",
+    "type": "AreaIconConfig",
+    "isRequired": false,
+    "description": "Icon 配置（信息图特色）",
+    "componentName": "AreaIconConfig"
+  },
+  {
+    "name": "brandImage",
+    "type": "BrandImageConfig",
+    "isRequired": false,
+    "description": "装饰图片，一般用于装饰图表",
+    "componentName": "BrandImageConfig"
+  },
+  {
+    "name": "annotationPoint",
+    "type": "AnnotationPointConfig[]",
+    "isRequired": false,
+    "description": "标注点配置（使用 vchart markPoint）",
+    "componentName": "AnnotationPointConfig"
+  },
+  {
+    "name": "annotationVerticalLine",
+    "type": "AnnotationVerticalLineConfig[]",
+    "isRequired": false,
+    "description": "垂直标注线配置（使用 vchart markLine）",
+    "componentName": "AnnotationVerticalLineConfig"
+  },
+  {
+    "name": "annotationHorizontalLine",
+    "type": "AnnotationHorizontalLineConfig[]",
+    "isRequired": false,
+    "description": "水平标注线配置（使用 vchart markLine）",
+    "componentName": "AnnotationHorizontalLineConfig"
+  },
+  {
+    "name": "annotationArea",
+    "type": "AnnotationAreaConfig[]",
+    "isRequired": false,
+    "description": "标注区域配置（使用 vchart markArea）",
+    "componentName": "AnnotationAreaConfig"
+  },
+  {
+    "name": "xAxis",
+    "type": "AxisConfig",
+    "isRequired": false,
+    "description": "X 轴配置（分类轴）",
+    "componentName": "AxisConfig"
+  },
+  {
+    "name": "yAxis",
+    "type": "AxisConfig",
+    "isRequired": false,
+    "description": "Y 轴配置（数值轴）",
+    "componentName": "AxisConfig"
+  }
+]

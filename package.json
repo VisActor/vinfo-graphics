@@ -1,6 +1,6 @@
 {
   "name": "@visactor/vinfo-graphics",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A simplified, LLM-friendly chart library for infographics based on VChart",
   "main": "cjs/index.js",
   "module": "esm/index.js",

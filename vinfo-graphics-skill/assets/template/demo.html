@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VInfo Graphics Demo</title>
+
+    <!-- VChart CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@visactor/vchart/build/index.min.js"></script>
+    <!-- VInfo Graphics UMD -->
+    <script src="https://cdn.jsdelivr.net/npm/@visactor/vinfo-graphics/dist/index.umd.js"></script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+          'Noto Sans', sans-serif;
+        background-color: #f8fafc;
+        min-height: 100vh;
+        padding: 24px;
+      }
+      .page {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      header {
+        margin-bottom: 24px;
+        text-align: center;
+      }
+      header h1 {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 8px;
+      }
+      header p {
+        color: #64748b;
+        font-size: 15px;
+      }
+      .editor-container {
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+      }
+      .code-panel {
+        background: #1e293b;
+        display: flex;
+        flex-direction: column;
+      }
+      .code-panel.is-hidden {
+        display: none;
+      }
+      .preview-panel {
+        background: #fff;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+      .editor-container.is-code-hidden .preview-panel {
+        border-bottom: none;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+      }
+      .editor-container.is-code-hidden .chart-container {
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        overflow: hidden;
+      }
+      .panel-header {
+        padding: 12px 20px;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        flex-shrink: 0;
+      }
+      .panel-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .code-panel .panel-header {
+        background: #0f172a;
+        color: #64748b;
+        border-bottom: 1px solid #334155;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .preview-panel .panel-header {
+        background: #f8fafc;
+        color: #64748b;
+        border-bottom: 1px solid #e2e8f0;
+        margin: -20px -20px 20px -20px;
+        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .code-editor {
+        flex: 1;
+        min-height: 600px;
+        overflow: auto;
+        padding: 16px;
+      }
+      .code-editor textarea {
+        width: 100%;
+        height: 100%;
+        min-height: 550px;
+        background: transparent;
+        border: none;
+        color: #e2e8f0;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        font-size: 13px;
+        line-height: 1.6;
+        resize: none;
+        outline: none;
+      }
+      .chart-container {
+        height: 500px;
+        position: relative;
+        background-size: cover;
+        background-position: center;
+      }
+      #chart {
+        width: 100%;
+        height: 100%;
+      }
+      .validation-result {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+      .validation-success {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .validation-error {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: none;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-primary {
+        background: #3b82f6;
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: #2563eb;
+      }
+      .btn-secondary {
+        background: #1e293b;
+        color: #e2e8f0;
+        border: 1px solid #334155;
+      }
+      .btn-secondary:hover {
+        background: #0f172a;
+      }
+
+      body.is-dark {
+        background-color: #0f172a;
+      }
+      body.is-dark header h1 {
+        color: #f1f5f9;
+      }
+      body.is-dark header p {
+        color: #94a3b8;
+      }
+      body.is-dark .editor-container {
+        background: #1e293b;
+        border-color: #334155;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+      body.is-dark .preview-panel {
+        background: #1e293b;
+        border-bottom-color: #334155;
+      }
+      body.is-dark .preview-panel .panel-header {
+        background: #0f172a;
+        color: #94a3b8;
+        border-bottom-color: #334155;
+      }
+      body.is-dark .chart-container {
+        background: #1e293b;
+      }
+      body.is-dark .validation-success {
+        background: #064e3b;
+        color: #6ee7b7;
+      }
+      body.is-dark .validation-error {
+        background: #7f1d1d;
+        color: #fca5a5;
+      }
+
+      body.is-light {
+        background-color: #f8fafc;
+      }
+      body.is-light header h1 {
+        color: #1e293b;
+      }
+      body.is-light header p {
+        color: #64748b;
+      }
+      body.is-light .editor-container {
+        background: #fff;
+        border-color: #e2e8f0;
+        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+      }
+      body.is-light .preview-panel {
+        background: #fff;
+        border-bottom-color: #e2e8f0;
+      }
+      body.is-light .preview-panel .panel-header {
+        background: #f8fafc;
+        color: #64748b;
+        border-bottom-color: #e2e8f0;
+      }
+      body.is-light .chart-container {
+        background: #fff;
+      }
+      body.is-light .validation-success {
+        background: #dcfce7;
+        color: #166534;
+      }
+      body.is-light .validation-error {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1 id="chart-title">{{title}}</h1>
+        <p>{{description}}</p>
+      </header>
+
+      <div class="editor-container">
+        <div class="preview-panel">
+          <div class="panel-header">
+            <span>Preview</span>
+            <div class="panel-header-actions">
+              <button class="btn btn-secondary" onclick="downloadImage()">Download</button>
+              <button class="btn btn-secondary" id="toggle-code-btn" onclick="toggleCodePanel()">
+                Show Code
+              </button>
+            </div>
+          </div>
+          <div id="validation-result" class="validation-result" style="display: none"></div>
+          <div class="chart-container" id="chart-wrapper">
+            <div id="chart"></div>
+          </div>
+        </div>
+        <div class="code-panel is-hidden">
+          <div class="panel-header">
+            <span>Schema Config</span>
+          </div>
+          <div class="code-editor">
+            <textarea id="code-input" spellcheck="false"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ====== SCHEMA_START ======
+      const schema = {
+        chartType: 'bar',
+        title: {
+          text: 'Best Universities in America',
+          subtext: '2023-2024 Tuition and Fees (USD, Thousands)',
+          position: 'left',
+        },
+        data: [
+          { rank: 1, university: 'Princeton', tuition: 59.7, type: 'private' },
+          { rank: 2, university: 'MIT', tuition: 60.2, type: 'private' },
+          { rank: 3, university: 'Harvard', tuition: 59.1, type: 'private' },
+          { rank: 4, university: 'Stanford', tuition: 62.5, type: 'private' },
+          { rank: 5, university: 'Yale', tuition: 64.7, type: 'private' },
+          { rank: 6, university: 'Penn', tuition: 66.1, type: 'private' },
+          { rank: 7, university: 'Caltech', tuition: 63.0, type: 'private' },
+          { rank: 8, university: 'Duke', tuition: 66.2, type: 'private' },
+          { rank: 9, university: 'Brown', tuition: 68.2, type: 'private' },
+          { rank: 10, university: 'Northwestern', tuition: 60.0, type: 'private' },
+          { rank: 15, university: 'Berkeley (CA)', tuition: 46.3, type: 'public' },
+          { rank: 16, university: 'UCLA', tuition: 46.3, type: 'public' },
+          { rank: 20, university: 'University of Michigan', tuition: 57.3, type: 'public' },
+        ],
+        categoryField: 'university',
+        valueField: 'tuition',
+        sort: 'desc',
+        background: {
+          color: '#FAFAFA',
+        },
+        bar: {
+          cornerRadius: 3,
+          linearGradient: {
+            direction: 'left-right',
+            colors: ['#003D7A', '#1565C0'],
+          },
+        },
+        rank: {
+          visible: true,
+          position: 'start',
+          // style: {
+          //   fontSize: 12,
+          //   fill: '#fff',
+          //   fontWeight: 'bold',
+          //   backgroundColor: '#003D7A',
+          //   cornerRadius: 12,
+          // },
+        },
+        label: {
+          visible: true,
+          position: 'inside-right',
+          format: '${value}K',
+        },
+        xAxis: {
+          visible: false,
+        },
+        yAxis: {
+          visible: true,
+        },
+        legend: false,
+      };
+      // ====== SCHEMA_END ======
+
+      let chartInstance = null;
+      let isCodePanelVisible = false;
+
+      // Initialize code editor
+      document.getElementById('code-input').value = JSON.stringify(schema, null, 2);
+
+      function setCodePanelVisibility(visible) {
+        const editorContainer = document.querySelector('.editor-container');
+        const codePanel = document.querySelector('.code-panel');
+        const toggleButton = document.getElementById('toggle-code-btn');
+        if (!editorContainer || !codePanel || !toggleButton) {
+          return;
+        }
+        isCodePanelVisible = visible;
+        codePanel.classList.toggle('is-hidden', !visible);
+        editorContainer.classList.toggle('is-code-hidden', !visible);
+        toggleButton.textContent = visible ? 'Hide Code' : 'Show Code';
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const editorContainer = document.querySelector('.editor-container');
+        if (editorContainer) {
+          editorContainer.classList.add('is-code-hidden');
+        }
+      });
+
+      function toggleCodePanel() {
+        setCodePanelVisibility(!isCodePanelVisible);
+      }
+
+      function showDownloadError(message) {
+        const resultEl = document.getElementById('validation-result');
+        resultEl.className = 'validation-result validation-error';
+        resultEl.textContent = message;
+        resultEl.style.display = 'block';
+      }
+
+      function downloadImage() {
+        const container = document.getElementById('chart');
+        if (!container) {
+          showDownloadError('Chart container not found');
+          return;
+        }
+
+        const canvas = container.querySelector('canvas');
+
+        if (canvas && canvas.toDataURL) {
+          const dataUrl = canvas.toDataURL('image/png');
+          const link = document.createElement('a');
+          link.href = dataUrl;
+          const title = document.getElementById('chart-title').textContent || 'chart';
+          link.download = title + '.png';
+          link.click();
+          return;
+        }
+
+        showDownloadError('Cannot export image from current chart');
+      }
+
+      function validateSchema(schemaToValidate) {
+        const resultEl = document.getElementById('validation-result');
+
+        try {
+          // Use VInfoGraphics validation
+          const result = VInfoGraphics.validateWithZod(schemaToValidate);
+
+          if (result.success) {
+            resultEl.className = 'validation-result validation-success';
+            resultEl.textContent = 'Schema validation passed';
+            resultEl.style.display = 'none';
+            return true;
+          } else {
+            resultEl.className = 'validation-result validation-error';
+            resultEl.textContent =
+              'Validation failed: ' + JSON.stringify(result.error?.issues || result.error, null, 2);
+            resultEl.style.display = 'block';
+            return false;
+          }
+        } catch (e) {
+          resultEl.className = 'validation-result validation-error';
+          resultEl.textContent = 'Validation error: ' + e.message;
+          resultEl.style.display = 'block';
+          return false;
+        }
+      }
+
+      function getSystemTheme() {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      }
+
+      function resolveThemeMode(schemaConfig) {
+        const themeType = schemaConfig?.theme;
+        const darkThemes = [
+          'dark',
+          'dream',
+          'neon',
+          'energy',
+          'crypto',
+          'oil',
+          'uranium',
+          'tiktok',
+        ];
+
+        if (darkThemes.includes(themeType)) {
+          return 'dark';
+        }
+
+        return 'light';
+      }
+
+      function applyPageTheme(mode) {
+        document.body.classList.toggle('is-dark', mode === 'dark');
+        document.body.classList.toggle('is-light', mode === 'light');
+      }
+
+      function applyBackground(schemaConfig) {
+        const wrapper = document.getElementById('chart-wrapper');
+        if (schemaConfig?.background?.image) {
+          wrapper.style.backgroundImage = `url(${schemaConfig.background.image})`;
+          wrapper.style.backgroundSize = 'cover';
+          wrapper.style.backgroundPosition = 'center';
+        } else if (schemaConfig?.background?.linearGradient) {
+          const gradient = schemaConfig.background.linearGradient;
+          let direction = 'to bottom';
+          if (gradient.direction === 'left-right') direction = 'to right';
+          else if (gradient.direction === 'right-left') direction = 'to left';
+          else if (gradient.direction === 'bottom-top') direction = 'to top';
+
+          const colors = gradient.colors.join(', ');
+          wrapper.style.backgroundImage = `linear-gradient(${direction}, ${colors})`;
+        } else if (schemaConfig?.background?.color) {
+          wrapper.style.backgroundColor = schemaConfig.background.color;
+          wrapper.style.backgroundImage = 'none';
+        } else {
+          wrapper.style.backgroundImage = 'none';
+        }
+      }
+
+      async function renderChart() {
+        const codeInput = document.getElementById('code-input').value;
+
+        let parsedSchema;
+        try {
+          parsedSchema = JSON.parse(codeInput);
+        } catch (e) {
+          const resultEl = document.getElementById('validation-result');
+          resultEl.className = 'validation-result validation-error';
+          resultEl.textContent = 'JSON parse error: ' + e.message;
+          resultEl.style.display = 'block';
+          return;
+        }
+
+        // Validate schema
+        const isValid = validateSchema(parsedSchema);
+
+        if (!isValid) {
+          return;
+        }
+
+        // Destroy old chart
+        if (chartInstance) {
+          chartInstance.release();
+          chartInstance = null;
+        }
+
+        // Clear container
+        document.getElementById('chart').innerHTML = '';
+
+        // Apply theme
+        const preferredTheme = resolveThemeMode(parsedSchema);
+        applyPageTheme(preferredTheme);
+
+        // Apply background
+        applyBackground(parsedSchema);
+
+        // Render new chart
+        const container = document.getElementById('chart');
+
+        try {
+          const vchartSpec = VInfoGraphics.toVChartSpec(parsedSchema);
+          chartInstance = new VChart.default(vchartSpec, { dom: container });
+          chartInstance.renderSync();
+        } catch (e) {
+          const resultEl = document.getElementById('validation-result');
+          resultEl.className = 'validation-result validation-error';
+          resultEl.textContent = 'Render error: ' + e.message;
+          resultEl.style.display = 'block';
+          return;
+        }
+      }
+
+      // Page load auto render
+      window.onload = function () {
+        renderChart();
+
+        // Add editor real-time update listener
+        const codeInput = document.getElementById('code-input');
+        let debounceTimer = null;
+
+        codeInput.addEventListener('input', function () {
+          clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(() => {
+            renderChart();
+          }, 500);
+        });
+
+        codeInput.addEventListener('keyup', function (e) {
+          if (e.ctrlKey && e.key === 'Enter') {
+            clearTimeout(debounceTimer);
+            renderChart();
+          }
+        });
+
+        // Listen for system theme changes
+        if (window.matchMedia) {
+          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+            renderChart();
+          });
+        }
+      };
+    </script>
+  </body>
+</html>

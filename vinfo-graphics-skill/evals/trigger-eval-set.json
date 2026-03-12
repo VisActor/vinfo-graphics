@@ -1,0 +1,50 @@
+[
+  {
+    "query": "给我做一个环形信息图，数据是A 40、B 35、C 25，要有语义化 icon 和背景图。",
+    "should_trigger": true
+  },
+  {
+    "query": "把这个柱状图 schema 改成条形图，并保留脚注和主题。",
+    "should_trigger": true
+  },
+  {
+    "query": "图表不显示，提示 categoryField 不存在，帮我诊断 schema。",
+    "should_trigger": true
+  },
+  {
+    "query": "给新能源车、燃油车、混动车找一套统一风格的 Iconify 图标。",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我给信息图挑三张商务风 Unsplash 背景图，并推荐主题。",
+    "should_trigger": true
+  },
+  {
+    "query": "做一个 treemap 信息图，字段 category/subcategory/amount，节点加 icon。",
+    "should_trigger": true
+  },
+  {
+    "query": "写一个 TypeScript 函数，输入数组返回去重后的数组。",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我把 package.json 里的 scripts 按用途整理一下。",
+    "should_trigger": false
+  },
+  {
+    "query": "给我解释一下 React useEffect 的依赖数组机制。",
+    "should_trigger": false
+  },
+  {
+    "query": "生成一份团队周报模板，包含目标、风险、下周计划。",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我写一个 SQL，统计每月新增用户数。",
+    "should_trigger": false
+  },
+  {
+    "query": "请把这个英文段落翻译成中文并润色。",
+    "should_trigger": false
+  }
+]

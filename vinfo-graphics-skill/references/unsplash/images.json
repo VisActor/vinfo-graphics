@@ -1,0 +1,81 @@
+{
+  "categories": {
+    "technology": {
+      "description": "科技、数字化、网络相关",
+      "images": [
+        {
+          "id": "1451187580459-43490279c0fa",
+          "description": "数字地球网络，深蓝色科技感",
+          "tags": ["科技", "网络", "数字", "蓝色"]
+        },
+        {
+          "id": "1550751827-4bd374c3f58b",
+          "description": "大数据科技屏幕",
+          "tags": ["科技", "数据", "屏幕", "深色"]
+        },
+        {
+          "id": "1518770660439-4636190af475",
+          "description": "科技芯片电子元件",
+          "tags": ["科技", "芯片", "电子", "蓝色"]
+        },
+        {
+          "id": "1486406146926-c627a92ad1ab",
+          "description": "现代建筑科技感",
+          "tags": ["科技", "建筑", "现代", "几何"]
+        }
+      ]
+    },
+    "business": {
+      "description": "商务、办公、会议相关",
+      "images": [
+        {
+          "id": "1497366216548-37526070297c",
+          "description": "现代办公室空间",
+          "tags": ["商务", "办公", "现代", "明亮"]
+        }
+      ]
+    },
+    "nature": {
+      "description": "自然、绿色、环保相关",
+      "images": [
+        {
+          "id": "1472214103451-9374bd1c798e",
+          "description": "绿色自然山脉",
+          "tags": ["自然", "山脉", "绿色", "风景"]
+        },
+        {
+          "id": "1470252649378-9c29740c9fa8",
+          "description": "绿色自然风景",
+          "tags": ["自然", "风景", "绿色", "户外"]
+        },
+        {
+          "id": "1507003211169-0a1dd7228f2d",
+          "description": "自然山景",
+          "tags": ["自然", "山", "风景", "蓝色"]
+        }
+      ]
+    },
+    "city": {
+      "description": "城市、建筑、夜景相关",
+      "images": [
+        {
+          "id": "1493612276216-ee3925520721",
+          "description": "城市建筑现代",
+          "tags": ["城市", "建筑", "现代", "几何"]
+        }
+      ]
+    },
+    "abstract": {
+      "description": "抽象、渐变、艺术相关",
+      "images": [
+        {
+          "id": "1551288049-bebda4e38f71",
+          "description": "抽象数据流",
+          "tags": ["抽象", "数据", "渐变", "彩色"]
+        }
+      ]
+    }
+  },
+  "urlTemplate": "https://images.unsplash.com/photo-{id}?w=1920&h=1080&fit=crop",
+  "usage": "在 schema 的 background.image 字段中使用完整 URL，如：https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&h=1080&fit=crop"
+}

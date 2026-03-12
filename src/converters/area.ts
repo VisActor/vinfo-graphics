@@ -376,6 +376,7 @@ export class AreaChartConverter extends BaseConverter<AreaChartSchema> {
     if (!spec.markLine) {
       spec.markLine = [];
     }
+    const themeConfig = this.getThemeConfig();
 
     schema.annotationVerticalLine.forEach((line) => {
       (spec.markLine as Record<string, unknown>[]).push({
@@ -384,7 +385,7 @@ export class AreaChartConverter extends BaseConverter<AreaChartSchema> {
           visible: true,
           text: line.text,
           textStyle: {
-            fill: line.textColor ?? '#333',
+            fill: line.textColor ?? themeConfig.secondaryTextColor,
             fontSize: line.textFontSize ?? 12,
           },
           position: 'outsideEnd',
@@ -430,6 +431,8 @@ export class AreaChartConverter extends BaseConverter<AreaChartSchema> {
       spec.markLine = [];
     }
 
+    const themeConfig = this.getThemeConfig();
+
     schema.annotationHorizontalLine.forEach((line) => {
       (spec.markLine as Record<string, unknown>[]).push({
         y: line.yValue,
@@ -437,7 +440,7 @@ export class AreaChartConverter extends BaseConverter<AreaChartSchema> {
           visible: true,
           text: line.text,
           style: {
-            fill: line.textColor ?? '#333',
+            fill: line.textColor ?? themeConfig.secondaryTextColor,
             fontSize: line.textFontSize ?? 12,
           },
           position: 'insideEndTop',

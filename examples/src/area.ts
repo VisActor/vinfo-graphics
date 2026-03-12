@@ -2,6 +2,128 @@ import type { AreaChartSchema } from '@visactor/vinfo-graphics';
 
 export const areaExamples: { name: string; schema: AreaChartSchema }[] = [
   {
+    name: 'test',
+    schema: {
+      chartType: 'area',
+      title: {
+        text: '中国制造业PMI指数趋势',
+        position: 'center',
+        subtext: '2025年2月 - 2026年2月（经季节调整，单位：%）',
+      },
+      data: [
+        {
+          月份: '2025年2月',
+          指数: 50.2,
+          iconKey: '制造业',
+        },
+        {
+          月份: '2025年3月',
+          指数: 50.5,
+          iconKey: '制造业',
+        },
+        {
+          月份: '2025年4月',
+          指数: 49,
+          iconKey: '制造业',
+        },
+        {
+          月份: '2025年5月',
+          指数: 49.5,
+          iconKey: '制造业',
+        },
+        {
+          月份: '2025年6月',
+          指数: 49.7,
+          iconKey: '制造业',
+        },
+        {
+          月份: '2025年7月',
+          指数: 49.3,
+          iconKey: '制造业',
+        },
+        {
+          月份: '2025年8月',
+          指数: 49.4,
+          iconKey: '制造业',
+        },
+        {
+          月份: '2025年9月',
+          指数: 49.8,
+          iconKey: '制造业',
+        },
+        {
+          月份: '2025年10月',
+          指数: 49,
+          iconKey: '制造业',
+        },
+        {
+          月份: '2025年11月',
+          指数: 49.2,
+          iconKey: '制造业',
+        },
+        {
+          月份: '2025年12月',
+          指数: 50.1,
+          iconKey: '制造业',
+        },
+        {
+          月份: '2026年1月',
+          指数: 49.3,
+          iconKey: '制造业',
+        },
+        {
+          月份: '2026年2月',
+          指数: 49,
+          iconKey: '制造业',
+        },
+      ],
+      categoryField: '月份',
+      valueField: '指数',
+      icon: {
+        field: 'iconKey',
+        map: {
+          制造业: 'https://api.iconify.design/mdi/factory.svg',
+        },
+        visible: true,
+        position: 'top',
+        size: 20,
+      },
+      area: {
+        smooth: true,
+        opacity: 0.5,
+        linearGradient: {
+          direction: 'top-bottom',
+          colors: ['#3370eb', 'rgba(51,112,235,0.12)'],
+        },
+      },
+      line: {
+        visible: true,
+        width: 2,
+      },
+      point: {
+        visible: true,
+        size: 5,
+      },
+      annotationHorizontalLine: [
+        {
+          yValue: 50,
+          text: '荣枯线 50',
+          lineStyle: 'dashed',
+          lineColor: '#f97316',
+        },
+      ],
+      background: {
+        image:
+          'https://images.unsplash.com/photo-1611915075827-0d27e2668fb79140?w=1920&h=1080&fit=crop',
+      },
+      theme: 'dark',
+      footnote: {
+        text: '数据来源：图片所示来源（如 国家统计局 / 中国物流与采购联合会）',
+        layout: 'left',
+      },
+    },
+  },
+  {
     name: '基础面积图',
     schema: {
       chartType: 'area',

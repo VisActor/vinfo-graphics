@@ -1,0 +1,114 @@
+[
+  {
+    "name": "title",
+    "type": "TitleConfig",
+    "isRequired": false,
+    "componentName": "TitleConfig",
+    "description": "图表标题配置"
+  },
+  {
+    "name": "footnote",
+    "type": "FootnoteConfig",
+    "isRequired": false,
+    "componentName": "FootnoteConfig",
+    "description": "脚注配置，支持图片和文字的多种布局"
+  },
+  {
+    "name": "data",
+    "type": "DataItem[]",
+    "isRequired": true,
+    "componentName": "DataItem",
+    "description": "数据（扁平数组），每条数据为一个对象，包含分类字段和数值字段"
+  },
+  {
+    "name": "width",
+    "type": "number",
+    "isRequired": false,
+    "description": "画布宽度"
+  },
+  {
+    "name": "height",
+    "type": "number",
+    "isRequired": false,
+    "description": "画布高度"
+  },
+  {
+    "name": "background",
+    "type": "BackgroundConfig",
+    "isRequired": false,
+    "componentName": "BackgroundConfig",
+    "description": "背景配置，支持背景图片、颜色等"
+  },
+  {
+    "name": "colors",
+    "type": "string[]",
+    "isRequired": false,
+    "description": "自定义颜色数组，覆盖主题默认颜色"
+  },
+  {
+    "name": "legend",
+    "type": "LegendConfig",
+    "isRequired": false,
+    "componentName": "LegendConfig",
+    "description": "图例配置"
+  },
+  {
+    "name": "theme",
+    "type": "PresetThemeName",
+    "isRequired": false,
+    "componentName": "PresetThemeName",
+    "description": "预设主题名称，如 light, dark, fresh, sunset 等"
+  },
+  {
+    "name": "customizedTheme",
+    "type": "ThemeConfig",
+    "isRequired": false,
+    "componentName": "ThemeConfig",
+    "description": "自定义主题配置，优先级高于 theme 中的预设主题名称"
+  },
+  {
+    "name": "categoryField",
+    "type": "string",
+    "isRequired": true,
+    "description": "分类字段名"
+  },
+  {
+    "name": "valueField",
+    "type": "string",
+    "isRequired": true,
+    "description": "数值字段名"
+  },
+  {
+    "name": "innerRadius",
+    "type": "number",
+    "isRequired": false,
+    "description": "内半径比例 0-1，默认 0（饼图），0.5+ 为环形图"
+  },
+  {
+    "name": "outerRadius",
+    "type": "number",
+    "isRequired": false,
+    "description": "外半径比例 0-1，默认 0.8"
+  },
+  {
+    "name": "label",
+    "type": "PieLabelConfig",
+    "isRequired": false,
+    "description": "标签配置",
+    "componentName": "PieLabelConfig"
+  },
+  {
+    "name": "icon",
+    "type": "PieIconConfig",
+    "isRequired": false,
+    "description": "Icon 配置（信息图特色），为每个扇区显示对应的图标",
+    "componentName": "PieIconConfig"
+  },
+  {
+    "name": "centerImage",
+    "type": "PieCenterImageConfig",
+    "isRequired": false,
+    "description": "中心图片配置（仅环形图有效，innerRadius > 0 时显示）",
+    "componentName": "PieCenterImageConfig"
+  }
+]

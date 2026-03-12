@@ -1,0 +1,65 @@
+{
+  "skill_name": "vinfo-graphics-skill",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我做一个市场份额信息图。数据是：华东 38，华南 27，华北 19，西南 10，其他 6。我要环形图，标题放中间，背景要科技感，图标要语义化且风格统一，输出可运行 HTML 命令。",
+      "expected_output": "应识别为场景一（生成），选择 pie 并配置 innerRadius；使用 top-keys/type-details 生成合法 schema；触发 fetch_icons.py 脚本获取图标；给出完整 schema 与 generate_demo_html.py 命令。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "我有一组平台用户数据：微信 1200、抖音 980、微博 430、小红书 510、知乎 280。请生成横向排名信息图，要求从大到小排序，左侧有排名标识，每个类目有图标，主题用深色。",
+      "expected_output": "应选择 bar 图，配置 sort=desc、rank、bar 样式与 icon；icon map 与 data 字段值匹配；title/legend/theme 等字段符合当前类型约束（对象或预设名）。",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "下面是我当前 schema，请你继续修改：{\n  \"chartType\": \"column\",\n  \"title\": {\"text\": \"季度营收\"},\n  \"data\": [{\"q\": \"Q1\", \"rev\": 100}, {\"q\": \"Q2\", \"rev\": 140}, {\"q\": \"Q3\", \"rev\": 180}, {\"q\": \"Q4\", \"rev\": 160}],\n  \"categoryField\": \"q\",\n  \"valueField\": \"rev\",\n  \"theme\": \"fresh\"\n}\n请把它改成蓝色渐变柱体、显示数值标签，加脚注\"数据来源：财务部\"，并输出修改后的完整 schema。",
+      "expected_output": "应识别为场景二（编辑），在保留原结构基础上增量修改；补充 column 样式的渐变、label、footnote；输出完整且可用 schema，不引入无关字段。",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "图表报错了，控制台提示 categoryField 不存在。我的 data 是 [{\"month\":\"1月\",\"value\":23},{\"month\":\"2月\",\"value\":31}]，但 schema 里写的是 categoryField: \"name\"。请你诊断并修复。",
+      "expected_output": "应识别为场景三（诊断）；明确问题原因是字段名不一致；给出修复建议并返回修复后的 schema（categoryField 改为 month）。",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "我只想查图标：给\"新能源车、燃油车、混动车\"各找一个 Iconify 图标，要求同一图标集，24px，最后给我 icon.map 可以直接粘贴进 schema。",
+      "expected_output": "应使用 fetch_icons.py 脚本获取图标；返回统一 collection 的 icon URL；提供可直接使用的 icon.field + icon.map + size 配置建议。",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "做一张城市夜间经济信息图，先别改图表本体，帮我挑 3 张适合的 Unsplash 背景图（1920x1080），并给出每张图适合的主题建议。",
+      "expected_output": "应走 Unsplash 子流程；从 references/unsplash/images.json 返回可用 URL；给出每张图与 theme 的搭配建议（如 dark/ocean 等）。",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "生成一个 treemap 信息图：数据字段是大类 category、小类 subcategory、金额 amount。请体现层级关系，节点里要图标，背景偏商务风，并给出最终 schema。",
+      "expected_output": "应选择 treemap，正确使用 groupField 与 valueField；结合 top-keys/type-details 配置 node/rank/label/icon 等字段；并通过 Unsplash 选择商务背景。",
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "请帮我修这个 schema：{\"chartType\":\"pie\",\"title\":\"占比图\",\"legend\":true,\"theme\":{\"type\":\"dark\"},\"data\":[{\"name\":\"A\",\"value\":60},{\"name\":\"B\",\"value\":40}],\"categoryField\":\"name\",\"valueField\":\"value\"}。要改成符合最新类型定义，并补上 icon。",
+      "expected_output": "应修复类型不匹配：title 改为对象、legend 改为对象、theme 改为预设名称或 customizedTheme；补全 icon 配置并保证 map 与数据匹配。",
+      "files": []
+    },
+    {
+      "id": 9,
+      "prompt": "帮我做一个 circlePacking 图，展示公司部门的人员分布：研发部 50 人、销售部 30 人、市场部 20 人、运营部 15 人、客服部 10 人。每个节点要有图标，背景用抽象风格，生成完整 schema。",
+      "expected_output": "应选择 circlePacking 图；正确配置层级结构和图标；使用 Unsplash 抽象背景图。",
+      "files": []
+    },
+    {
+      "id": 10,
+      "prompt": "生成一个 area 面积图，展示月度销售趋势：1月 100、2月 150、3月 180、4月 160、5月 200、6月 220。要求有渐变填充、数据点图标、平滑曲线，并给出完整 schema。",
+      "expected_output": "应选择 area 图；配置 area 渐变、point 图标、line 平滑曲线；给出完整 schema。",
+      "files": []
+    }
+  ]
+}
