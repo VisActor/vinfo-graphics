@@ -10,6 +10,7 @@ import type {
   Theme,
 } from '../types/chart/base';
 import { resolveTheme, isDarkTheme, vchartThemeMap } from '../themes';
+import { isNil } from '../utils/isNil';
 
 /**
  * 转换结果
@@ -75,9 +76,18 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
   abstract getDefaults(): Partial<T>;
 
   protected initSpec(schema: T): Record<string, unknown> {
-    const spec = {
+    const spec: Record<string, unknown> = {
       padding: { top: 20, right: 20, bottom: 20, left: 20 },
     };
+
+    if (!isNil(schema.width)) {
+      spec.width = schema.width
+    }
+
+    if (!isNil(schema.height)) {
+      spec.height = schema.height
+    }
+
     // 主题配置
     this.processTheme(schema.theme, schema.customizedTheme, spec);
 

@@ -1,0 +1,17 @@
+{
+  "name": "vinfo-graphics-knowledge-generator",
+  "version": "1.0.0",
+  "description": "Generate knowledge files for vinfo-graphics skill",
+  "type": "module",
+  "scripts": {
+    "generate": "tsx generate-knowledge.ts"
+  },
+  "dependencies": {
+    "ts-morph": "^24.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}

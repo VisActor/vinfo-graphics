@@ -7,6 +7,10 @@ examples/assets/*
 .claude
 .trae
 skills
+*.zip
+
+
+
 
 # build
 dist
@@ -46,4 +50,7 @@ dist-ssr
 
 # AI
 skills-lock.json
+
+# Generated knowledge files
+tools/knowledge/
 
