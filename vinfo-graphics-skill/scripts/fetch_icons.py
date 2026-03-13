@@ -5,9 +5,20 @@ Iconify Icon Fetcher for VInfo Graphics
 根据数据中的 categoryField 对应的值，从 Iconify API 搜索语义化图标。
 所有图标保持同一图标集（风格、大小一致）。
 
+支持两种搜索模式：
+1. 共享关键词模式（默认）：所有类目使用相同关键词搜索
+2. 逐类目关键词模式（--per-category-keywords）：每个类目使用独立关键词搜索，适用于
+   国家/国旗、品牌 Logo、具体实体等需要每个类目拥有不同语义图标的场景
+
 Usage:
-    # 基本用法：传入类目列表和关键词
+    # 基本用法：传入类目列表和关键词（共享模式）
     python fetch_icons.py --categories '["微信","抖音","微博"]' --keywords '["social","chat"]'
+
+    # 逐类目关键词模式：每个类目有独立搜索词（适合国旗、品牌等）
+    python fetch_icons.py \
+      --categories '["Norway","Estonia","Greece"]' \
+      --per-category-keywords '{"Norway":"norway","Estonia":"estonia","Greece":"greece"}' \
+      --prefer-collection circle-flags
 
     # 指定偏好图标集
     python fetch_icons.py --categories '["手机","电脑","平板"]' --keywords '["device","electronics"]' --prefer-collection mdi
@@ -30,6 +41,9 @@ from collections import Counter
 
 # 推荐的图标集（按优先级）
 PREFERRED_COLLECTIONS = ["mdi", "fa6-solid", "bi", "carbon", "tabler", "lucide", "ph"]
+
+# 国旗/地区专用图标集（按优先级）
+FLAG_COLLECTIONS = ["circle-flags", "flagpack", "flag", "twemoji", "emojione"]
 
 # 中文类目到英文关键词的常见映射
 CATEGORY_KEYWORD_HINTS = {
@@ -112,14 +126,28 @@ def find_best_collection(all_icons, prefer_collection=None):
     return best
 
 
-def search_icon_for_category(category, extra_keywords, all_results_cache):
-    """为单个类目搜索图标，返回所有匹配结果"""
+def search_icon_for_category(category, extra_keywords, all_results_cache, per_category_kw=None):
+    """为单个类目搜索图标，返回所有匹配结果
+
+    Args:
+        category: 类目名称
+        extra_keywords: 共享的额外搜索关键词
+        all_results_cache: 搜索结果缓存
+        per_category_kw: 该类目专属的搜索关键词（字符串或列表），如有则优先使用
+    """
     keywords_to_try = []
 
-    # 尝试中文关键词提示
-    for hint_key, hint_words in CATEGORY_KEYWORD_HINTS.items():
-        if hint_key in category:
-            keywords_to_try.extend(hint_words)
+    # 如果有逐类目专属关键词，优先使用
+    if per_category_kw:
+        if isinstance(per_category_kw, list):
+            keywords_to_try.extend(per_category_kw)
+        else:
+            keywords_to_try.append(per_category_kw)
+    else:
+        # 尝试中文关键词提示
+        for hint_key, hint_words in CATEGORY_KEYWORD_HINTS.items():
+            if hint_key in category:
+                keywords_to_try.extend(hint_words)
 
     # 追加用户提供的额外关键词
     keywords_to_try.extend(extra_keywords)
@@ -154,10 +182,17 @@ def pick_icon_from_collection(icons, collection, category, used_icons):
     return candidates[0]
 
 
-def fetch_icons(categories, keywords, prefer_collection=None, size=None):
+def fetch_icons(categories, keywords, prefer_collection=None, size=None, per_category_keywords=None):
     """
     主函数：为所有类目统一获取图标。
     保证所有图标来自同一图标集（风格、大小一致）。
+
+    Args:
+        categories: 类目列表
+        keywords: 共享搜索关键词
+        prefer_collection: 偏好图标集
+        size: 图标尺寸
+        per_category_keywords: dict，每个类目的专属搜索关键词，如 {"Norway": "norway", "Estonia": "estonia"}
 
     Returns:
         dict: { "iconField": "iconKey", "map": { category: url, ... }, "collection": "mdi", "icons": [...] }
@@ -168,7 +203,8 @@ def fetch_icons(categories, keywords, prefer_collection=None, size=None):
     # 搜索所有类目的图标
     all_icons = []
     for cat in categories:
-        results = search_icon_for_category(cat, keywords, all_results_cache)
+        cat_kw = per_category_keywords.get(cat) if per_category_keywords else None
+        results = search_icon_for_category(cat, keywords, all_results_cache, per_category_kw=cat_kw)
         category_results[cat] = results
         all_icons.extend(results)
 
@@ -206,7 +242,11 @@ def main():
     parser = argparse.ArgumentParser(description="Fetch consistent icons from Iconify for infographic categories")
     parser.add_argument("--categories", required=True, help='JSON array of category names, e.g. \'["微信","抖音"]\'')
     parser.add_argument("--keywords", default="[]", help='JSON array of extra search keywords, e.g. \'["social"]\'')
-    parser.add_argument("--prefer-collection", default=None, help="Preferred icon collection (e.g. mdi, bi, tabler)")
+    parser.add_argument("--per-category-keywords", default=None,
+                        help='JSON object mapping each category to its own search keyword(s). '
+                             'Use when each category needs a distinct semantic icon (e.g. country flags). '
+                             'Example: \'{"Norway":"norway","Estonia":"estonia"}\'')
+    parser.add_argument("--prefer-collection", default=None, help="Preferred icon collection (e.g. mdi, circle-flags, flagpack)")
     parser.add_argument("--size", type=int, default=None, help="Icon size in pixels (applied to SVG URL)")
     parser.add_argument("--output", default=None, help="Output JSON file path (default: stdout)")
 
@@ -224,7 +264,18 @@ def main():
         print("Error: --keywords must be a valid JSON array", file=sys.stderr)
         sys.exit(1)
 
-    result = fetch_icons(categories, keywords, args.prefer_collection, args.size)
+    per_category_keywords = None
+    if args.per_category_keywords:
+        try:
+            per_category_keywords = json.loads(args.per_category_keywords)
+            if not isinstance(per_category_keywords, dict):
+                print("Error: --per-category-keywords must be a JSON object", file=sys.stderr)
+                sys.exit(1)
+        except json.JSONDecodeError:
+            print("Error: --per-category-keywords must be a valid JSON object", file=sys.stderr)
+            sys.exit(1)
+
+    result = fetch_icons(categories, keywords, args.prefer_collection, args.size, per_category_keywords)
 
     output_json = json.dumps(result, ensure_ascii=False, indent=2)
     if args.output:

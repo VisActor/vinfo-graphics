@@ -282,17 +282,29 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
         symbolType: 'circle',
         size: iconSize,
         visible: (datum: any) => {
+          const originalDatum = datum.datum[datum.datum.length - 1];
           // 分组模式下，只显示叶子节点的 icon
-          if (datum.isLeaf === false) {
+          if (!isNil(schema.groupField) && schema.icon?.field === schema.groupField) {
+            if (datum.isLeaf === false && originalDatum.children?.[0]) {
+              const childDatum = originalDatum.children[0];
+              const iconKey = String(childDatum[schema.icon!.field!] ?? '');
+              return !!iconKey && !!schema.icon!.map![iconKey];
+            }
             return false;
           }
-          const originalDatum = datum.datum[datum.datum.length - 1];
+
           const iconKey = String(originalDatum[schema.icon!.field!] ?? '');
-          return !!iconKey && !!schema.icon!.map![iconKey];
+          const hasIcon = !!iconKey && !!schema.icon!.map![iconKey];
+
+          return datum.isLeaf && hasIcon;
         },
         x: (datum: any, ctx: any) => {
           const bounds = this.getNodeBounds(datum, ctx);
           if (!bounds) return 0;
+
+          if (!isNil(schema.groupField) && schema.icon?.field === schema.groupField) {
+            return bounds.x + iconSize / 2 + (spec.nodePadding! as number);
+          }
 
           switch (position) {
             case 'top-left':
@@ -310,6 +322,10 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
           const bounds = this.getNodeBounds(datum, ctx);
           if (!bounds) return 0;
 
+          if (!isNil(schema.groupField) && schema.icon?.field === schema.groupField) {
+            return bounds.y + iconSize / 2 + (spec.nodePadding! as number);
+          }
+
           switch (position) {
             case 'top-left':
             case 'top-right':
@@ -324,6 +340,15 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
         },
         background: (datum: any) => {
           const originalDatum = datum.datum[datum.datum.length - 1];
+
+          if (!isNil(schema.groupField) && schema.icon?.field === schema.groupField) {
+            if (datum.isLeaf === false && originalDatum.children?.[0]) {
+              const childDatum = originalDatum.children[0];
+              const iconKey = String(childDatum[schema.icon!.field!] ?? '');
+              return schema.icon!.map![iconKey] ?? '';
+            }
+            return '';
+          }
 
           const iconKey = String(originalDatum[schema.icon!.field!] ?? '');
           return schema.icon!.map![iconKey] ?? '';

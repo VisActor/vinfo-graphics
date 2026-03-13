@@ -13,6 +13,36 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
 
 ---
 
+## ⚠️ 强制执行规则（每次生成必须遵守）
+
+以下规则在每次生成信息图时**必须执行**，不可省略或替代：
+
+### 1. 必须在终端执行 `fetch_icons.py` 获取图标
+
+- **禁止**手动拼接 Iconify URL、凭记忆猜测图标名称
+- **禁止**跳过脚本调用直接在 schema 中写入 icon.map
+- 必须将脚本输出的 map 直接用于 schema
+
+### 2. Icon 必须语义匹配数据类目
+
+- 数据是**国家**时 → 使用 `--per-category-keywords` 为每个国家搜索国旗图标，`--prefer-collection twemoji`
+- 数据是**品牌/平台**时 → 使用 `--per-category-keywords` 为每个品牌搜索对应图标
+- 数据是**通用类目**时 → 使用 `--keywords` 传入共享主题关键词
+- 详见 `references/workflows/subprocess-icon-generation.md` 的「语义类型识别」
+
+### 3. 必须在终端执行 `generate_demo_html.py` 生成 HTML
+
+- **禁止**手动拼写 HTML 页面
+- **禁止**只输出 schema JSON 而不生成 HTML 文件
+- 必须使用模板生成可运行的 HTML 文件
+
+### 4. 必须查阅 top-keys 和 type-details
+
+- 生成前必须读取 `references/top-keys/{chartType}.json` 确认可用字段
+- 不确定某字段的结构时必须读取 `references/type-details/{ComponentName}.md`
+
+---
+
 ## 知识库
 
 本技能使用三层知识体系，按需逐层查阅：
@@ -60,6 +90,22 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
 | **Icon 子流程**     | `references/workflows/subprocess-icon-generation.md` | 需要配置语义化图标    |
 | **Unsplash 子流程** | `references/workflows/subprocess-unsplash-image.md`  | 需要背景/装饰图片     |
 | **Icon 查询**       | `references/workflows/scenario-icon-query.md`        | 用户单独搜索/替换图标 |
+
+### 层级 4：生成规则（rules）
+
+`references/rules/{chartType}.md` 记录每种图表类型的生成规则（元素位置防重叠、装饰元素推荐等）。
+
+| 规则文件               | 路径                                 | 何时查阅                     |
+| ---------------------- | ------------------------------------ | ---------------------------- |
+| **通用规则**           | `references/rules/general.md`        | 每次生成图表时               |
+| **Pie 规则**           | `references/rules/pie.md`            | 生成/编辑 pie 饼图/环形图时  |
+| **Bar 规则**           | `references/rules/bar.md`            | 生成/编辑 bar 条形图时       |
+| **Area 规则**          | `references/rules/area.md`           | 生成/编辑 area 面积图时      |
+| **CirclePacking 规则** | `references/rules/circle-packing.md` | 生成/编辑 circlePacking 时   |
+| **Treemap 规则**       | `references/rules/treemap.md`        | 生成/编辑 treemap 矩阵树图时 |
+| **Column 规则**        | `references/rules/column.md`         | 生成/编辑 column 柱状图时    |
+
+**何时查阅**：配置图表特有字段时（步骤 6），必须读取对应图表类型的 rules 文件 + `general.md`，按规则调整字段配置。
 
 ### 辅助资源
 
@@ -115,18 +161,19 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
    - `background`：如需背景图 → 执行 **Unsplash 子流程** (`subprocess-unsplash-image.md`)
    - `theme` / `colors`：预设主题名称或自定义颜色
    - `legend`：LegendConfig 对象
-5. **Icon 生成（必选）** → 必须调用 `scripts/fetch_icons.py` 脚本获取图标
+5. **Icon 生成（必选）** → 🚨 必须在终端执行 `scripts/fetch_icons.py` 脚本
+   - 先识别语义类型：国家→国旗(`--per-category-keywords` + `twemoji`)，品牌→品牌图标，通用→主题关键词
    - **禁止手动拼接 Iconify URL**，必须使用脚本
    - 脚本输出包含统一风格的 icon map，直接用于 schema
 
 ### 图表特有流程
 
-6. **配置图表特有字段** → 查阅 `top-keys/{chartType}.json` 中除通用字段外的特有字段，按需查阅 `type-details/{ComponentName}.md`
+6. **配置图表特有字段** → 查阅 `top-keys/{chartType}.json` + `rules/{chartType}.md` + `rules/general.md`，按规则配置特有字段并确保元素位置不冲突
 
 ### 输出流程
 
-7. **Schema 验证** → 自查清单：字段名一致性、icon map 完整性、position 有效性
-8. **输出 HTML** → 使用 `scripts/generate_demo_html.py` 生成可运行页面
+7. **Schema 验证** → 自查清单：字段名一致性、icon 语义匹配、icon map 完整性、position 有效性
+8. **输出 HTML** → 🚨 必须在终端执行 `scripts/generate_demo_html.py` 生成可运行页面
 
 ---
 
@@ -140,12 +187,29 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
 
 ### fetch_icons.py 快速参考
 
+**模式 A：逐类目搜索**（国家/品牌等独立实体）
+
 ```bash
+# 国家数据 → 国旗图标
+python <SKILL_DIR>/scripts/fetch_icons.py \
+  --categories '["Norway","Estonia","Greece"]' \
+  --per-category-keywords '{"Norway":"norway flag","Estonia":"estonia flag","Greece":"greece flag"}' \
+  --prefer-collection twemoji
+
+# 品牌数据 → 品牌图标
 python <SKILL_DIR>/scripts/fetch_icons.py \
   --categories '["微信","抖音","微博"]' \
-  --keywords '["social","chat"]' \
-  --prefer-collection mdi \
-  --size 24
+  --per-category-keywords '{"微信":"wechat","抖音":"tiktok","微博":"weibo"}' \
+  --prefer-collection mdi
+```
+
+**模式 B：共享关键词搜索**（通用类目）
+
+```bash
+python <SKILL_DIR>/scripts/fetch_icons.py \
+  --categories '["手机","电脑","平板"]' \
+  --keywords '["device","phone","laptop"]' \
+  --prefer-collection mdi
 ```
 
 输出包含 `map`（category → SVG URL 映射）和 `collection`（统一的图标集名称）。
@@ -175,11 +239,13 @@ python <SKILL_DIR>/scripts/fetch_unsplash.py --list-categories
 4. **title 必须是对象**：`{ text: "标题" }`，不支持纯字符串
 5. **legend 必须是对象**：`{ visible: true }`，不支持布尔值
 6. **theme 只接受预设名称字符串**：自定义主题配置需使用 `customizedTheme` 字段
-7. **Icon 是必选的**：每个信息图都必须调用 `fetch_icons.py` 脚本获取语义化图标
-8. **禁止手动拼接 Iconify URL**：必须使用 `fetch_icons.py` 脚本
-9. **图标风格一致性**：所有图标必须来自同一图标集（如全部 `mdi:`），通过 `fetch_icons.py` 的 `--prefer-collection` 保证
-10. **字段名严格匹配**：`categoryField`、`valueField`、`groupField`、`icon.field`（如有）必须与 data 中实际字段名完全一致
-11. **icon.map key 必须匹配**：`icon.map` 的 key 必须与 data 中 `icon.field` 对应的值一致
+7. **Icon 是必选的**：每个信息图都必须在终端执行 `fetch_icons.py` 脚本获取语义化图标
+8. **禁止手动拼接 Iconify URL**：必须使用 `fetch_icons.py` 脚本，禁止凭记忆猜测图标名
+9. **图标语义匹配**：图标必须与数据类目语义对应 — 国家数据必须用国旗图标(`--per-category-keywords` + `twemoji`)，品牌数据用品牌图标，通用数据用主题图标
+10. **图标风格一致性**：所有图标必须来自同一图标集，通过 `--prefer-collection` 保证
+11. **HTML 必须通过脚本生成**：必须在终端执行 `generate_demo_html.py`，禁止手动拼写 HTML
+12. **字段名严格匹配**：`categoryField`、`valueField`、`groupField`、`icon.field`（如有）必须与 data 中实际字段名完全一致
+13. **icon.map key 必须匹配**：`icon.map` 的 key 必须与 data 中 `icon.field` 对应的值一致
 
 ---
 
@@ -194,8 +260,8 @@ python <SKILL_DIR>/scripts/fetch_unsplash.py --list-categories
 3. 选择图表 → `bar`
 4. 查阅 `top-keys/bar.json` → 确认可用字段
 5. 配置通用字段 → title, theme
-6. **Icon 子流程**：
-   - 调用 `scripts/fetch_icons.py --categories '["微信","抖音","微博","小红书","知乎"]' --keywords '["social","chat","message"]' --prefer-collection mdi`
+6. **Icon 子流程**（语义类型：品牌 → 逐类目搜索）：
+   - **在终端执行**：`python <SKILL_DIR>/scripts/fetch_icons.py --categories '["微信","抖音","微博","小红书","知乎"]' --per-category-keywords '{"微信":"wechat","抖音":"tiktok","微博":"weibo","小红书":"xiaohongshu","知乎":"zhihu"}' --prefer-collection mdi`
    - 获取统一风格图标映射
 7. 配置特有字段 → `sort: "desc"`, `rank`, `bar.cornerRadius`
-8. 验证 + 输出 HTML
+8. **在终端执行**：`python <SKILL_DIR>/scripts/generate_demo_html.py --template ... --schema '...' --output "social-ranking.html"`
