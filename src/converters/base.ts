@@ -81,11 +81,11 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
     };
 
     if (!isNil(schema.width)) {
-      spec.width = schema.width
+      spec.width = schema.width;
     }
 
     if (!isNil(schema.height)) {
-      spec.height = schema.height
+      spec.height = schema.height;
     }
 
     // 主题配置
@@ -296,7 +296,7 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
       return { visible: true };
     }
 
-    const result: Record<string, unknown> = { visible: true };
+    const result: Record<string, unknown> = { visible: legend.visible !== false };
     if (legend.position) {
       result.orient = legend.position;
     }

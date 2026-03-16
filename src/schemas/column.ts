@@ -11,7 +11,7 @@ import { linearGradientSchema, axisSchema, brandImageSchema, baseChartSchema } f
 const columnLabelSchema = z
   .object({
     visible: z.boolean().optional(),
-    position: z.enum(['inside', 'top', 'bottom']).optional(),
+    position: z.enum(['middle', 'inside-top', 'inside-bottom', 'top', 'bottom']).optional(),
     format: z.string().optional(),
     minVisible: z.number().optional(),
   })

@@ -185,11 +185,6 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
       (labelSpec.style as any).fill = this.getThemeConfig()!.secondaryTextColor;
     }
 
-    // 内标签用白色文字
-    if (labelPosition?.startsWith('inside')) {
-      (labelSpec.style as any).fill = '#fff';
-    }
-
     // 格式化
     if (schema.label?.format) {
       labelSpec.formatMethod = (label: string, datum: any) => {

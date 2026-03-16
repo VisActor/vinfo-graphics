@@ -172,17 +172,12 @@ export class ColumnChartConverter extends BaseConverter<ColumnChartSchema> {
 
     const labelSpec: Record<string, unknown> = {
       visible: true,
-      position: labelPosition,
+      position: labelPosition === 'middle' ? 'inside' : labelPosition,
       style: {},
     };
 
     if (this.getThemeConfig().secondaryTextColor) {
       (labelSpec.style as any).fill = this.getThemeConfig()!.secondaryTextColor;
-    }
-
-    // 内标签用白色文字
-    if (labelPosition?.startsWith('inside')) {
-      (labelSpec.style as any).fill = '#fff';
     }
 
     // 格式化
