@@ -274,6 +274,34 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
       spec.extensionMark = [];
     }
 
+    const getIconVisible = (datum: any) => {
+      const originalDatum = datum.datum[datum.datum.length - 1];
+      if (!isNil(schema.groupField) && schema.icon?.field === schema.groupField) {
+        if (datum.isLeaf === false && originalDatum.children?.[0]) {
+          const childDatum = originalDatum.children[0];
+          const iconKey = String(childDatum[schema.icon!.field!] ?? '');
+          return !!iconKey && !!schema.icon!.map![iconKey];
+        }
+        return false;
+      }
+      const iconKey = String(originalDatum[schema.icon!.field!] ?? '');
+      return datum.isLeaf && !!iconKey && !!schema.icon!.map![iconKey];
+    };
+
+    const getIconImage = (datum: any) => {
+      const originalDatum = datum.datum[datum.datum.length - 1];
+      if (!isNil(schema.groupField) && schema.icon?.field === schema.groupField) {
+        if (datum.isLeaf === false && originalDatum.children?.[0]) {
+          const childDatum = originalDatum.children[0];
+          const iconKey = String(childDatum[schema.icon!.field!] ?? '');
+          return schema.icon!.map![iconKey] ?? '';
+        }
+        return '';
+      }
+      const iconKey = String(originalDatum[schema.icon!.field!] ?? '');
+      return schema.icon!.map![iconKey] ?? '';
+    };
+
     (spec.extensionMark as Record<string, unknown>[]).push({
       type: 'symbol',
       dataIndex: 0,
@@ -281,23 +309,7 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
         ...schema.icon.style,
         symbolType: 'circle',
         size: iconSize,
-        visible: (datum: any) => {
-          const originalDatum = datum.datum[datum.datum.length - 1];
-          // 分组模式下，只显示叶子节点的 icon
-          if (!isNil(schema.groupField) && schema.icon?.field === schema.groupField) {
-            if (datum.isLeaf === false && originalDatum.children?.[0]) {
-              const childDatum = originalDatum.children[0];
-              const iconKey = String(childDatum[schema.icon!.field!] ?? '');
-              return !!iconKey && !!schema.icon!.map![iconKey];
-            }
-            return false;
-          }
-
-          const iconKey = String(originalDatum[schema.icon!.field!] ?? '');
-          const hasIcon = !!iconKey && !!schema.icon!.map![iconKey];
-
-          return datum.isLeaf && hasIcon;
-        },
+        visible: getIconVisible,
         x: (datum: any, ctx: any) => {
           const bounds = this.getNodeBounds(datum, ctx);
           if (!bounds) return 0;
@@ -338,20 +350,56 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
               return bounds.y + bounds.height / 2;
           }
         },
-        background: (datum: any) => {
-          const originalDatum = datum.datum[datum.datum.length - 1];
+      },
+    });
+
+    (spec.extensionMark as Record<string, unknown>[]).push({
+      type: 'image',
+      dataIndex: 0,
+      style: {
+        visible: getIconVisible,
+        width: iconSize * 0.8,
+        height: iconSize * 0.8,
+        image: getIconImage,
+        x: (datum: any, ctx: any) => {
+          const bounds = this.getNodeBounds(datum, ctx);
+          if (!bounds) return 0;
 
           if (!isNil(schema.groupField) && schema.icon?.field === schema.groupField) {
-            if (datum.isLeaf === false && originalDatum.children?.[0]) {
-              const childDatum = originalDatum.children[0];
-              const iconKey = String(childDatum[schema.icon!.field!] ?? '');
-              return schema.icon!.map![iconKey] ?? '';
-            }
-            return '';
+            return bounds.x + iconSize * 0.1 + (spec.nodePadding! as number);
           }
 
-          const iconKey = String(originalDatum[schema.icon!.field!] ?? '');
-          return schema.icon!.map![iconKey] ?? '';
+          switch (position) {
+            case 'top-left':
+            case 'bottom-left':
+              return bounds.x + offset + iconSize * 0.1;
+            case 'top-right':
+            case 'bottom-right':
+              return bounds.x + bounds.width - offset - iconSize * 0.9;
+            case 'center':
+            default:
+              return bounds.x + bounds.width / 2 - iconSize * 0.4;
+          }
+        },
+        y: (datum: any, ctx: any) => {
+          const bounds = this.getNodeBounds(datum, ctx);
+          if (!bounds) return 0;
+
+          if (!isNil(schema.groupField) && schema.icon?.field === schema.groupField) {
+            return bounds.y + iconSize * 0.1 + (spec.nodePadding! as number);
+          }
+
+          switch (position) {
+            case 'top-left':
+            case 'top-right':
+              return bounds.y + offset + iconSize * 0.1;
+            case 'bottom-left':
+            case 'bottom-right':
+              return bounds.y + bounds.height - offset - iconSize * 0.9;
+            case 'center':
+            default:
+              return bounds.y + bounds.height / 2 - iconSize * 0.4;
+          }
         },
       },
     });

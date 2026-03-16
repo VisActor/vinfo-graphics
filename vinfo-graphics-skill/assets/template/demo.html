@@ -97,6 +97,59 @@
         align-items: center;
         justify-content: space-between;
       }
+      .code-panel .panel-header-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .code-panel .panel-hint {
+        font-size: 12px;
+        font-weight: 400;
+        text-transform: none;
+        letter-spacing: 0;
+        color: #94a3b8;
+      }
+      .btn-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        border-radius: 4px;
+        border: 1px solid #334155;
+        background: transparent;
+        color: #94a3b8;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+      }
+      .btn-icon:hover {
+        background: #334155;
+        color: #e2e8f0;
+      }
+      .btn-icon .tooltip {
+        position: absolute;
+        bottom: calc(100% + 6px);
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 4px 8px;
+        border-radius: 4px;
+        background: #0f172a;
+        color: #e2e8f0;
+        font-size: 11px;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .btn-icon:hover .tooltip {
+        opacity: 1;
+      }
+      .btn-icon.is-copied {
+        color: #4ade80;
+        border-color: #4ade80;
+      }
       .preview-panel .panel-header {
         background: #f8fafc;
         color: #64748b;
@@ -272,6 +325,30 @@
         <div class="code-panel is-hidden">
           <div class="panel-header">
             <span>Schema Config</span>
+            <div class="panel-header-right">
+              <span class="panel-hint">修改代码，更新图表效果</span>
+              <button
+                class="btn-icon"
+                id="copy-schema-btn"
+                onclick="copySchema()"
+                title="Copy Schema"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span class="tooltip">复制 Schema</span>
+              </button>
+            </div>
           </div>
           <div class="code-editor">
             <textarea id="code-input" spellcheck="false"></textarea>
@@ -282,65 +359,8 @@
 
     <script>
       // ====== SCHEMA_START ======
-      const schema = {
-        chartType: 'bar',
-        title: {
-          text: 'Best Universities in America',
-          subtext: '2023-2024 Tuition and Fees (USD, Thousands)',
-          position: 'left',
-        },
-        data: [
-          { rank: 1, university: 'Princeton', tuition: 59.7, type: 'private' },
-          { rank: 2, university: 'MIT', tuition: 60.2, type: 'private' },
-          { rank: 3, university: 'Harvard', tuition: 59.1, type: 'private' },
-          { rank: 4, university: 'Stanford', tuition: 62.5, type: 'private' },
-          { rank: 5, university: 'Yale', tuition: 64.7, type: 'private' },
-          { rank: 6, university: 'Penn', tuition: 66.1, type: 'private' },
-          { rank: 7, university: 'Caltech', tuition: 63.0, type: 'private' },
-          { rank: 8, university: 'Duke', tuition: 66.2, type: 'private' },
-          { rank: 9, university: 'Brown', tuition: 68.2, type: 'private' },
-          { rank: 10, university: 'Northwestern', tuition: 60.0, type: 'private' },
-          { rank: 15, university: 'Berkeley (CA)', tuition: 46.3, type: 'public' },
-          { rank: 16, university: 'UCLA', tuition: 46.3, type: 'public' },
-          { rank: 20, university: 'University of Michigan', tuition: 57.3, type: 'public' },
-        ],
-        categoryField: 'university',
-        valueField: 'tuition',
-        sort: 'desc',
-        background: {
-          color: '#FAFAFA',
-        },
-        bar: {
-          cornerRadius: 3,
-          linearGradient: {
-            direction: 'left-right',
-            colors: ['#003D7A', '#1565C0'],
-          },
-        },
-        rank: {
-          visible: true,
-          position: 'start',
-          // style: {
-          //   fontSize: 12,
-          //   fill: '#fff',
-          //   fontWeight: 'bold',
-          //   backgroundColor: '#003D7A',
-          //   cornerRadius: 12,
-          // },
-        },
-        label: {
-          visible: true,
-          position: 'inside-right',
-          format: '${value}K',
-        },
-        xAxis: {
-          visible: false,
-        },
-        yAxis: {
-          visible: true,
-        },
-        legend: false,
-      };
+      // prettier-ignore
+      {{schema}}
       // ====== SCHEMA_END ======
 
       let chartInstance = null;
@@ -371,6 +391,20 @@
 
       function toggleCodePanel() {
         setCodePanelVisibility(!isCodePanelVisible);
+      }
+
+      function copySchema() {
+        const codeInput = document.getElementById('code-input');
+        const text = codeInput.value;
+        navigator.clipboard.writeText(text).then(function () {
+          const btn = document.getElementById('copy-schema-btn');
+          btn.classList.add('is-copied');
+          btn.querySelector('.tooltip').textContent = '已复制!';
+          setTimeout(function () {
+            btn.classList.remove('is-copied');
+            btn.querySelector('.tooltip').textContent = '复制 Schema';
+          }, 1500);
+        });
       }
 
       function showDownloadError(message) {

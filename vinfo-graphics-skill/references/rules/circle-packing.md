@@ -19,8 +19,8 @@
     "visible": true,
     "field": "bgKey",
     "map": {
-      "手机": "https://images.unsplash.com/photo-xxx?w=300&h=300&fit=crop",
-      "电脑": "https://images.unsplash.com/photo-yyy?w=300&h=300&fit=crop"
+      "手机": "https://cdn.pixabay.com/photo/xxx/xxx_1280.jpg",
+      "电脑": "https://cdn.pixabay.com/photo/yyy/yyy_1280.jpg"
     },
     "opacity": 0.3
   }
@@ -29,20 +29,23 @@
 
 ### 图片来源选择
 
-| 数据类型                     | 图片来源                    | 说明                                 |
-| ---------------------------- | --------------------------- | ------------------------------------ |
-| 人物/频道/博主               | Unsplash 子流程，搜索头像   | 每个人物搜索对应的人像或头像风格图片 |
-| 国家/地区                    | Unsplash 或国旗图片         | 优先使用国旗 icon/图片，增强辨识度   |
-| 具体实体（产品、城市、食物） | Unsplash 子流程，按类目搜索 | 每个类目搜索对应的实物图片           |
-| 品牌/公司                    | Unsplash 或品牌相关图片     | 体现品牌特色，如 logo 相关的场景图   |
-| 抽象类目（部门、季度）       | Unsplash 子流程，按主题搜索 | 使用同一主题的不同图片               |
+| 数据类型                     | 图片来源                              | 说明                                 |
+| ---------------------------- | ------------------------------------- | ------------------------------------ |
+| 人物/频道/博主               | 从预置图片库选择对应分类图片          | 从 general 或 sports 分类选择        |
+| 国家/地区                    | 从预置图片库选择或使用国旗 icon       | 优先使用国旗 icon/图片，增强辨识度   |
+| 具体实体（产品、城市、食物） | 从预置图片库对应分类选择              | 从 technology、nature、food 分类选择 |
+| 品牌/公司                    | 从预置图片库 business 分类选择        | 体现品牌特色                         |
+| 抽象类目（部门、季度）       | 从预置图片库 general 分类选择         | 使用抽象装饰图片                     |
 
 ### 注意事项
 
 - `opacity` 推荐设置 `0.2` ~ `0.4`，避免背景图太亮影响标签可读性
 - 如果背景图本身视觉较丰富（如人物头像），建议 `opacity: 0.25 ~ 0.35`
 - data 中需要添加 `bgKey` 字段（或复用 categoryField 的值作为 map key）
-- 图片 URL 使用 Unsplash 的 `?w=300&h=300&fit=crop` 参数裁剪为正方形
+- **circleBackground 中每个圆的图片必须与该数据项语义相关**（如 YouTube 频道 → 选择相关主题图片，而非通用图片）
+- **circleBackground 中的图片不可与 background.image 重复**
+- **不同圆之间的图片也不可重复**
+- 如预置图片库中没有匹配的图片，可跳过 circleBackground 配置
 
 ---
 
@@ -172,26 +175,26 @@
 }
 ```
 
-或搭配 Unsplash 图片：
+或搭配预置图片库背景图：
 
 ```json
 {
   "background": {
     "color": "#1e1b4b",
-    "image": "https://images.unsplash.com/photo-xxx?w=1920&h=1080&fit=crop"
+    "image": "https://cdn.pixabay.com/photo/xxx/xxx_1280.jpg"
   }
 }
 ```
 
 ### brandImage（装饰图片）
 
-加入与主题相关的装饰元素，增强信息图效果：
+从预置图片库的 illustrations 分类中选择装饰元素：
 
 ```json
 {
   "brandImage": {
     "visible": true,
-    "url": "https://images.unsplash.com/photo-xxx?w=400&h=400&fit=crop",
+    "url": "https://pixabay.com/get/xxx_1280.png",
     "width": 200,
     "height": 200,
     "align": "right",

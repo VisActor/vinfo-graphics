@@ -1,7 +1,7 @@
 # 子流程：Icon 生成
 
 > **何时使用**：信息图生成/编辑过程中，需要为数据类目配置语义化图标时。
-> **核心原则**：所有图标必须来自同一图标集，保持风格和大小一致。图标必须与每个类目的**语义**匹配。
+> **核心原则**：所有图标必须来自同一图标集，保持风格和大小一致。图标必须与每个类目的**语义**匹配。图标颜色要与整体主题协调，单色图标可通过 URL `color` 参数自定义颜色。
 
 ---
 
@@ -151,6 +151,8 @@ python <SKILL_DIR>/scripts/fetch_icons.py \
 }
 ```
 
+> **脚本输出的是不带颜色参数的基础 URL。** 对于单色图标（如 `mdi`、`lucide`、`bi` 等），需要在写入 schema 前根据主题手动追加 `color` 参数（见步骤 5.2）。国旗类图标（`twemoji`、`openmoji`）已有内置调色板，不受 `color` 参数影响，无需追加。
+
 ---
 
 ## 步骤 5：生成 Icon 配置
@@ -169,15 +171,40 @@ data: [
 
 ### 5.2 生成 icon 配置
 
+对于单色图标，根据 schema 的整体主题在 URL 中追加 `color` 参数（`#` 必须编码为 `%23`）：
+
+| 主题类型                                      | 推荐颜色             | color 参数示例                 |
+| --------------------------------------------- | -------------------- | ------------------------------ |
+| 深色主题（`dark`、`dream`、`neon`、`oil` 等） | 白色或浅色           | `?color=%23ffffff`             |
+| 浅色主题（默认、`light`）                     | 深灰或品牌主色       | `?color=%231e293b`             |
+| 彩色背景（linearGradient/image）              | 白色，与背景形成对比 | `?color=%23ffffff`             |
+| 自定义颜色方案                                | 与图表主色调一致     | `?color=%234A90D9`（蓝色示例） |
+
+> ⚠️ `color` 参数仅对**单色图标**（monotone）有效，`twemoji`、`fluent-emoji-flat` 等带内置调色板的图标不受影响，无需追加。
+
 ```javascript
+// 浅色主题示例（color = #1e293b）
 icon: {
-  field: "iconKey",           // data 中存储 icon key 的字段名
+  field: "iconKey",
   map: {
-    "Norway": "https://api.iconify.design/twemoji/flag-norway.svg",
+    "Norway": "https://api.iconify.design/twemoji/flag-norway.svg",      // 国旗：不加 color
     "Estonia": "https://api.iconify.design/twemoji/flag-estonia.svg"
   },
   visible: true,
-  position: "start",          // 根据图表类型选择（见下表）
+  position: "start",
+  size: 24
+}
+
+// 深色主题示例（color = #ffffff，单色图标集）
+icon: {
+  field: "iconKey",
+  map: {
+    "手机": "https://api.iconify.design/mdi/cellphone.svg?color=%23ffffff",
+    "电脑": "https://api.iconify.design/mdi/laptop.svg?color=%23ffffff",
+    "平板": "https://api.iconify.design/mdi/tablet.svg?color=%23ffffff"
+  },
+  visible: true,
+  position: "start",
   size: 24
 }
 ```
@@ -199,11 +226,12 @@ icon: {
 
 ## 验证清单
 
-| 检查项             | 要求                                                                 |
-| ------------------ | -------------------------------------------------------------------- |
-| 语义匹配           | 图标必须与每个类目的语义对应（国家→国旗，品牌→品牌图标）             |
-| icon.field 有效    | 必须是 data 中存在的字段名                                           |
-| icon.map key 完整  | 每个数据项的 iconKey 值都有对应的 URL                                |
-| icon.map URL 有效  | 所有 URL 格式为 `https://api.iconify.design/{collection}/{name}.svg` |
-| 图标风格一致       | 所有图标来自同一图标集（如全部是 `twemoji:` 或全部是 `mdi:`）        |
-| icon.position 有效 | 必须是该图表类型支持的 position 值                                   |
+| 检查项             | 要求                                                                                                      |
+| ------------------ | --------------------------------------------------------------------------------------------------------- |
+| 语义匹配           | 图标必须与每个类目的语义对应（国家→国旗，品牌→品牌图标）                                                  |
+| icon.field 有效    | 必须是 data 中存在的字段名                                                                                |
+| icon.map key 完整  | 每个数据项的 iconKey 值都有对应的 URL                                                                     |
+| icon.map URL 有效  | 所有 URL 格式为 `https://api.iconify.design/{collection}/{name}.svg`（单色图标可附加 `?color=%23xxxxxx`） |
+| 图标风格一致       | 所有图标来自同一图标集（如全部是 `twemoji:` 或全部是 `mdi:`）                                             |
+| 图标颜色与主题适配 | 深色主题用白/浅色，浅色主题用深灰/主色；国旗等多色图标无需追加 color 参数                                 |
+| icon.position 有效 | 必须是该图表类型支持的 position 值                                                                        |

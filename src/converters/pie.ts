@@ -164,9 +164,7 @@ export class PieChartConverter extends BaseConverter<PieChartSchema> {
         },
         // 获取扇区中心的 x 坐标
         x: (datum: any, ctx: any) => {
-          // 获取扇区的角度信息
           const angle = this.getDatumAngle(datum, ctx);
-          // 使用中间半径位置
           const midRadius = this.getMidRadius(
             ctx,
             innerRadius,
@@ -175,7 +173,6 @@ export class PieChartConverter extends BaseConverter<PieChartSchema> {
             offsetRadius
           );
           const center = ctx.getCenter();
-
           return center.x() + midRadius * Math.cos(angle);
         },
         // 获取扇区中心的 y 坐标
@@ -189,13 +186,51 @@ export class PieChartConverter extends BaseConverter<PieChartSchema> {
             offsetRadius
           );
           const center = ctx.getCenter();
-
           return center.y() + midRadius * Math.sin(angle);
         },
+      },
+    });
+
+    (spec.extensionMark as Record<string, unknown>[]).push({
+      type: 'image',
+      dataIndex: 0,
+      style: {
+        visible: (datum: any) => {
+          const iconKey = String(datum[schema.icon!.field!]);
+          return !!iconKey && !!schema.icon!.map![iconKey];
+        },
+        width: iconSize * 0.8,
+        height: iconSize * 0.8,
         // 背景图片
-        background: (datum: any) => {
+        image: (datum: any) => {
           const iconKey = String(datum[schema.icon!.field!]);
           return schema.icon!.map![iconKey];
+        },
+        // 获取扇区中心的 x 坐标（图片左上角 = 中心 - 40%）
+        x: (datum: any, ctx: any) => {
+          const angle = this.getDatumAngle(datum, ctx);
+          const midRadius = this.getMidRadius(
+            ctx,
+            innerRadius,
+            outerRadius,
+            position,
+            offsetRadius
+          );
+          const center = ctx.getCenter();
+          return center.x() + midRadius * Math.cos(angle) - iconSize * 0.4;
+        },
+        // 获取扇区中心的 y 坐标（图片左上角 = 中心 - 40%）
+        y: (datum: any, ctx: any) => {
+          const angle = this.getDatumAngle(datum, ctx);
+          const midRadius = this.getMidRadius(
+            ctx,
+            innerRadius,
+            outerRadius,
+            position,
+            offsetRadius
+          );
+          const center = ctx.getCenter();
+          return center.y() + midRadius * Math.sin(angle) - iconSize * 0.4;
         },
       },
     });

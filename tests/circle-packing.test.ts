@@ -11,10 +11,10 @@ describe('CirclePackingChart Schema', () => {
         data: [
           { product: '手机', sales: 1200 },
           { product: '电脑', sales: 800 },
-          { product: '平板', sales: 600 }
+          { product: '平板', sales: 600 },
         ],
         categoryField: 'product',
-        valueField: 'sales'
+        valueField: 'sales',
       };
 
       const spec = toVChartSpec(schema);
@@ -33,8 +33,8 @@ describe('CirclePackingChart Schema', () => {
         circle: {
           padding: 10,
           strokeWidth: 2,
-          strokeColor: '#fff'
-        }
+          strokeColor: '#fff',
+        },
       };
 
       const spec = toVChartSpec(schema);
@@ -52,8 +52,8 @@ describe('CirclePackingChart Schema', () => {
         valueField: 'sales',
         label: {
           visible: true,
-          position: 'center'
-        }
+          position: 'center',
+        },
       };
 
       const spec = toVChartSpec(schema);
@@ -68,11 +68,11 @@ describe('CirclePackingChart Schema', () => {
         title: '产品销售分布',
         data: [
           { product: '手机', sales: 1200 },
-          { product: '电脑', sales: 800 }
+          { product: '电脑', sales: 800 },
         ],
         categoryField: 'product',
         valueField: 'sales',
-        colors: ['#FF6B6B', '#4ECDC4', '#45B7D1']
+        colors: ['#FF6B6B', '#4ECDC4', '#45B7D1'],
       };
 
       const spec = toVChartSpec(schema);
@@ -87,7 +87,7 @@ describe('CirclePackingChart Schema', () => {
         chartType: 'circlePacking',
         data: [{ product: '手机', sales: 1200 }],
         categoryField: 'product',
-        valueField: 'sales'
+        valueField: 'sales',
       };
 
       const result = validate(schema);
@@ -99,13 +99,104 @@ describe('CirclePackingChart Schema', () => {
       const schema: CirclePackingChartSchema = {
         chartType: 'circlePacking',
         data: [{ product: '手机', sales: 1200 }],
-        valueField: 'sales'
+        valueField: 'sales',
       } as any;
 
       const result = validate(schema);
 
       expect(result.valid).toBe(false);
       expect(result.errors).toContain('categoryField is required');
+    });
+  });
+
+  describe('scenario: global commodity flows circle packing', () => {
+    it('should produce spec with icon, nodeBackground, and label for commodity data', () => {
+      const schema: CirclePackingChartSchema = {
+        chartType: 'circlePacking',
+        title: 'Share of Global Commodity Flows',
+        data: [
+          { Trade: 'Crude oil', value: 38, icon: 'oil', bg: 'oil' },
+          { Trade: 'Liquefied petroleum gas', value: 29, icon: 'gas', bg: 'gas' },
+          { Trade: 'Liquefied natural gas', value: 19, icon: 'lng', bg: 'lng' },
+          { Trade: 'Refined oil products', value: 19, icon: 'refined', bg: 'refined' },
+          {
+            Trade: 'Chemicals, including fertilizers',
+            value: 13,
+            icon: 'chemical',
+            bg: 'chemical',
+          },
+          { Trade: 'Container', value: 2.8, icon: 'container', bg: 'container' },
+          { Trade: 'Dry bulk, including grains', value: 2.4, icon: 'grain', bg: 'grain' },
+        ],
+        categoryField: 'Trade',
+        valueField: 'value',
+        icon: {
+          field: 'icon',
+          map: {
+            oil: 'https://example.com/icons/oil.png',
+            gas: 'https://example.com/icons/gas.png',
+            lng: 'https://example.com/icons/lng.png',
+            refined: 'https://example.com/icons/refined.png',
+            chemical: 'https://example.com/icons/chemical.png',
+            container: 'https://example.com/icons/container.png',
+            grain: 'https://example.com/icons/grain.png',
+          },
+          size: 32,
+          visible: true,
+          position: 'top-left',
+        },
+        circleBackground: {
+          field: 'bg',
+          map: {
+            oil: 'https://example.com/bg/oil.jpg',
+            gas: 'https://example.com/bg/gas.jpg',
+            lng: 'https://example.com/bg/lng.jpg',
+            refined: 'https://example.com/bg/refined.jpg',
+            chemical: 'https://example.com/bg/chemical.jpg',
+            container: 'https://example.com/bg/container.jpg',
+            grain: 'https://example.com/bg/grain.jpg',
+          },
+          opacity: 0.3,
+          visible: true,
+        },
+        label: {
+          visible: true,
+          showPercent: true,
+        },
+      };
+
+      const spec = toVChartSpec(schema);
+
+      // 1. Chart type should be circlePacking
+      expect(spec.type).toBe('circlePacking');
+
+      // 2. Label should be present and visible
+      expect(spec.label).toBeDefined();
+      expect((spec.label as any).visible).toBe(true);
+
+      // 3. extensionMark should exist for icon and nodeBackground
+      expect(spec.extensionMark).toBeDefined();
+      expect(Array.isArray(spec.extensionMark)).toBe(true);
+
+      const marks = spec.extensionMark as Record<string, unknown>[];
+      // At least 2 extensionMarks: background (symbol) + icon (symbol) + rank marks
+      expect(marks.length).toBeGreaterThanOrEqual(2);
+
+      // nodeBackground mark (first, unshifted) should be a symbol with background style
+      const bgMark = marks[0];
+      expect(bgMark.type).toBe('symbol');
+      expect((bgMark.style as any).background).toBeDefined();
+      expect((bgMark.style as any).opacity).toBe(0.3);
+
+      // icon mark should be a symbol with background callback
+      const iconMark = marks.find(
+        (m) =>
+          m.type === 'symbol' && m !== bgMark && typeof (m.style as any).background === 'function'
+      );
+      expect(iconMark).toBeDefined();
+
+      // 4. Data should contain all 7 commodity items
+      expect((spec.data as any).values).toHaveLength(7);
     });
   });
 

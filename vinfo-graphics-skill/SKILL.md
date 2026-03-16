@@ -1,6 +1,6 @@
 ---
 name: vinfo-graphics-skill
-description: VInfo Graphics 信息图专家助手，基于结构化知识库（top-keys 字段索引 + type-details 类型定义）生成、编辑与诊断信息图。支持 pie/bar/column/area/treemap/circlePacking 六种图表类型，自动配置语义化 Icon（Iconify API）和背景图片（Unsplash）。当用户需要创建信息图、修改图表配置、诊断图表问题、搜索图标、配置背景图时使用此技能。即使用户没有明确提到"信息图"，只要涉及数据可视化图表、图表schema配置、Iconify图标、信息图样式定制等任务就应该触发。
+description: VInfo Graphics 信息图专家助手，基于结构化知识库（top-keys 字段索引 + type-details 类型定义）生成、编辑与诊断信息图。支持 pie/bar/column/area/treemap/circlePacking 六种图表类型，自动配置语义化 Icon（Iconify API）和预置背景图片/插图。当用户需要创建信息图、修改图表配置、诊断图表问题、搜索图标、配置背景图时使用此技能。即使用户没有明确提到"信息图"，只要涉及数据可视化图表、图表schema配置、Iconify图标、信息图样式定制等任务就应该触发。
 ---
 
 # VInfo Graphics Skill
@@ -88,7 +88,7 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
 | **编辑流程**        | `references/workflows/scenario-2-editing.md`         | 修改现有图表配置      |
 | **诊断流程**        | `references/workflows/scenario-3-diagnosis.md`       | 排查图表显示问题      |
 | **Icon 子流程**     | `references/workflows/subprocess-icon-generation.md` | 需要配置语义化图标    |
-| **Unsplash 子流程** | `references/workflows/subprocess-unsplash-image.md`  | 需要背景/装饰图片     |
+| **图片子流程**       | `references/workflows/subprocess-image.md`            | 需要背景/装饰图片     |
 | **Icon 查询**       | `references/workflows/scenario-icon-query.md`        | 用户单独搜索/替换图标 |
 
 ### 层级 4：生成规则（rules）
@@ -111,7 +111,7 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
 
 | 资源            | 路径                              | 何时查阅             |
 | --------------- | --------------------------------- | -------------------- |
-| Unsplash 图片库 | `references/unsplash/images.json` | 获取预设背景图片 ID  |
+| 预置图片库      | `references/images/images.json`   | 获取背景图/插图 URL  |
 | 示例            | `references/examples/*.md`        | 参考完整 schema 示例 |
 
 ---
@@ -158,7 +158,7 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
    - `title`：TitleConfig 对象（`{ text, position }`），详见 `type-details/TitleConfig.md`
    - `footnote`：FootnoteConfig 对象，详见 `type-details/FootnoteConfig.md`
    - `width` / `height`：画布尺寸，默认 800 × 600
-   - `background`：如需背景图 → 执行 **Unsplash 子流程** (`subprocess-unsplash-image.md`)
+   - `background`：如需背景图 → 执行 **图片子流程** (`subprocess-image.md`) 查表获取
    - `theme` / `colors`：预设主题名称或自定义颜色
    - `legend`：LegendConfig 对象
 5. **Icon 生成（必选）** → 🚨 必须在终端执行 `scripts/fetch_icons.py` 脚本
@@ -183,7 +183,6 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
 | ----------------------- | ------------------------------- | ----------------------------------- |
 | `generate_demo_html.py` | `scripts/generate_demo_html.py` | 根据 schema 生成可运行 HTML         |
 | `fetch_icons.py`        | `scripts/fetch_icons.py`        | 从 Iconify API 批量获取统一风格图标 |
-| `fetch_unsplash.py`     | `scripts/fetch_unsplash.py`     | 从预设图片库搜索背景/装饰图片       |
 
 ### fetch_icons.py 快速参考
 
@@ -213,19 +212,6 @@ python <SKILL_DIR>/scripts/fetch_icons.py \
 ```
 
 输出包含 `map`（category → SVG URL 映射）和 `collection`（统一的图标集名称）。
-
-### fetch_unsplash.py 快速参考
-
-```bash
-# 按关键词搜索
-python <SKILL_DIR>/scripts/fetch_unsplash.py --keywords '["科技","数据"]'
-
-# 按分类获取
-python <SKILL_DIR>/scripts/fetch_unsplash.py --category technology
-
-# 列出所有分类
-python <SKILL_DIR>/scripts/fetch_unsplash.py --list-categories
-```
 
 ---
 

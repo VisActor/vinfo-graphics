@@ -130,9 +130,19 @@ function renderChart(example: Example) {
     currentChart = null;
   }
 
+  const chartDom = document.getElementById('chart')!;
+
+  if (vchartSpec.width) {
+    chartDom.style.minWidth = vchartSpec.width + 'px';
+  }
+
+  if (vchartSpec.height) {
+    chartDom.style.minHeight = vchartSpec.height + 'px';
+  }
+
   // 创建新图表
   currentChart = new VChart(vchartSpec as any, {
-    dom: document.getElementById('chart')!,
+    dom: chartDom,
   });
   currentChart.renderSync();
 

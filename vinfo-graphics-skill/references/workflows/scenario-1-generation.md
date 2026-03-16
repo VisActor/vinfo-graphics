@@ -17,7 +17,7 @@
 │  4. 配置通用字段                         │
 │     · title / footnote                   │
 │     · width / height                     │
-│     · background（→ Unsplash 子流程）     │
+│     · background（→ 图片子流程）          │
 │     · theme / colors                     │
 │     · legend                             │
 │  5. Icon 生成（→ Icon 子流程）            │
@@ -153,12 +153,12 @@ default 推荐：`800 x 600`。竖版信息图可用 `600 x 800` 或 `400 x 700`
 
 #### 4.4 背景 (background)
 
-如需背景图 → 执行 **Unsplash 子流程** (`references/workflows/subprocess-unsplash-image.md`)
+如需背景图 → 执行 **图片子流程** (`references/workflows/subprocess-image.md`)，从预置图片库选择
 
 ```json
 {
   "background": {
-    "image": "https://images.unsplash.com/photo-xxx?w=1920&h=1080&fit=crop"
+    "image": "https://cdn.pixabay.com/photo/xxx/xxx_1280.jpg"
   }
 }
 ```

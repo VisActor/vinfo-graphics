@@ -360,16 +360,15 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
    */
   private processAxes(schema: BarChartSchema, spec: Record<string, unknown>): void {
     // X 轴（数值轴）
-    if (schema.xAxis) {
-      spec.axes = spec.axes ?? [];
-      (spec.axes as Record<string, unknown>[]).push({
-        orient: 'bottom',
-        visible: schema.xAxis.visible !== false,
-        label: schema.xAxis.format
-          ? { formatMethod: (val: number) => this.formatValue(schema.xAxis!.format!, val) }
-          : undefined,
-      });
-    }
+    spec.axes = spec.axes ?? [];
+    (spec.axes as Record<string, unknown>[]).push({
+      orient: 'bottom',
+      visible: schema.xAxis?.visible !== false,
+      label: schema.xAxis?.format
+        ? { formatMethod: (val: number) => this.formatValue(schema.xAxis!.format!, val) }
+        : undefined,
+      grid: { visible: false },
+    });
 
     // Y 轴（分类轴）
     if (schema.yAxis) {
@@ -506,7 +505,29 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
           return ctx.valueToY(datum[schema.categoryField]) + ctx.yBandwidth() / 2;
         },
         size: (datum: any, ctx: any) => ctx.yBandwidth(),
-        background: (datum: any) => {
+      },
+    });
+
+    (spec.extensionMark as Record<string, unknown>[]).push({
+      type: 'image',
+      dataIndex: 0,
+      style: {
+        visible: (datum: any) => {
+          const iconKey = String(datum[schema.icon!.field!]);
+          return !!iconKey;
+        },
+        symbolType: 'circle',
+        x: (datum: any, ctx: any) => {
+          return position === 'end'
+            ? ctx.valueToX(datum[schema.valueField]) - 0.9 * ctx.yBandwidth()
+            : ctx.yBandwidth() * 0.1;
+        },
+        y: (datum: any, ctx: any) => {
+          return ctx.valueToY(datum[schema.categoryField]) + ctx.yBandwidth() * 0.1;
+        },
+        width: (datum: any, ctx: any) => ctx.yBandwidth() * 0.8,
+        height: (datum: any, ctx: any) => ctx.yBandwidth() * 0.8,
+        image: (datum: any, ctx: any) => {
           const iconKey = String(datum[schema.icon!.field!]);
           return schema.icon!.map![iconKey];
         },

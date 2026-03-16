@@ -271,6 +271,19 @@ export class CirclePackingChartConverter extends BaseConverter<CirclePackingChar
       spec.extensionMark = [];
     }
 
+    const getIconVisible = (datum: any) => {
+      if (datum.isLeaf === false) return false;
+      const originalDatum = datum.datum[datum.datum.length - 1];
+      const iconKey = String(originalDatum[schema.icon!.field!] ?? '');
+      return !!iconKey && !!schema.icon!.map![iconKey];
+    };
+
+    const getIconImage = (datum: any) => {
+      const originalDatum = datum.datum[datum.datum.length - 1];
+      const iconKey = String(originalDatum[schema.icon!.field!] ?? '');
+      return schema.icon!.map![iconKey] ?? '';
+    };
+
     (spec.extensionMark as Record<string, unknown>[]).push({
       type: 'symbol',
       dataIndex: 0,
@@ -278,15 +291,7 @@ export class CirclePackingChartConverter extends BaseConverter<CirclePackingChar
         ...schema.icon.style,
         symbolType: 'circle',
         size: iconSize,
-        visible: (datum: any) => {
-          // 分组模式下，只显示叶子节点的 icon
-          if (datum.isLeaf === false) {
-            return false;
-          }
-          const originalDatum = datum.datum[datum.datum.length - 1];
-          const iconKey = String(originalDatum[schema.icon!.field!] ?? '');
-          return !!iconKey && !!schema.icon!.map![iconKey];
-        },
+        visible: getIconVisible,
         x: (datum: any, ctx: any) => {
           const { cx, cy } = this.getCircleCenter(datum);
           if (!cx || !cy) return 0;
@@ -314,10 +319,43 @@ export class CirclePackingChartConverter extends BaseConverter<CirclePackingChar
               return cy;
           }
         },
-        background: (datum: any) => {
-          const originalDatum = datum.datum[datum.datum.length - 1];
-          const iconKey = String(originalDatum[schema.icon!.field!] ?? '');
-          return schema.icon!.map![iconKey] ?? '';
+      },
+    });
+
+    (spec.extensionMark as Record<string, unknown>[]).push({
+      type: 'image',
+      dataIndex: 0,
+      style: {
+        visible: getIconVisible,
+        width: iconSize * 0.8,
+        height: iconSize * 0.8,
+        image: getIconImage,
+        x: (datum: any, ctx: any) => {
+          const { cx, cy } = this.getCircleCenter(datum);
+          if (!cx || !cy) return 0;
+
+          switch (position) {
+            case 'top-left':
+              return cx - offset - iconSize * 0.9;
+            case 'top-right':
+              return cx + offset + iconSize * 0.1;
+            case 'center':
+            default:
+              return cx - iconSize * 0.4;
+          }
+        },
+        y: (datum: any, ctx: any) => {
+          const { cx, cy, r } = this.getCircleCenter(datum);
+          if (!cx || !cy || !r) return 0;
+
+          switch (position) {
+            case 'top-left':
+            case 'top-right':
+              return cy - r + offset + iconSize * 0.1;
+            case 'center':
+            default:
+              return cy - iconSize * 0.4;
+          }
         },
       },
     });

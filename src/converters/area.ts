@@ -301,7 +301,28 @@ export class AreaChartConverter extends BaseConverter<AreaChartSchema> {
             : ctx.valueToY(datum[schema.valueField]) + iconSize;
         },
         size: iconSize,
-        background: (datum: any) => {
+      },
+    });
+
+    (spec.extensionMark as Record<string, unknown>[]).push({
+      type: 'image',
+      dataIndex: 0,
+      style: {
+        visible: (datum: any) => {
+          const iconKey = String(datum[schema.icon!.field!]);
+          return !!iconKey && !!schema.icon!.map![iconKey];
+        },
+        x: (datum: any, ctx: any) => {
+          return ctx.valueToX(datum[schema.categoryField]) - iconSize * 0.4;
+        },
+        y: (datum: any, ctx: any) => {
+          return position === 'top'
+            ? ctx.valueToY(datum[schema.valueField]) - iconSize * 1.4
+            : ctx.valueToY(datum[schema.valueField]) + iconSize * 0.6;
+        },
+        width: iconSize * 0.8,
+        height: iconSize * 0.8,
+        image: (datum: any) => {
           const iconKey = String(datum[schema.icon!.field!]);
           return schema.icon!.map![iconKey];
         },

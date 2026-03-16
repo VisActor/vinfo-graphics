@@ -748,4 +748,89 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
       legend: { visible: false },
     },
   },
+  {
+    name: '复刻图片',
+    schema: {
+      chartType: 'bar',
+      title: {
+        text: "Gen Z's Digital Entertainment",
+        subtext: '% of U.S. Gen Z population engaged in digital activity at least once a month...',
+        position: 'center',
+      },
+      footnote: {
+        text: 'Source: EMARKETER. Data as of May 2024. Digital buyers are users who have made one purchase through any digital channel.',
+        layout: 'left',
+        fontSize: 12,
+        fill: '#4B5563',
+      },
+      width: 800,
+      height: 600,
+      background: {
+        color: '#D6FF57',
+      },
+      theme: 'fresh',
+      colors: ['#8B5CF6'],
+      data: [
+        {
+          category: 'Digital video viewers',
+          value: 96,
+          iconKey: 'Digital video viewers',
+        },
+        {
+          category: 'Social network users',
+          value: 88,
+          iconKey: 'Social network users',
+        },
+        {
+          category: 'Digital buyers',
+          value: 82,
+          iconKey: 'Digital buyers',
+        },
+        {
+          category: 'Podcast listeners',
+          value: 57,
+          iconKey: 'Podcast listeners',
+        },
+        {
+          category: 'VR/AR users',
+          value: 37,
+          iconKey: 'VR/AR users',
+        },
+      ],
+      categoryField: 'category',
+      valueField: 'value',
+      sort: 'desc',
+      bar: {
+        cornerRadius: 8,
+        gap: 10,
+        linearGradient: {
+          direction: 'left-right',
+          colors: ['#8B5CF6', '#C4B5FD'],
+        },
+      },
+      label: {
+        visible: true,
+        position: 'inside-right',
+        format: '{value}%',
+        minVisible: 0,
+      },
+      icon: {
+        field: 'iconKey',
+        map: {
+          'Digital video viewers': 'https://api.iconify.design/mdi/clock-digital.svg',
+          'Social network users': 'https://api.iconify.design/mdi/digital-ocean.svg',
+          'Digital buyers': 'https://api.iconify.design/mdi/perm-media.svg',
+          'Podcast listeners': 'https://api.iconify.design/mdi/folder-media.svg',
+          'VR/AR users': 'https://api.iconify.design/mdi/folder-media-outline.svg',
+        },
+        visible: true,
+        position: 'start',
+        size: 24,
+        style: {
+          lineWidth: 2,
+          stroke: '#FFFFFF',
+        },
+      },
+    },
+  },
 ];

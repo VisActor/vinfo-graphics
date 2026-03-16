@@ -17,7 +17,7 @@
   "outerRadius": 0.85,
   "centerImage": {
     "visible": true,
-    "url": "https://images.unsplash.com/photo-xxx?w=300&h=300&fit=crop",
+    "url": "https://cdn.pixabay.com/photo/xxx/xxx_1280.jpg",
     "width": 80,
     "height": 80
   }
@@ -26,13 +26,13 @@
 
 ### centerImage 选择策略
 
-| 数据类型                      | centerImage 来源            | 说明                                         |
-| ----------------------------- | --------------------------- | -------------------------------------------- |
-| 行业/市场份额（航空、汽车等） | Unsplash 搜索行业代表物品   | 如航空市场 → 飞机图片，汽车市场 → 汽车图片   |
-| 国家/地区数据                 | Unsplash 搜索相关物品或地图 | 如橄榄产量 → 橄榄图片，咖啡产量 → 咖啡豆图片 |
-| 人物投资组合/持仓             | 人物头像照片                | 如基金经理的头像                             |
-| 品牌/产品份额                 | 行业相关图片或品牌 logo     | 体现行业特征                                 |
-| 抽象数据（用户分布、预算等）  | 主题图标或 Unsplash 图片    | 如用户分布 → 人群图片                        |
+| 数据类型                      | centerImage 来源                            | 说明                                         |
+| ----------------------------- | ------------------------------------------- | -------------------------------------------- |
+| 行业/市场份额（航空、汽车等） | 从预置图片库选择对应分类图片                | 如航空市场 → travel 分类，汽车市场 → car 图片 |
+| 国家/地区数据                 | 从预置图片库选择 nature 或 food 分类图片    | 如橄榄产量 → food 分类图片                   |
+| 人物投资组合/持仓             | 人物头像照片                                | 如基金经理的头像                             |
+| 品牌/产品份额                 | 从预置图片库选择 business 分类图片          | 体现行业特征                                 |
+| 抽象数据（用户分布、预算等）  | 从预置图片库 general 分类选择               | 如用户分布 → 人群相关图片                    |
 
 ### innerRadius / outerRadius 推荐值
 
@@ -46,8 +46,9 @@
 ### 注意事项
 
 - centerImage 的 `width` 和 `height` 不能超过内圆直径，推荐为内圆直径的 60%~80%
-- 当 centerImage 是 Unsplash 图片时，使用 `?w=300&h=300&fit=crop` 裁剪为正方形
 - centerImage 仅在 `innerRadius > 0` 时才会渲染
+- **centerImage 不可与 background.image 使用同一张图片**，应从预置图片库中分别选择
+- 如预置图片库中没有匹配的图片，可跳过 centerImage 配置
 
 ---
 
@@ -257,7 +258,7 @@
 {
   "brandImage": {
     "visible": true,
-    "url": "https://images.unsplash.com/photo-xxx?w=400&h=400&fit=crop",
+    "url": "https://pixabay.com/get/xxx_1280.png",
     "width": 200,
     "height": 200,
     "align": "right",
