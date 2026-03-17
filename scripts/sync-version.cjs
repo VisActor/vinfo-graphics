@@ -14,8 +14,8 @@ const indexPath = path.join(root, 'src', 'index.ts');
 let content = fs.readFileSync(indexPath, 'utf-8');
 
 const updated = content.replace(
-  /^export const version = ['"][^'"]*['"];/m,
-  `export const version = '${version}';`
+  /^export const VINFO_GRAPHICS_VERSION = ['"][^'"]*['"];/m,
+  `export const VINFO_GRAPHICS_VERSION = '${version}';`
 );
 
 if (updated === content) {

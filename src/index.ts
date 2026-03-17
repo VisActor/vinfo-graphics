@@ -29,7 +29,7 @@
  */
 
 // 版本号（与 package.json 保持一致）
-export const version = '0.0.7';
+export const VINFO_GRAPHICS_VERSION = '0.0.8';
 
 // 类型导出
 export type {
