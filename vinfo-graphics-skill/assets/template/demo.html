@@ -471,23 +471,8 @@
       }
 
       function resolveThemeMode(schemaConfig) {
-        const themeType = schemaConfig?.theme;
-        const darkThemes = [
-          'dark',
-          'dream',
-          'neon',
-          'energy',
-          'crypto',
-          'oil',
-          'uranium',
-          'tiktok',
-        ];
-
-        if (darkThemes.includes(themeType)) {
-          return 'dark';
-        }
-
-        return 'light';
+        const themeConfig = VInfoGraphics.resolveTheme(schemaConfig?.theme);
+        return VInfoGraphics.isDarkTheme(themeConfig) ? 'dark' : 'light';
       }
 
       function applyPageTheme(mode) {
