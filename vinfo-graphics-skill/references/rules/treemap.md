@@ -19,8 +19,8 @@
     "visible": true,
     "field": "bgKey",
     "map": {
-      "Bitcoin": "https://cdn.pixabay.com/photo/xxx/xxx_1280.jpg",
-      "Ethereum": "https://cdn.pixabay.com/photo/yyy/yyy_1280.jpg"
+      "Bitcoin": "https://images.pexels.com/photos/xxx/pexels-photo-xxx.jpeg?w=600&h=400&fit=crop",
+      "Ethereum": "https://images.pexels.com/photos/yyy/pexels-photo-yyy.jpeg?w=600&h=400&fit=crop"
     },
     "opacity": 0.3
   }
@@ -29,12 +29,14 @@
 
 ### 图片选择策略
 
-| 数据类型                | 背景图来源                            | 说明                                      |
-| ----------------------- | ------------------------------------- | ----------------------------------------- |
-| 品牌/产品（如加密货币） | 从预置图片库选择对应分类图片          | 如 Bitcoin → 从 finance 分类选择          |
-| 人物/组织（如裁员原因） | 从预置图片库选择 business 分类图片    | 如 DOGE → 选择政府/办公相关图片           |
-| 具体实体（城市、食物）  | 从预置图片库对应分类选择              | 从 nature、food 等分类选择                |
-| 抽象类目（部门、类型）  | 从预置图片库 general 分类选择         | 使用抽象装饰图片                          |
+通过 **背景图片子流程** (`references/workflows/subprocess-select-background.md`) 从预置背景图片库 (`references/images/images.json`) 按 keywords/tags 语义匹配选择：
+
+| 数据类型                | 背景图来源                          | 说明                               |
+| ----------------------- | ----------------------------------- | ---------------------------------- |
+| 品牌/产品（如加密货币） | 按 keywords/tags 匹配数据项主题     | 如 Bitcoin → tags 含“金色”“科技”等 |
+| 人物/组织（如裁员原因） | 按 keywords/tags 匹配商务主题       | 如 DOGE → tags 含“建筑”“城市”等    |
+| 具体实体（城市、食物）  | 按 keywords/tags 匹配对应主题       | 从自然、食品等相关 tags 选择       |
+| 抽象类目（部门、类型）  | 选择纹理类图片（type 含 "texture"） | 使用抽象装饰图片                   |
 
 ### 注意事项
 
@@ -131,11 +133,11 @@
 
 ### 策略
 
-| 场景           | background 配置                                              | 说明                     |
-| -------------- | ------------------------------------------------------------ | ------------------------ |
-| 深色主题信息图 | `background.color` 配合深色 + 预置图片库对应主题背景图       | 如加密货币用深蓝/深灰底  |
-| 浅色主题信息图 | `background.color` 使用浅色底 + 可选预置图片库背景图         | 如商务数据用浅灰/米色    |
-| 无特殊需求     | 至少设置 `background.color`                                  | 避免白底时节点边界不清晰 |
+| 场景           | background 配置                                        | 说明                     |
+| -------------- | ------------------------------------------------------ | ------------------------ |
+| 深色主题信息图 | `background.color` 配合深色 + 预置图片库对应主题背景图 | 如加密货币用深蓝/深灰底  |
+| 浅色主题信息图 | `background.color` 使用浅色底 + 可选预置图片库背景图   | 如商务数据用浅灰/米色    |
+| 无特殊需求     | 至少设置 `background.color`                            | 避免白底时节点边界不清晰 |
 
 ```json
 {

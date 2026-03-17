@@ -153,12 +153,12 @@ default 推荐：`800 x 600`。竖版信息图可用 `600 x 800` 或 `400 x 700`
 
 #### 4.4 背景 (background)
 
-如需背景图 → 执行 **图片子流程** (`references/workflows/subprocess-image.md`)，从预置图片库选择
+如需背景图 → 执行 **背景图片子流程** (`references/workflows/subprocess-select-background.md`)，从预置背景图片库选择
 
 ```json
 {
   "background": {
-    "image": "https://cdn.pixabay.com/photo/xxx/xxx_1280.jpg"
+    "image": "https://images.pexels.com/photos/xxx/pexels-photo-xxx.jpeg?w=1920&h=1080&fit=crop"
   }
 }
 ```
@@ -167,12 +167,36 @@ default 推荐：`800 x 600`。竖版信息图可用 `600 x 800` 或 `400 x 700`
 
 #### 4.5 主题 (theme) / 颜色 (colors)
 
+**主题优先，colors 和 background.color 不与 theme 同时使用**（详见 `references/rules/general.md` 规则 4）。
+
+**决策流程**：
+
+1. 根据数据主题判断是否有匹配的预设主题（见 `references/type-details/ThemeConfig.md` 中的预设主题列表）
+2. 有匹配主题 → 只写 `theme`，不写 `colors` 和 `background.color`
+3. 无匹配主题 → 不写 `theme`，手动配置 `colors` + `background`
+
+**方案 A：使用预设主题**（有匹配主题时）
+
 ```json
 {
-  "theme": "fresh",
-  "colors": ["#3370eb", "#1bcebf", "#ffc60a"]
+  "theme": "energy"
 }
 ```
+
+**方案 B：手动配色**（无匹配主题时）
+
+```json
+{
+  "colors": ["#3370eb", "#1bcebf", "#ffc60a", "#f97316", "#8b5cf6"],
+  "background": { "color": "#0F172A" }
+}
+```
+
+**colors 数量规则**（详见 `references/rules/general.md` 规则 5）：
+
+- 1 个颜色 = 所有元素统一色
+- ≥ 数据类目数 = 每个类目独立色
+- 禁止 2 ~ (类目数 - 1) 个颜色，避免部分类目共享颜色
 
 详细配置见 `references/type-details/ThemeConfig.md`。
 

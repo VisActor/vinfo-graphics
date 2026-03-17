@@ -387,6 +387,11 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
         visible: true,
       },
       legend: { visible: false },
+      brandImage: {
+        url: 'https://images.unsplash.com/vector-1738237558950-a8f9e4fe946e',
+        width: 400,
+        height: 400,
+      },
     },
   },
   {

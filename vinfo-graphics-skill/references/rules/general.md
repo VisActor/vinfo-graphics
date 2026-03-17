@@ -54,17 +54,18 @@
 
 ### 图片选择流程
 
-从预置图片库 (`references/images/images.json`) 中选择图片：
+图片分为两个独立的预置库，分别对应不同用途：
 
-1. **先选 background**：根据数据整体主题从 `backgrounds.categories.{分类}.images` 中选择 1 张
-2. **再选数据项图片**：从对应分类的 `illustrations` 中选择，确保与 background 不同
+- **背景图片**（`references/images/images.json`）→ 用于 `background.image`、`nodeBackground.map`、`circleBackground.map`
+  - 选择流程见 **背景图片子流程** (`references/workflows/subprocess-select-background.md`)
+- **装饰插图**（`references/images/decorations.json`）→ 用于 `brandImage.url`、`centerImage.url`
+  - 选择流程见 **装饰插图子流程** (`references/workflows/subprocess-select-decoration.md`)
 
 **核心原则**：
 
-- 优先匹配：主题与预置分类匹配时优先使用对应图片
-- 分级回退：无精确匹配时回退到 `abstract`（背景）或 `business`（插图）
+- 背景图和装饰插图来自不同图片库，不会互相冲突
+- 同一图片库内的图片必须去重（如 background 与 nodeBackground 不可用同一张）
 - 至少一项装饰：`background` 与 `brandImage` 不可同时缺失
-- 去重：background 和 brandImage 使用不同图片，数据项之间图片也应不同
 - **`brandImage` 写了就必须显示**：若不想显示，直接省略该字段；禁止写 `{ "visible": false }` 的 brandImage
 
 ### 常见错误
@@ -93,3 +94,94 @@
   → **错误**：节点图片应分别搜索公司特征关键词
 - 数据主题为「游戏 YouTube 频道」，background 和 circleBackground 都使用同一张游戏手柄图片
   → **错误**：应分别搜索背景（如「gaming room」）和每个频道的个性化图片
+
+---
+
+## 规则 4：主题优先 — theme 与 colors / background.color 互斥
+
+预设主题（`theme`）已包含完整的配色方案（`colors`、`backgroundColor`、`textColor`、`secondaryTextColor`）。**当使用预设主题时，禁止同时手写 `colors` 或 `background.color`**，否则会产生冗余甚至冲突。
+
+### 决策流程
+
+```
+数据主题 → 是否有匹配的预设主题？
+  ├─ 是 → 只写 theme，不写 colors 和 background.color
+  │       （background.image 仍可独立使用）
+  └─ 否 → 不写 theme，手动配置 colors + background.color（或 background.image）
+```
+
+### 允许的组合
+
+| 组合                                        | 是否允许 | 说明                                      |
+| ------------------------------------------- | -------- | ----------------------------------------- |
+| `theme` 单独使用                            | ✅       | 主题提供全部配色，最简洁                  |
+| `theme` + `background.image`                | ✅       | 背景图是独立视觉层，不与主题冲突          |
+| `theme` + `brandImage`                      | ✅       | 装饰图是独立视觉层                        |
+| `colors` + `background.color`（无 theme）   | ✅       | 无合适主题时，手动配色                    |
+| `colors` + `background.image`（无 theme）   | ✅       | 手动配色 + 背景图                         |
+| ~~`theme` + `colors`~~                      | ❌       | 主题已含 colors，手写 colors 冗余         |
+| ~~`theme` + `background.color`~~            | ❌       | 主题已含 backgroundColor，手写 color 冗余 |
+| ~~`theme` + `colors` + `background.color`~~ | ❌       | 三者同时出现，完全冗余                    |
+
+### 例外：品牌色覆盖
+
+当数据项有明确的品牌色（如航空公司、科技公司的品牌色）时，可以在 `theme` 基础上额外写 `colors` 来覆盖主题默认色板：
+
+```json
+{
+  "theme": "airline",
+  "colors": ["#0033A0", "#E4002B", "#6A1B9A"]
+}
+```
+
+此时 `colors` 的目的不是"配色"而是"品牌还原"，属于合理覆盖。
+
+### 反面示例
+
+```json
+// ❌ 错误：theme 已包含 colors 和 backgroundColor，不应再手写
+{
+  "theme": "energy",
+  "colors": ["#F2C14F", "#1D4ED8", "#10B981", "#F97316", "#6366F1", "#14B8A6", "#9CA3AF"],
+  "background": { "color": "#020617" }
+}
+
+// ✅ 正确：使用主题即可
+{
+  "theme": "energy"
+}
+
+// ✅ 也正确：主题 + 背景图（独立视觉层）
+{
+  "theme": "energy",
+  "background": { "image": "https://images.pexels.com/photos/xxx?w=1920&h=1080&fit=crop" }
+}
+```
+
+---
+
+## 规则 5：colors 数量 — 1 个或 ≥ 数据类目数
+
+手动配置 `colors` 数组时，数组长度必须为 **1**（所有元素统一颜色）或 **≥ 数据类目数**（每个类目独立颜色）。**禁止 colors 数量在 2 到 (类目数 - 1) 之间**，这会导致部分类目共享颜色，视觉上混乱。
+
+### 规则
+
+| colors 数量      | 效果             | 是否允许   |
+| ---------------- | ---------------- | ---------- |
+| 1                | 所有元素统一颜色 | ✅         |
+| = 数据类目数     | 每个类目独立颜色 | ✅（推荐） |
+| > 数据类目数     | 每个类目独立颜色 | ✅         |
+| 2 ~ (类目数 - 1) | 部分类目共享颜色 | ❌         |
+
+### 示例（7 个数据类目）
+
+```json
+// ✅ 正确：1 个颜色，所有元素统一
+{ "colors": ["#E11D48"] }
+
+// ✅ 正确：7 个颜色，每个类目独立
+{ "colors": ["#F2C14F", "#1D4ED8", "#10B981", "#F97316", "#6366F1", "#14B8A6", "#9CA3AF"] }
+
+// ❌ 错误：3 个颜色给 7 个类目，导致 4 个类目复用颜色
+{ "colors": ["#F2C14F", "#1D4ED8", "#10B981"] }
+```

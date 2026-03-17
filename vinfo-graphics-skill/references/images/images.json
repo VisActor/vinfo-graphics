@@ -1,870 +1,256 @@
-{
-  "backgrounds": {
-    "description": "背景图片库 - 适合信息图背景的高质量图片（Pixabay 精选）",
-    "source": "Pixabay",
-    "categories": {
-      "gradient": {
-        "description": "渐变背景，平滑过渡的色彩",
-        "keywords": ["渐变", "色彩", "平滑", "过渡"],
-        "images": [
-          {
-            "id": "pixabay-gradient-9998368",
-            "description": "抽象渐变背景，色彩丰富的现代风格平滑过渡",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2025/12/06/10/48/abstract-9998368_1280.png",
-            "tags": ["抽象", "渐变", "多彩", "现代"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-gradient-7936068",
-            "description": "抽象渐变壁纸，流畅流动的色彩图形设计",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2023/04/18/22/46/abstract-7936068_1280.jpg",
-            "tags": ["抽象", "渐变", "壁纸", "设计"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-gradient-1191000",
-            "description": "蓝紫渐变配暖色日出色调，柔和专业",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2016/02/10/03/45/gradient-1191000_1280.jpg",
-            "tags": ["渐变", "蓝色", "紫色", "日出"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-gradient-781022",
-            "description": "紫蓝粉渐变，深色调平滑过渡",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2015/05/23/21/21/gradient-781022_1280.jpg",
-            "tags": ["渐变", "紫色", "蓝色", "粉色"],
-            "isDark": true
-          },
-          {
-            "id": "pixabay-gradient-7150278",
-            "description": "紫色渐变波浪，浓郁流动的紫色背景",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2022/04/22/17/34/waves-7150278_1280.png",
-            "tags": ["紫色", "渐变", "波浪", "流动"],
-            "isDark": true
-          },
-          {
-            "id": "pixabay-gradient-570",
-            "description": "蓝紫渐变配线条图案叠加",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2026/01/31/15/34/15-34-54-570_1280.jpg",
-            "tags": ["蓝色", "紫色", "渐变", "线条图案"],
-            "isDark": true
-          }
-        ]
-      },
-      "geometric": {
-        "description": "几何图案背景，规则形状排列",
-        "keywords": ["几何", "图案", "形状", "规则"],
-        "images": [
-          {
-            "id": "pixabay-geometric-7245554",
-            "description": "简洁几何图案背景，重复形状排列",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2022/06/06/08/07/background-7245554_1280.jpg",
-            "tags": ["几何", "图案", "形状", "抽象"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-geometric-1101398",
-            "description": "几何镶嵌图案背景，规则排列设计",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2015/12/20/16/45/geometric-1101398_1280.png",
-            "tags": ["几何", "镶嵌", "抽象", "设计"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-geometric-6640370",
-            "description": "点阵几何图案，极简抽象背景",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2021/09/20/09/43/geometric-pattern-6640370_1280.jpg",
-            "tags": ["几何", "点阵", "极简", "抽象"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-geometric-7296348",
-            "description": "菱形几何图案，结构化装饰背景",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2022/07/01/22/24/geometric-pattern-7296348_1280.jpg",
-            "tags": ["几何", "菱形", "图案", "设计"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-geometric-7434037",
-            "description": "彩色几何图案，鲜艳活泼的重复形状",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2022/09/05/12/16/geometric-pattern-7434037_1280.jpg",
-            "tags": ["几何", "彩色", "鲜艳", "形状"],
-            "isDark": false
-          }
-        ]
-      },
-      "wave": {
-        "description": "波浪纹理背景，流动曲线设计",
-        "keywords": ["波浪", "流动", "曲线", "纹理"],
-        "images": [
-          {
-            "id": "pixabay-wave-8756951",
-            "description": "流动波浪背景，光滑优雅的设计",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2024/05/12/13/37/waves-8756951_1280.jpg",
-            "tags": ["波浪", "流动", "光滑", "优雅"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-wave-8563942",
-            "description": "波浪纹理背景，抽象流动线条",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2024/02/10/00/15/waves-8563942_1280.png",
-            "tags": ["波浪", "纹理", "线条", "抽象"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-wave-8477456",
-            "description": "柔和粉彩色波浪，轻柔流动的曲线",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2023/12/30/06/29/pastel-8477456_1280.jpg",
-            "tags": ["粉彩", "波浪", "柔和", "轻柔"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-wave-8435730",
-            "description": "有机抽象粉彩波浪，极简美学",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2023/12/07/15/10/abstract-8435730_1280.jpg",
-            "tags": ["粉彩", "有机", "极简", "波浪"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-wave-757879",
-            "description": "绿色波浪背景，自然风格抽象流动",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2015/05/08/10/37/green-757879_1280.jpg",
-            "tags": ["绿色", "波浪", "自然", "流动"],
-            "isDark": true
-          }
-        ]
-      },
-      "dark": {
-        "description": "深色背景，低调现代设计",
-        "keywords": ["深色", "黑色", "暗色", "低调"],
-        "images": [
-          {
-            "id": "pixabay-dark-3494082",
-            "description": "深色抽象背景，低调现代设计元素",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2018/06/24/08/01/dark-background-3494082_1280.jpg",
-            "tags": ["深色", "抽象", "黑色", "现代"],
-            "isDark": true
-          },
-          {
-            "id": "pixabay-dark-8012877",
-            "description": "黑色科技主题抽象背景，数字未来感",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2023/05/23/14/18/technology-8012877_1280.jpg",
-            "tags": ["科技", "黑色", "数字", "未来感"],
-            "isDark": true
-          },
-          {
-            "id": "pixabay-dark-539960",
-            "description": "深色科技碎片风格抽象背景",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2014/11/20/22/57/abstract-539960_1280.jpg",
-            "tags": ["深色", "科技", "碎片", "抽象"],
-            "isDark": true
-          },
-          {
-            "id": "pixabay-dark-8273150",
-            "description": "AI 生成的抽象波浪图案，科技质感",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2023/09/24/15/28/ai-generated-8273150_1280.png",
-            "tags": ["AI生成", "波浪", "科技", "数字"],
-            "isDark": true
-          }
-        ]
-      },
-      "light": {
-        "description": "浅色背景，干净极简设计",
-        "keywords": ["浅色", "白色", "干净", "极简"],
-        "images": [
-          {
-            "id": "pixabay-light-6556364",
-            "description": "白色丙烯纹理抽象背景，干净极简",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2021/08/18/19/12/abstract-background-6556364_1280.jpg",
-            "tags": ["白色", "干净", "极简", "纹理"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-light-4038587",
-            "description": "浅色抽象背景，柔和细腻的设计元素",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2019/03/06/16/38/background-4038587_1280.jpg",
-            "tags": ["浅色", "抽象", "干净", "柔和"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-light-1061100",
-            "description": "极简企业风格抽象背景，浅色专业调性",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2015/11/25/01/09/abstract-background-1061100_1280.jpg",
-            "tags": ["极简", "企业", "干净", "专业"],
-            "isDark": false
-          }
-        ]
-      },
-      "nature": {
-        "description": "自然风景背景，山脉湖泊等",
-        "keywords": ["自然", "山脉", "湖泊", "风景"],
-        "images": [
-          {
-            "id": "pexels-1472214103451",
-            "description": "空旷雪山",
-            "source": "pexels",
-            "url": "https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg",
-            "tags": ["自然", "山脉", "雪山", "风景"],
-            "isDark": false
-          },
-          {
-            "id": "pexels-1446974386655",
-            "description": "山区傍晚",
-            "source": "pexels",
-            "url": "https://images.pexels.com/photos/1261728/pexels-photo-1261728.jpeg",
-            "tags": ["山脉", "自然", "风景", "傍晚"],
-            "isDark": false
-          }
-        ]
-      },
-      "city": {
-        "description": "城市建筑背景",
-        "keywords": ["城市", "建筑", "夜景", "现代"],
-        "images": [
-          {
-            "id": "pexels-1514565131",
-            "description": "城市夜景灯光",
-            "source": "pexels",
-            "url": "https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg",
-            "tags": ["城市", "夜景", "灯光", "车流"],
-            "isDark": true
-          },
-          {
-            "id": "pexels-1497366811350",
-            "description": "现代办公室建筑",
-            "source": "pexels",
-            "url": "https://images.pexels.com/photos/416320/pexels-photo-416320.jpeg",
-            "tags": ["城市", "建筑", "现代", "办公"],
-            "isDark": false
-          }
-        ]
-      },
-      "technology": {
-        "description": "科技数字背景",
-        "keywords": ["科技", "数字", "网络", "AI"],
-        "images": [
-          {
-            "id": "pexels-1451187580459",
-            "description": "数字地球网络，深蓝色科技感",
-            "source": "pexels",
-            "url": "https://images.pexels.com/photos/1148820/pexels-photo-1148820.jpeg",
-            "tags": ["科技", "网络", "数字", "蓝色"],
-            "isDark": true
-          },
-          {
-            "id": "pexels-1550751827",
-            "description": "电路板 PCB 电子元件特写",
-            "source": "pexels",
-            "url": "https://images.pexels.com/photos/158826/structure-light-led-movement-158826.jpeg",
-            "tags": ["科技", "电路板", "电子", "硬件"],
-            "isDark": false
-          }
-        ]
-      },
-      "food": {
-        "description": "美食餐饮背景",
-        "keywords": ["美食", "食物", "餐饮", "健康"],
-        "images": [
-          {
-            "id": "pexels-1504674900247",
-            "description": "美食菜肴",
-            "source": "pexels",
-            "url": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg",
-            "tags": ["美食", "食物", "菜肴", "餐饮"],
-            "isDark": false
-          },
-          {
-            "id": "pexels-1540185559335",
-            "description": "水果沙拉健康",
-            "source": "pexels",
-            "url": "https://images.pexels.com/photos/1132558/pexels-photo-1132558.jpeg",
-            "tags": ["水果", "沙拉", "健康", "食物"],
-            "isDark": false
-          }
-        ]
-      },
-      "travel": {
-        "description": "旅游度假背景",
-        "keywords": ["旅游", "海滩", "度假", "风景"],
-        "images": [
-          {
-            "id": "pexels-1469854523086",
-            "description": "海滩度假",
-            "source": "pexels",
-            "url": "https://images.pexels.com/photos/1032652/pexels-photo-1032652.jpeg",
-            "tags": ["旅游", "海滩", "度假", "旅行"],
-            "isDark": false
-          },
-          {
-            "id": "pexels-1507525428034",
-            "description": "海边日落度假",
-            "source": "pexels",
-            "url": "https://images.pexels.com/photos/1379636/pexels-photo-1379636.jpeg",
-            "tags": ["海边", "日落", "度假", "旅游"],
-            "isDark": false
-          }
-        ]
-      }
-    }
+[
+  {
+    "url": "https://images.pexels.com/photos/7640901/pexels-photo-7640901.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "black noise"
   },
-  "textures": {
-    "description": "纹理背景库 - 用于填充、叠加等场景的纹理图案",
-    "source": "Pixabay",
-    "categories": {
-      "noise": {
-        "description": "噪点纹理，增加质感",
-        "keywords": ["噪点", "颗粒", "质感", "纹理"],
-        "images": [
-          {
-            "id": "pixabay-noise-6556364",
-            "description": "白色纹理噪点背景",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2021/08/18/19/12/abstract-background-6556364_1280.jpg",
-            "tags": ["噪点", "纹理", "白色", "质感"],
-            "isDark": false
-          }
-        ]
-      },
-      "pattern": {
-        "description": "图案纹理，规则重复",
-        "keywords": ["图案", "重复", "规则", "纹理"],
-        "images": [
-          {
-            "id": "pixabay-pattern-7245554",
-            "description": "简洁几何图案纹理",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2022/06/06/08/07/background-7245554_1280.jpg",
-            "tags": ["图案", "几何", "重复", "纹理"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-pattern-6640370",
-            "description": "点阵图案纹理",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2021/09/20/09/43/geometric-pattern-6640370_1280.jpg",
-            "tags": ["点阵", "图案", "极简", "纹理"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-pattern-1101398",
-            "description": "几何镶嵌图案纹理",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2015/12/20/16/45/geometric-1101398_1280.png",
-            "tags": ["镶嵌", "几何", "图案", "纹理"],
-            "isDark": false
-          }
-        ]
-      },
-      "gradient": {
-        "description": "渐变纹理，平滑过渡",
-        "keywords": ["渐变", "过渡", "色彩", "纹理"],
-        "images": [
-          {
-            "id": "pixabay-gradient-texture-9998368",
-            "description": "抽象渐变纹理",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2025/12/06/10/48/abstract-9998368_1280.png",
-            "tags": ["渐变", "抽象", "色彩", "纹理"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-gradient-texture-781022",
-            "description": "紫蓝粉渐变纹理",
-            "source": "pixabay",
-            "url": "https://cdn.pixabay.com/photo/2015/05/23/21/21/gradient-781022_1280.jpg",
-            "tags": ["渐变", "紫色", "蓝色", "纹理"],
-            "isDark": true
-          }
-        ]
-      }
-    }
+  {
+    "url": "https://images.pexels.com/photos/26771257/pexels-photo-26771257.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "blue sea"
   },
-  "illustrations": {
-    "description": "装饰插图库 - Pixabay 精选插图，适合信息图装饰（无版权问题）",
-    "source": "Pixabay",
-    "categories": {
-      "business": {
-        "description": "商务相关装饰插图",
-        "keywords": ["商务", "办公", "工作", "团队"],
-        "images": [
-          {
-            "id": "pixabay-business-76202",
-            "description": "全球商务团队，跨国合作场景",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g05eff6f9e5dc11d99c24cd736011989fbfe5756abc24fcab0c5f3bb9c4e85f2a2f5d3d2331885a697d4dc39ad35c3f5e_1280.jpg",
-            "tags": ["商务", "团队", "全球", "合作"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-business-680572",
-            "description": "金融会议场景，银行交易数据图表",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/gaf7264cf076d3f8a88b44a7be42c14ea74d11c7ec68e4c774037fbcca07eed910fe2c35c4b9d22bb7fe7205f7714af8e2300997646e473c413c50ded42bf18b2_1280.jpg",
-            "tags": ["金融", "会议", "交易", "图表"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-business-4284157",
-            "description": "邮件营销和商务通讯场景",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/ga5a72a2cb4b1b887b8d89aa4a9c8a7c9a08d410e412f965dbba8002000a971a0cc600dd40a0aa587df3852ea4e2fc446c824996b3c5840fa9e3ddedcb1d75370_1280.png",
-            "tags": ["营销", "邮件", "商务", "社交"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-business-4365597",
-            "description": "办公室工作场景，商务人士使用电脑",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g611ac16a51c73aefa488be9e7e5c8ce10cb867ada93e83aa8b3d33f02ebe157e11548683ed6f970f24e7d0a735ac7c66b1766cc9391d95e83d699d1f20d5ab01_1280.png",
-            "tags": ["办公", "电脑", "工作", "商务"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-business-544949",
-            "description": "经济增长趋势，股票交易图表",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g8f8e7e3606add12aff60339f9c716f841cb2402b0427912a1ff0aa45e73beca96f82d42e0f2ef0e6dc3485584a3baf4fdaa6bf3f0a4778afd6a565f445d99cc9_1280.jpg",
-            "tags": ["增长", "股票", "经济", "图表"],
-            "isDark": false
-          }
-        ]
-      },
-      "technology": {
-        "description": "科技相关装饰插图",
-        "keywords": ["科技", "数字", "代码", "网络"],
-        "images": [
-          {
-            "id": "pixabay-tech-1732847",
-            "description": "蓝色几何科技感设计，现代数字抽象",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g3c23350c11b2d9b1f3e75192cd8b678e1ae2036e06ebd9bbb85761c5b499ae06b9271a9143d7f4ddd6db2a8292fadb5c291accc0158bcff95b6f78e82def619a_1280.jpg",
-            "tags": ["科技", "几何", "蓝色", "数字"],
-            "isDark": true
-          },
-          {
-            "id": "pixabay-tech-2298286",
-            "description": "笔记本电脑工作场景，办公科技",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g0f3862b5cbf26195566c53303278860d285eaccf2ec7f896c9e19888f9e57fa891d47e76d6dd4b4e90a3e6243a61d3fdab093c9c8806b75f8ea561550b1eda98_1280.png",
-            "tags": ["电脑", "笔记本", "办公", "科技"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-tech-8760950",
-            "description": "复古像素艺术，数字科技美学",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/gef35a34202fe56dd71f941bf44c731bf49ed33a9376dc6f7d77f80189bcda3d06f747820f17e035eedf5d86e6ceb1c4487f703b05608e0b5ab833f7a16622839_1280.png",
-            "tags": ["像素", "复古", "数字", "电视"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-tech-784046",
-            "description": "大脑思维科技感，数字化思考",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g3327290e46a4bdf9bb848f07ac5ea4779ead83bba58411c4f3d48d99b03414b688a54f294ed2562047940966bbfc36fc50476eb982e6376e3c324b2ca9b0e51c_1280.jpg",
-            "tags": ["大脑", "思维", "科技", "抽象"],
-            "isDark": true
-          },
-          {
-            "id": "pixabay-tech-430621",
-            "description": "相机镜头，摄影科技",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g11f16bcf3d8baee4d9a03fce094cb1d41c5dccd2fa8950eac2756eb487634fb23380abd0400e63658ac6ba7055a67509a677dab41d6513ec2ccec2831e1141a5_1280.jpg",
-            "tags": ["相机", "镜头", "摄影", "科技"],
-            "isDark": false
-          }
-        ]
-      },
-      "finance": {
-        "description": "金融相关装饰插图",
-        "keywords": ["金融", "投资", "图表", "货币"],
-        "images": [
-          {
-            "id": "pixabay-finance-660223",
-            "description": "美元货币符号，金融财务标志",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g1f98a1e2c32c6f3b5500ac707a3a6d7cf16e613229cb1b1becace40d82c904d315bf512496d79cc2fff100ef0c7a08dad432057db79f5a95e208cf97627ff882_1280.png",
-            "tags": ["美元", "货币", "金融", "符号"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-finance-634901",
-            "description": "全球货币符号，财务金融",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g554287346ca68aec9c27e47aea07a9d42013d883a82e4458bc631a83eccbf9062ad01117c401024394beb6bc03e8f030ab4af4bba425bc660afc957f44bd1ec6_1280.png",
-            "tags": ["货币", "金融", "美元", "符号"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-finance-6792968",
-            "description": "银行金融建筑，金融服务",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g38bcdbc51f81b4d4c105cd85bfe6dff6cf1ca9d9b66c36aaacceabb170272de70a3377aab4b326afd3f7740edc0b4bed53143520e1f31e4d7c9e2e7aea3c183e_1280.png",
-            "tags": ["银行", "金融", "建筑", "服务"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-finance-6406468",
-            "description": "投资基金增长图表，财富增值",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g4d46fecf2fdd9ca6e2b32c99b152e2db1bf72625bfd6a729f2f7cd2f28c81050698bd067a4a0a9cf7c9425478eb608caa8275abf24d85a1c6dce25a530b645cc_1280.png",
-            "tags": ["投资", "基金", "增长", "图表"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-finance-1300155",
-            "description": "信用卡和购物，金融交易",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g2d42c63e784c7efb0b1a8ada030d94ae0d92ec297138ab1bd62d7ae429629efdeb05ea395e313da7dffb2b68833a4738fb660305a3bac3beeec3d6cfa593710b_1280.png",
-            "tags": ["信用卡", "购物", "银行", "交易"],
-            "isDark": false
-          }
-        ]
-      },
-      "nature": {
-        "description": "自然相关装饰插图",
-        "keywords": ["自然", "环保", "绿色", "生态"],
-        "images": [
-          {
-            "id": "pixabay-nature-7650059",
-            "description": "绿色植物枝叶，自然生态",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/gb5fdd20d9a2517aa0907d0e54e48e36f536665a7812e0344d6fe69df939c11667ae68abc3d1be1336d4bb77b5dae642517ccd0dcf0e3e9966e42ba55b9c436a5_1280.jpg",
-            "tags": ["植物", "自然", "绿色", "树枝"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-nature-1412683",
-            "description": "山脉森林全景，自然风景",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/gd3578be246ae2a122c5128557858174d538c77a016190e6819c4953b217fb2b201b4010aad1830f9918bc20ed98f11cabc252e2751f34ee373a0f5c7e85887d1_1280.png",
-            "tags": ["山脉", "森林", "自然", "风景"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-nature-7931229",
-            "description": "猫头鹰插画，自然动物",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/ga70c161c3e8883a8c0dc7320856d099e10b5a9a7bda2f5619a519308b40ab30f802c3d5a4f96ef0c3fd39a4e1cf72b5f041d26fcf606187e64738f2499bdc054_1280.png",
-            "tags": ["猫头鹰", "动物", "自然", "插画"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-nature-4917877",
-            "description": "室内植物盆栽，家居自然",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g6235295a315af151e14f8438b4e83469a25494cbcf9dfb34f3d15848bceb4885b1381cc7f267287bb575d8a90aba1762aebe72c157e97ab605c33673fc5689de_1280.jpg",
-            "tags": ["植物", "盆栽", "家居", "自然"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-nature-7212848",
-            "description": "登山成功，自然风景",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g3f2f1d1ad5a71e224b1eca1ebf9ce6936be8ad260ef499cc0abb52db6641d247348e6b7ef66302a513480a05fdb013855b33a25a746a9184dc98e30f0337549d_1280.jpg",
-            "tags": ["登山", "山峰", "自然", "成功"],
-            "isDark": false
-          }
-        ]
-      },
-      "education": {
-        "description": "教育相关装饰插图",
-        "keywords": ["教育", "学习", "知识", "书籍"],
-        "images": [
-          {
-            "id": "pixabay-education-607831",
-            "description": "商务培训演讲，职业培训场景",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/gf7200609c44eef8c3f0b9f73232252bc958f54b4e0e5a94356045691a5ed87765e0db443b4048d2fc2233e4caccc607adc2b9bbf8cdff18112570ed419ced2ca_1280.png",
-            "tags": ["培训", "演讲", "商务", "教育"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-education-9676385",
-            "description": "地球地图，教育学习",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/gc49456dc8e59b902743a0d179e37ef48cfc6f52b9da790a6bb3f1397396bcb6c060b9821c241bb9b2d6e11e7f53ee0c07529880592fbb0ee9b2aed7d096725b6_1280.png",
-            "tags": ["地球", "地图", "教育", "学习"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-education-152024",
-            "description": "毕业证书，教育成就",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g865ccc6ca46b0ef51e9844c76d606fec1eaab1668a28f63d72235c7c2a50d749b7d666e4cb3781c4a8d6fb2009fc7161b9b890b604edbb1ba9dc691e8a4d0859_1280.png",
-            "tags": ["毕业", "证书", "教育", "成就"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-education-160172",
-            "description": "女孩阅读书籍，学习场景",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g495198b7750812e2f0961d6c61c8b134673317f2c81d7a8564848155b7835558b93435108aab7585d1c1ac9658463b24bd8163d4e95c903568b1c9029c1be228_1280.png",
-            "tags": ["阅读", "书籍", "学习", "女孩"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-education-857943",
-            "description": "师生教育场景，学习交流",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g1c08ad3cf372c0e857c9b4d19238d3daca897442073e0576b64808b28778e51a928b1ad5933ffb9b3cb01fb0521480452af7e4851f29a6513d6f6258a969de43_1280.png",
-            "tags": ["老师", "学生", "教育", "学习"],
-            "isDark": false
-          }
-        ]
-      },
-      "healthcare": {
-        "description": "医疗健康相关装饰插图",
-        "keywords": ["医疗", "健康", "医生", "医院"],
-        "images": [
-          {
-            "id": "pixabay-health-1884784",
-            "description": "注射器和药品，医疗健康",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g74901309de698648cd9e86b73208e3eba33f9cb413238d14a4eb0c67bfaf92f45279079f3260746d0284aa2ba5b15d89d14f92a73f5b11357aa32225bb6368a4_1280.jpg",
-            "tags": ["注射器", "药品", "医疗", "健康"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-health-1884775",
-            "description": "药丸胶囊，医药保健",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g2764fef9c670f07b4714a2414cfc1914883387d90d217ed891e8912d2295aff386c9d15c5a369e40fd609b1e833908b0a66b02b3ec8be66e6e3d4ea579c59c45_1280.jpg",
-            "tags": ["药丸", "胶囊", "医药", "健康"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-health-9301630",
-            "description": "医院急救车标志，医疗logo",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g1f5c5537835c3e9835ce39e494f6078e0c20c014a45b6a7e89c7572edfeb47fedfc97f30910c271409e28f490ebed04cbcc15338d7839f34dc0b1fe57fe4978c_1280.jpg",
-            "tags": ["医院", "急救车", "医疗", "标志"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-health-5187732",
-            "description": "医生和医疗设备，健康护理",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g3b7c0971511901ebe71acecf2c63de3a737041c76c2edd1f5620f122a564852cb58b5b660bdfea578947c7bef2cba33658ddb9d5ddcac43bc0f559430a851a46_1280.png",
-            "tags": ["医生", "护士", "医疗", "健康"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-health-3673645",
-            "description": "药品包装，处方药物",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g4884c09d9511723b819967d3d9368dfe0c98e8c924a358285d176b61dc772c6461638873da3ce8dbb76a3cba16ffbdba5442ff026c2b6b9965a0686649473018_1280.jpg",
-            "tags": ["药品", "药物", "处方", "健康"],
-            "isDark": false
-          }
-        ]
-      },
-      "travel": {
-        "description": "旅游出行相关装饰插图",
-        "keywords": ["旅游", "出行", "度假", "酒店"],
-        "images": [
-          {
-            "id": "pixabay-travel-9855574",
-            "description": "飞机旅行，机场度假",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g681fb9e59d50368e6975ed2f56830bac8e8514cfaee3e97b5343e1edb6e445e684a1dc5d1d0bfdf536acfda21eda2541249a25bbe76371e13a7da38334ee242c_1280.png",
-            "tags": ["飞机", "旅行", "机场", "度假"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-travel-8183867",
-            "description": "热带海滩度假，棕榈树海岛",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g5067078ee810c5bdc7b0fec555b7a60c8f8f22de3a995a8ef1942dbe01f18d3fb6325fd6af6b6eb81c00c7be50932944d83ed4403848bbb355b81082038e83da_1280.png",
-            "tags": ["海滩", "度假", "棕榈树", "海岛"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-travel-4888643",
-            "description": "火车旅行，铁路交通",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/ged2ffc1387880d5e20dec761f7bfb07b33d22627a13650554f4aae90090e37a6d1a69262832e1564dc67a67f29acc2b4a1562b92aa2b36b4b3b01a8896be34b9_1280.jpg",
-            "tags": ["火车", "铁路", "旅行", "交通"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-travel-2384365",
-            "description": "指南针，旅行探险",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g29cb6d20498a26fe2090d61e06c9f404d571601a53783db7176eaafc2a8ad9c1ddb8ec59a627efb3ec233caa6bd07d008fc8f96fbeffeb762308b405e23f6ce1_1280.png",
-            "tags": ["指南针", "探险", "旅行", "方向"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-travel-8587090",
-            "description": "女性旅行，护照机票",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/gfb55164a6b1b4b4728dbbab0cde44a689448acb946bc778451af1de668390a068c7adfc384106d448ac27a8e45e9429e04b49dceb8c1456d4918be045b460adb_1280.png",
-            "tags": ["旅行", "护照", "机票", "女性"],
-            "isDark": false
-          }
-        ]
-      },
-      "sports": {
-        "description": "运动健身相关装饰插图",
-        "keywords": ["运动", "健身", "体育", "健康"],
-        "images": [
-          {
-            "id": "pixabay-sports-7968714",
-            "description": "运动鞋，健身跑步",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g3932c50bcff60e00d21f0fcbe92c7dcee31369ff11cf6c1f89d36414704ed2db7dd4aa297fb21772cca0e369a1bd86be0920ceac03ae274ec090ce4871f92617_1280.png",
-            "tags": ["运动鞋", "跑步", "健身", "体育"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-sports-9491285",
-            "description": "登山攀登，户外运动",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g75154e07be7cd95df1c5544a26921e03480df77bf33a00c41d054e26ab06071a14c17acab75e7b25d1edabaf397649c3cbd60a1b77ef4977db3de0d4a288a739_1280.png",
-            "tags": ["登山", "攀登", "户外", "运动"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-sports-147794",
-            "description": "篮球，运动体育",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g0ff3d0e9b2604729c6efc8b2e0d3e37f90ac3393349a077a6057a62fbd80ff21eb565a8490f5cd4e45d226864bf9891649ff2580272d0b03464fe4c1768981c1_1280.png",
-            "tags": ["篮球", "球类", "运动", "体育"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-sports-161132",
-            "description": "足球，竞技运动",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g516f1a6b5ceb6c89f0aa8f422da84e46978edbb6b6cb81a6a62b87ddc53eb96e872e69914363cc0edd850c04c330daa50e3177167ccb72985ce789befb30dc03_1280.png",
-            "tags": ["足球", "运动", "球类", "体育"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-sports-157930",
-            "description": "足球图标，运动标志",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g3a0a601fa8d2b35866c431db7558d33239f5e282d4c16a234d834ae5006ad0b70e673e9a1c9c78d039e3a5cff19a45c12c8bc4286008dcb7ada7a9aa59780360_1280.png",
-            "tags": ["足球", "图标", "运动", "标志"],
-            "isDark": false
-          }
-        ]
-      },
-      "food": {
-        "description": "食品餐饮相关装饰插图",
-        "keywords": ["食品", "美食", "餐饮", "健康"],
-        "images": [
-          {
-            "id": "pixabay-food-8029161",
-            "description": "墨西哥卷饼，快餐美食",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g7023f7ee7a885032a6f94e8d008e3a2cdaf653cc0a893cb5df06c8d4cefd8cfe672583da688e620d50080a0fe3a274ff37237260f800146f7cbe2c6b9c1b68fc_1280.png",
-            "tags": ["卷饼", "快餐", "美食", "墨西哥"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-food-8029158",
-            "description": "汤类美食，家常菜肴",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g8b8a737b9aba5c09473b4afcbc7af5b9e76b7cf63214500b626b89782442e7a8ed86d850af8c159cb77906f1345ac9e39300368abd128315a5c9cabbadd5874a_1280.png",
-            "tags": ["汤", "美食", "家常", "餐饮"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-food-575655",
-            "description": "汉堡快餐，垃圾食品",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/gf0565bf41bcf716ee1b9defc9b0934e66ac90210a98a23d1185516f3dc900554716ff8a76e4869d56f3837c38618e0a21cdc1f539860af3f88fca2ac613923f8_1280.png",
-            "tags": ["汉堡", "快餐", "美食", "餐饮"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-food-8294340",
-            "description": "披萨，意大利美食",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/gef070815c718a3f9ed73e46ed27aa65d29568d22ca5b76826873ace7260458e627396c55ed55caf3170200168f2f596ddf623da9b9bd589e07c34e04fa863c7d_1280.png",
-            "tags": ["披萨", "意大利", "美食", "餐饮"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-food-8585032",
-            "description": "巧克力饼干，甜点零食",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/gc7b94f3f4c6f4354f6a2a55b52c79039d83131414b62fb62d4bcfdb72f342e0ae52e9a04a07cab51e133d7070570a039c3add0a6e395dd524334cad8a889387a_1280.png",
-            "tags": ["巧克力", "饼干", "甜点", "零食"],
-            "isDark": false
-          }
-        ]
-      },
-      "general": {
-        "description": "通用装饰插图",
-        "keywords": ["通用", "抽象", "装饰", "图案"],
-        "images": [
-          {
-            "id": "pixabay-general-5719221",
-            "description": "抽象星空宇宙背景",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g1ad36dbbc564967f3b855d43a13b18167aafb952a3aac9ecb44ced6a6783cea3ed49abf11f066a7e0753aa4198ab004be8f00f3b11c8c27f85e8acd938244e13_1280.jpg",
-            "tags": ["抽象", "星空", "宇宙", "背景"],
-            "isDark": true
-          },
-          {
-            "id": "pixabay-general-6296890",
-            "description": "抽象彩虹背景，现代设计",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/g48b7248f92f9caf15c5acf64a6116ff6df3a888aa423700c4f810c228a719ba4764aef021bd4e3dff499b6ef80a9782fd4f941a58798825e1fb4f647684426f6_1280.jpg",
-            "tags": ["抽象", "彩虹", "现代", "设计"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-general-1647380",
-            "description": "金色纹理背景，奢华设计",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/gbe4bc8a8046704e0d4f1506da91f4bcd79b2d6c0e7739c97f84397a9d771dcb83d880c4ff8abe3b265f0223a9a3bc69c1ed36c34a6a8f6583b79a712aa8a8410_1280.jpg",
-            "tags": ["金色", "纹理", "奢华", "背景"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-general-1373684",
-            "description": "彩色波纹屏幕，抽象艺术",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/gc2f99050fa4305a01b31d44e43d84f6693a8a2708a95a14e5bd8e767a7b2390761b1f140fbcf298b45414f85055d1ffde826d3a5dfe62500e6ed5ce39a6627f2_1280.jpg",
-            "tags": ["波纹", "彩色", "抽象", "艺术"],
-            "isDark": false
-          },
-          {
-            "id": "pixabay-general-3381438",
-            "description": "3D立方体几何，科技感",
-            "source": "pixabay",
-            "url": "https://pixabay.com/get/ga94482cd286fe03814bcbc67e77ca7ed08217abf671bbb38e21d0312bec2382e3720edd6940c9c115f341da9364fd5042e2395d9deaada586a27b52ad64ea624_1280.jpg",
-            "tags": ["立方体", "几何", "3D", "科技"],
-            "isDark": true
-          }
-        ]
-      }
-    }
+  {
+    "url": "https://images.pexels.com/photos/12602063/pexels-photo-12602063.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "blue sky"
+  },
+  {
+    "url": "https://images.pexels.com/photos/7794365/pexels-photo-7794365.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "grey gradient"
+  },
+  {
+    "url": "https://images.pexels.com/photos/10330757/pexels-photo-10330757.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "grey sky"
+  },
+  {
+    "url": "https://images.pexels.com/photos/17507670/pexels-photo-17507670.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "car",
+    "tags": ["car", "white", "night"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2631489/pexels-photo-2631489.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "car",
+    "tags": ["car", "red"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/3855962/pexels-photo-3855962.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "石油",
+    "tags": ["石油", "能源", "工业", "黑色"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "棕色",
+    "tags": ["棕色", "纸张"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1831234/pexels-photo-1831234.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "棕色",
+    "tags": ["粉色", "云朵", "天空"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2088208/pexels-photo-2088208.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "粉色",
+    "tags": ["粉色", "山峦", "星星"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/4041285/pexels-photo-4041285.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "粉色",
+    "tags": ["粉色", "花瓣"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2680270/pexels-photo-2680270.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "藏蓝",
+    "tags": ["藏蓝", "微光"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1456291/pexels-photo-1456291.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "藏蓝",
+    "tags": ["藏蓝", "大海", "渐变"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/3418400/pexels-photo-3418400.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "藏蓝",
+    "tags": ["藏蓝", "油画", "深邃"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/3418400/pexels-photo-3418400.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "藏蓝",
+    "tags": ["藏蓝", "陶器", "碟子", "重复"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/7233109/pexels-photo-7233109.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "紫色",
+    "tags": ["紫色", "羽毛"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/8823483/pexels-photo-8823483.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "紫色",
+    "tags": ["紫色", "纸张", "纹理", "褶皱"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/4424355/pexels-photo-4424355.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "紫色",
+    "tags": ["紫色", "光线", "科技"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2526097/pexels-photo-2526097.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "紫色",
+    "tags": ["紫色", "花朵", "健康"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "紫色",
+    "tags": ["紫色", "自然", "湖面", "山峦"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2098427/pexels-photo-2098427.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深蓝",
+    "tags": ["深蓝", "夜空", "山峰", "星河"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/956981/pexels-photo-956981.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深蓝",
+    "tags": ["深蓝", "银河", "夜空"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/747101/pexels-photo-747101.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深蓝",
+    "tags": ["深蓝", "夜景", "建筑", "灯光"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1687341/pexels-photo-1687341.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深绿",
+    "tags": ["深绿", "植物", "自然"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1556796/pexels-photo-1556796.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深绿",
+    "tags": ["深绿", "海洋", "游泳"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/21243784/pexels-photo-21243784.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深绿",
+    "tags": ["深绿", "渐变", "抽象"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/40896/pexels-photo-40896.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深绿",
+    "tags": ["绿色", "嫩芽", "植物"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/48884/pexels-photo-48884.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "煤炭",
+    "tags": ["黑色", "煤炭", "能源"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1843717/pexels-photo-1843717.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "白色",
+    "tags": ["白色", "浮雕", "乳胶漆"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2333293/pexels-photo-2333293.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "黄色",
+    "tags": ["黄色", "线条", "阳光"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/35468833/pexels-photo-35468833.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "黄色",
+    "tags": ["黄色", "重叠", "阳光"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/14182648/pexels-photo-14182648.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "墨绿",
+    "tags": ["墨绿", "流动", "黄色"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/3616764/pexels-photo-3616764.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "灰色",
+    "tags": ["灰色", "水墨", "清淡"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/6985185/pexels-photo-6985185.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "浅绿",
+    "tags": ["浅绿", "渐变"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/5913897/pexels-photo-5913897.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "红色",
+    "tags": ["红色", "纹理", "树叶"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "暗色",
+    "tags": ["暗色", "演唱会", "灯光", "人群"]
   }
-}
+]

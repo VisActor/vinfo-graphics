@@ -31,13 +31,13 @@
     },
     {
       "id": 2,
-      "prompt": "生成一个 Pie 图，数据是 A 40、B 35、C 25。从 references/images/images.json 的 backgrounds.categories 分类中找一张适合的背景图，并给出完整的 schema。",
+      "prompt": "生成一个 Pie 图，数据是 A 40、B 35、C 25。从 references/images/images.json 中按 keywords/tags 语义匹配找一张适合的背景图，并给出完整的 schema。",
       "expected_output": "应从 images.json 读取背景图 URL；正确使用 pie 的 innerRadius 字段；schema 符合 top-keys/pie.json 定义。",
       "schema_validations": {
         "chartType": "pie",
         "innerRadius": { "min": 0.4, "max": 0.7 },
         "background.image": "is_valid_url",
-        "background.image": "contains_pixabay",
+        "background.image": "contains_pexels",
         "icon.field": "exists",
         "icon.map": "exists"
       },
@@ -56,11 +56,10 @@
     },
     {
       "id": 4,
-      "prompt": "帮我从 references/images/images.json 里找 3 张适合城市主题的背景图，要深色系的，给出每张图的 URL 和推荐搭配的主题色。",
-      "expected_output": "应读取 images.json 的 backgrounds.categories.city 分类；筛选 isDark=true 的图片；返回 3 张图片的 URL 和主题建议。",
+      "prompt": "帮我从 references/images/images.json 里找 3 张适合城市/建筑主题的背景图，要深色系的（isDark: true），给出每张图的 URL 和推荐搭配的主题色。",
+      "expected_output": "应读取 images.json 按 keywords/tags 筛选含'建筑''城市''夜景'等标签的图片；筛选 isDark=true；返回 3 张图片的 URL 和主题建议。",
       "schema_validations": {
         "background.images_count": 3,
-        "background.categories_used": ["city"],
         "background.all_isDark": true
       },
       "files": ["references/images/images.json"]
@@ -81,7 +80,7 @@
     {
       "id": 6,
       "prompt": "帮我做一个 circlePacking 图，展示公司部门的人员分布：研发部 50 人、销售部 30 人、市场部 20 人、运营部 15 人、客服部 10 人。每个节点要有图标，背景用抽象风格，生成完整 schema。",
-      "expected_output": "应选择 circlePacking 图；正确配置层级结构和图标；从预置图片库 illustrations.general 分类选择抽象风格背景图。",
+      "expected_output": "应选择 circlePacking 图；正确配置层级结构和图标；从预置背景图片库按 keywords/tags 匹配选择抽象纹理风格背景图。",
       "schema_validations": {
         "chartType": "circlePacking",
         "required_fields": ["chartType", "data", "categoryField", "valueField"],
@@ -121,11 +120,11 @@
     {
       "id": 9,
       "prompt": "做一个环形信息图，数据是 A 40、B 35、C 25，要有语义化 icon。帮我从 images.json 找背景图，从 fetch_icons.py 找图标，最后输出完整 schema 和 generate_demo_html.py 命令。",
-      "expected_output": "应完成完整流程：读取 images.json 找背景图、执行 fetch_icons.py 找图标、生成符合 pie 规范的完整 schema、给出 HTML 生成命令。",
+      "expected_output": "应完成完整流程：读取 images.json 按 keywords/tags 匹配找背景图、执行 fetch_icons.py 找图标、生成符合 pie 规范的完整 schema、给出 HTML 生成命令。",
       "schema_validations": {
         "chartType": "pie",
         "innerRadius": { "min": 0.4, "max": 0.7 },
-        "background.image": "contains_pixabay",
+        "background.image": "contains_pexels",
         "icon.map_keys_match_data": true,
         "icon.collection": "is_same_across_all_keys",
         "has_generate_command": true
