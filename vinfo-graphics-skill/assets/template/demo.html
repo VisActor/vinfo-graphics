@@ -495,6 +495,19 @@
         document.body.classList.toggle('is-light', mode === 'light');
       }
 
+      function applyContainerSize(width, height) {
+        const container = document.getElementById('chart-wrapper');
+        if (container) {
+          if (width) {
+            container.style.minWidth = width + 'px';
+          }
+
+          if (height) {
+            container.style.height = height + 'px';
+          }
+        }
+      }
+
       async function renderChart() {
         const codeInput = document.getElementById('code-input').value;
 
@@ -528,6 +541,7 @@
         // Apply theme
         const preferredTheme = resolveThemeMode(parsedSchema);
         applyPageTheme(preferredTheme);
+        applyContainerSize(parsedSchema.width, parsedSchema.height);
 
         // Render new chart
         const container = document.getElementById('chart');
