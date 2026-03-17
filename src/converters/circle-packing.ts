@@ -334,7 +334,7 @@ export class CirclePackingChartConverter extends BaseConverter<CirclePackingChar
         y: (datum: any) => {
           const { cy, r } = this.getCircleCenter(datum);
           // 名称在数值下方
-          return cy + r * 0.35;
+          return cy + r * 0.4;
         },
         fontSize: nameStyle.fontSize
           ? nameStyle.fontSize
@@ -342,6 +342,15 @@ export class CirclePackingChartConverter extends BaseConverter<CirclePackingChar
               const { r } = this.getCircleCenter(datum);
               return Math.max(8, Math.floor(r * 0.22));
             },
+        // 名称文字位于 cy + r*0.35，该处弦长约为 2r*0.937，留 10% 余量
+        maxLineWidth: (datum: any) => {
+          const { r } = this.getCircleCenter(datum);
+          return r * 1.6;
+        },
+        ellipsis: '...',
+        lineClamp: 2,
+        wrap: true,
+        wordBreak: 'break-word',
         fontWeight: defaultNameFontWeight,
         fill: defaultNameFill,
         textAlign: 'center',
