@@ -7,7 +7,7 @@
   },
   {
     "url": "https://images.pexels.com/photos/26771257/pexels-photo-26771257.jpeg",
-    "isDark": true,
+    "isDark": false,
     "type": ["background", "texture"],
     "keywords": "blue sea"
   },

@@ -79,16 +79,44 @@
 | `nodeBackground.map` 中不同节点使用相同图片          | 重新为重复节点选择 |
 | `circleBackground.map` 中不同圆使用相同图片          | 重新为重复圆选择   |
 
-### 步骤 4：追加尺寸参数并集成到 Schema
+### 步骤 4：根据主题与图片色调设置透明度
+
+背景图片的透明度（`opacity`）需要根据**主题色调**与**图片色调**的组合来设置，以保证文字可读性和视觉和谐：
+
+| 主题类型 (`theme.type`) | 图片色调 (`isDark`) | 推荐 `opacity` 范围 | 说明                                                  |
+| ----------------------- | ------------------- | ------------------- | ----------------------------------------------------- |
+| `light`（浅色主题）     | `true`（深色图片）  | **0.10 ~ 0.25**     | ⚠️ 冲突！深色图片会压制浅色背景色，必须大幅降低透明度 |
+| `light`（浅色主题）     | `false`（浅色图片） | 0.40 ~ 0.65         | 匹配，图片可适度显示                                  |
+| `dark`（深色主题）      | `true`（深色图片）  | 0.40 ~ 0.65         | 匹配，图片可适度显示                                  |
+| `dark`（深色主题）      | `false`（浅色图片） | **0.10 ~ 0.25**     | ⚠️ 冲突！浅色图片会破坏深色氛围，必须大幅降低透明度   |
+
+**关键规则**：
+
+- 当图片 `isDark` 与主题 `type` **不匹配**（一深一浅）时，透明度必须设为低值（`0.10 ~ 0.25`），否则图文对比度会严重下降
+- `nodeBackground` 和 `circleBackground` 的 `opacity` 遵循同样逻辑（通常取 `0.25 ~ 0.4`，适当保留节点内容可读性）
+
+### 步骤 5：追加尺寸参数并集成到 Schema
 
 根据使用场景追加对应尺寸参数（见上表），然后写入 schema。
 
-#### background.image 示例
+#### background.image 示例（浅色主题 + 深色图片 → 低透明度）
 
 ```json
 {
   "background": {
-    "image": "https://images.pexels.com/photos/2098427/pexels-photo-2098427.jpeg?w=1920&h=1080&fit=crop"
+    "image": "https://images.pexels.com/photos/2098427/pexels-photo-2098427.jpeg?w=1920&h=1080&fit=crop",
+    "opacity": 0.15
+  }
+}
+```
+
+#### background.image 示例（主题与图片色调匹配 → 正常透明度）
+
+```json
+{
+  "background": {
+    "image": "https://images.pexels.com/photos/2098427/pexels-photo-2098427.jpeg?w=1920&h=1080&fit=crop",
+    "opacity": 0.55
   }
 }
 ```
