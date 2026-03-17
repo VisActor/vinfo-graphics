@@ -188,15 +188,67 @@ describe('CirclePackingChart Schema', () => {
       expect((bgMark.style as any).background).toBeDefined();
       expect((bgMark.style as any).opacity).toBe(0.3);
 
-      // icon mark should be a symbol with background callback
+      // icon mark should be a symbol with symbolType
       const iconMark = marks.find(
-        (m) =>
-          m.type === 'symbol' && m !== bgMark && typeof (m.style as any).background === 'function'
+        (m) => m.type === 'symbol' && m !== bgMark && (m.style as any).symbolType === 'circle'
       );
       expect(iconMark).toBeDefined();
 
       // 4. Data should contain all 7 commodity items
       expect((spec.data as any).values).toHaveLength(7);
+    });
+  });
+
+  describe('prominent-value layout', () => {
+    it('should use extensionMark for prominent-value label layout', () => {
+      const schema: CirclePackingChartSchema = {
+        chartType: 'circlePacking',
+        data: [
+          { trade: 'Crude oil', share: 38 },
+          { trade: 'LPG', share: 29 },
+        ],
+        categoryField: 'trade',
+        valueField: 'share',
+        label: {
+          visible: true,
+          layout: 'prominent-value',
+          showPercent: true,
+          valueStyle: { fill: '#ffffff', fontWeight: 'bold' },
+          nameStyle: { fill: 'rgba(255,255,255,0.9)' },
+        },
+      };
+
+      const spec = toVChartSpec(schema);
+
+      // Default label should be hidden
+      expect((spec.label as any).visible).toBe(false);
+
+      // Should have extensionMark with at least 2 text marks (value + name) + rank marks
+      expect(spec.extensionMark).toBeDefined();
+      const marks = spec.extensionMark as Record<string, unknown>[];
+      const textMarks = marks.filter((m) => m.type === 'text');
+      // 2 prominent-value text marks + rank text mark = at least 2
+      expect(textMarks.length).toBeGreaterThanOrEqual(2);
+    });
+
+    it('should apply fillOpacity to circle style', () => {
+      const schema: CirclePackingChartSchema = {
+        chartType: 'circlePacking',
+        data: [{ trade: 'Crude oil', share: 38 }],
+        categoryField: 'trade',
+        valueField: 'share',
+        circle: {
+          padding: 5,
+          strokeWidth: 2,
+          strokeColor: 'rgba(255,255,255,0.3)',
+          fillOpacity: 0.8,
+        },
+      };
+
+      const spec = toVChartSpec(schema);
+
+      expect(spec.circlePacking).toBeDefined();
+      expect((spec.circlePacking as any).style.fillOpacity).toBe(0.8);
     });
   });
 

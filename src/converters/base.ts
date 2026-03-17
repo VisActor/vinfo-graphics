@@ -264,22 +264,58 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
    * 处理背景配置
    */
   protected processBackground(
-    background: BackgroundConfig | undefined
+    background: BackgroundConfig | undefined,
+    spec: Record<string, unknown>
   ): Record<string, unknown> | string | undefined {
-    if (!background) return this.getThemeConfig().backgroundColor;
-
-    if (background.color) {
-      return background.color;
+    if (!background) {
+      spec.background = this.getThemeConfig().backgroundColor;
+      return;
     }
 
     const result: Record<string, unknown> = {};
     if (background.image) {
-      result.image = background.image;
+      if (!isNil(background.opacity)) {
+        if (!spec.customMark) {
+          spec.customMark = [];
+        }
+
+        // 使用 customMark 添加一个全图的半透明遮罩层来实现背景图的透明度控制
+        (spec.customMark as Record<string, unknown>[]).push({
+          type: 'rect',
+          zIndex: 0,
+          style: {
+            background: background.image,
+            backgroundOpacity: background.opacity,
+            x: 0,
+            y: 0,
+            width: (datum: any, ctx: any) => {
+              const rect = ctx.chart.getViewRect();
+              return rect.width;
+            },
+            height: (datum: any, ctx: any) => {
+              const rect = ctx.chart.getViewRect();
+              return rect.height;
+            },
+          },
+        });
+
+        return;
+      }
+
+      result.background = background.image;
     } else if (background.linearGradient) {
-      return this.processLinearGradient(background.linearGradient);
+      result.fill = this.processLinearGradient(background.linearGradient);
+      result.opacity = background.opacity ?? 1;
+    } else if (background.color) {
+      result.fill = background.color;
+      result.opacity = background.opacity ?? 1;
     }
 
-    return Object.keys(result).length > 0 ? result : undefined;
+    if (Object.keys(result).length > 0) {
+      spec.background = result;
+    }
+
+    return;
   }
 
   /**

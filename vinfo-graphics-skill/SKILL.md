@@ -82,14 +82,14 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
 
 ### 层级 3：工作流文档
 
-| 文档                | 路径                                                 | 何时查阅              |
-| ------------------- | ---------------------------------------------------- | --------------------- |
-| **生成流程**        | `references/workflows/scenario-1-generation.md`      | 从零创建信息图        |
-| **编辑流程**        | `references/workflows/scenario-2-editing.md`         | 修改现有图表配置      |
-| **诊断流程**        | `references/workflows/scenario-3-diagnosis.md`       | 排查图表显示问题      |
-| **Icon 子流程**     | `references/workflows/subprocess-icon-generation.md` | 需要配置语义化图标    |
-| **图片子流程**       | `references/workflows/subprocess-image.md`            | 需要背景/装饰图片     |
-| **Icon 查询**       | `references/workflows/scenario-icon-query.md`        | 用户单独搜索/替换图标 |
+| 文档            | 路径                                                 | 何时查阅              |
+| --------------- | ---------------------------------------------------- | --------------------- |
+| **生成流程**    | `references/workflows/scenario-1-generation.md`      | 从零创建信息图        |
+| **编辑流程**    | `references/workflows/scenario-2-editing.md`         | 修改现有图表配置      |
+| **诊断流程**    | `references/workflows/scenario-3-diagnosis.md`       | 排查图表显示问题      |
+| **Icon 子流程** | `references/workflows/subprocess-icon-generation.md` | 需要配置语义化图标    |
+| **图片子流程**  | `references/workflows/subprocess-image.md`           | 需要背景/装饰图片     |
+| **Icon 查询**   | `references/workflows/scenario-icon-query.md`        | 用户单独搜索/替换图标 |
 
 ### 层级 4：生成规则（rules）
 
@@ -109,10 +109,10 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
 
 ### 辅助资源
 
-| 资源            | 路径                              | 何时查阅             |
-| --------------- | --------------------------------- | -------------------- |
-| 预置图片库      | `references/images/images.json`   | 获取背景图/插图 URL  |
-| 示例            | `references/examples/*.md`        | 参考完整 schema 示例 |
+| 资源       | 路径                            | 何时查阅             |
+| ---------- | ------------------------------- | -------------------- |
+| 预置图片库 | `references/images/images.json` | 获取背景图/插图 URL  |
+| 示例       | `references/examples/*.md`      | 参考完整 schema 示例 |
 
 ---
 
@@ -158,12 +158,13 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
    - `title`：TitleConfig 对象（`{ text, position }`），详见 `type-details/TitleConfig.md`
    - `footnote`：FootnoteConfig 对象，详见 `type-details/FootnoteConfig.md`
    - `width` / `height`：画布尺寸，默认 800 × 600
-   - `background`：如需背景图 → 执行 **图片子流程** (`subprocess-image.md`) 查表获取
+   - `background`：执行 **图片子流程** (`subprocess-image.md`)；并保证 `background` 与 `brandImage` 至少一项存在
    - `theme` / `colors`：预设主题名称或自定义颜色
    - `legend`：LegendConfig 对象
-5. **Icon 生成（必选）** → 🚨 必须在终端执行 `scripts/fetch_icons.py` 脚本
+5. **Icon 生成（条件启用）** → 🚨 必须在终端执行 `scripts/fetch_icons.py` 脚本
    - 先识别语义类型：国家→国旗(`--per-category-keywords` + `twemoji`)，品牌→品牌图标，通用→主题关键词
    - **禁止手动拼接 Iconify URL**，必须使用脚本
+   - 仅当 icon 与类目语义可解释匹配时才写入 schema；若语义不成立，必须跳过 icon
    - 脚本输出包含统一风格的 icon map，直接用于 schema
 
 ### 图表特有流程

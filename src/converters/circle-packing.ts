@@ -31,7 +31,7 @@ export class CirclePackingChartConverter extends BaseConverter<CirclePackingChar
     }
 
     // 背景
-    spec.background = this.processBackground(schema.background);
+    this.processBackground(schema.background, spec);
 
     // 颜色
     this.processColors(schema, spec);
@@ -141,6 +141,18 @@ export class CirclePackingChartConverter extends BaseConverter<CirclePackingChar
       };
     }
 
+    // fillOpacity 支持
+    if (schema.circle?.fillOpacity !== undefined) {
+      if (!spec.circlePacking) {
+        spec.circlePacking = {};
+      }
+      const circlePacking = spec.circlePacking as Record<string, unknown>;
+      if (!circlePacking.style) {
+        circlePacking.style = {};
+      }
+      (circlePacking.style as Record<string, unknown>).fillOpacity = schema.circle.fillOpacity;
+    }
+
     if (!isNil(schema.groupField)) {
       if (!spec.circlePacking) {
         spec.circlePacking = {};
@@ -160,6 +172,13 @@ export class CirclePackingChartConverter extends BaseConverter<CirclePackingChar
    */
   private processLabel(schema: CirclePackingChartSchema, spec: Record<string, unknown>): void {
     if (schema.label?.visible === false) return;
+
+    // prominent-value 布局：使用 extensionMark 实现大数值+小名称的双行标签
+    if (schema.label?.layout === 'prominent-value') {
+      spec.label = { visible: false };
+      this.processProminentValueLabel(schema, spec);
+      return;
+    }
 
     const labelSpec: Record<string, unknown> = {
       visible: true,
@@ -206,6 +225,129 @@ export class CirclePackingChartConverter extends BaseConverter<CirclePackingChar
     }
 
     spec.label = labelSpec;
+  }
+
+  /**
+   * 处理 prominent-value 布局标签
+   * 使用 extensionMark 实现：大数值文字 + 小名称文字的双行显示
+   */
+  private processProminentValueLabel(
+    schema: CirclePackingChartSchema,
+    spec: Record<string, unknown>
+  ): void {
+    if (!spec.extensionMark) {
+      spec.extensionMark = [];
+    }
+
+    const valueStyle = schema.label?.valueStyle ?? {};
+    const nameStyle = schema.label?.nameStyle ?? {};
+    const showPercent = schema.label?.showPercent !== false;
+    const total = this.calculateTotal(schema.data, schema.valueField);
+
+    const defaultValueFill = valueStyle.fill ?? '#fff';
+    const defaultNameFill = nameStyle.fill ?? '#fff';
+    const defaultValueFontWeight = valueStyle.fontWeight ?? 'bold';
+    const defaultNameFontWeight = nameStyle.fontWeight ?? 'normal';
+
+    // 获取数值文本
+    const getValueText = (datum: any): string => {
+      const originalDatum = datum.datum[datum.datum.length - 1];
+      const value = originalDatum[schema.valueField] ?? 0;
+
+      if (showPercent && total > 0) {
+        const numValue = Number(value);
+        if (!isNaN(numValue)) {
+          const percent = ((numValue / total) * 100).toFixed(0);
+          return `${percent}%`;
+        }
+      }
+
+      if (schema.label?.format) {
+        // 从 format 中提取 value 部分
+        const formatted = schema.label.format
+          .replace(/{name}/g, '')
+          .replace(/{value}/g, String(value))
+          .replace(
+            /{percent}/g,
+            total > 0 ? `${((Number(value) / total) * 100).toFixed(0)}%` : '0%'
+          )
+          .trim();
+        return formatted;
+      }
+
+      return String(value);
+    };
+
+    // 获取名称文本
+    const getNameText = (datum: any): string => {
+      const originalDatum = datum.datum[datum.datum.length - 1];
+      return String(originalDatum[schema.categoryField] ?? '');
+    };
+
+    // 数值文字（大号，居中偏上）
+    (spec.extensionMark as Record<string, unknown>[]).push({
+      type: 'text',
+      dataIndex: 0,
+      style: {
+        text: (datum: any) => {
+          if (datum.isLeaf === false) return '';
+          return getValueText(datum);
+        },
+        visible: (datum: any) => datum.isLeaf !== false,
+        x: (datum: any) => {
+          const { cx } = this.getCircleCenter(datum);
+          return cx;
+        },
+        y: (datum: any) => {
+          const { cy, r } = this.getCircleCenter(datum);
+          // 数值偏上，名称偏下
+          return cy - r * 0.08;
+        },
+        fontSize: valueStyle.fontSize
+          ? valueStyle.fontSize
+          : (datum: any) => {
+              const { r } = this.getCircleCenter(datum);
+              // 按圆半径自适应缩放，最小12px
+              return Math.max(12, Math.floor(r * 0.55));
+            },
+        fontWeight: defaultValueFontWeight,
+        fill: defaultValueFill,
+        textAlign: 'center',
+        textBaseline: 'middle',
+      },
+    });
+
+    // 名称文字（小号，居中偏下）
+    (spec.extensionMark as Record<string, unknown>[]).push({
+      type: 'text',
+      dataIndex: 0,
+      style: {
+        text: (datum: any) => {
+          if (datum.isLeaf === false) return '';
+          return getNameText(datum);
+        },
+        visible: (datum: any) => datum.isLeaf !== false,
+        x: (datum: any) => {
+          const { cx } = this.getCircleCenter(datum);
+          return cx;
+        },
+        y: (datum: any) => {
+          const { cy, r } = this.getCircleCenter(datum);
+          // 名称在数值下方
+          return cy + r * 0.35;
+        },
+        fontSize: nameStyle.fontSize
+          ? nameStyle.fontSize
+          : (datum: any) => {
+              const { r } = this.getCircleCenter(datum);
+              return Math.max(8, Math.floor(r * 0.22));
+            },
+        fontWeight: defaultNameFontWeight,
+        fill: defaultNameFill,
+        textAlign: 'center',
+        textBaseline: 'middle',
+      },
+    });
   }
 
   /**

@@ -31,7 +31,7 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
     }
 
     // 背景
-    spec.background = this.processBackground(schema.background);
+    this.processBackground(schema.background, spec);
 
     // 颜色
     this.processColors(schema, spec);

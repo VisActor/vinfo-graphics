@@ -712,4 +712,155 @@ export const treemapExamples: { name: string; schema: TreemapChartSchema }[] = [
       },
     },
   },
+  {
+    name: '分组treemap+icon+背景图',
+    schema: {
+      chartType: 'treemap',
+      title: {
+        text: '主要国家跨境外汇规模矩阵树图',
+        position: 'center',
+        subtext: '按国家划分的跨境外汇交易规模（单位：十亿美元）',
+      },
+      footnote: {
+        text: '单位：十亿美元（$ billions）。数据仅为示例，用于展示矩阵树图信息图配置。',
+        layout: 'left',
+        fontSize: 12,
+        fill: '#667085',
+        offset: 10,
+      },
+      data: [
+        {
+          country: 'UK',
+          fxTotal: 957,
+          iconKey: 'UK',
+        },
+        {
+          country: 'U.S.',
+          fxTotal: 653,
+          iconKey: 'U.S.',
+        },
+        {
+          country: 'Singapore',
+          fxTotal: 336,
+          iconKey: 'Singapore',
+        },
+        {
+          country: 'Hong Kong',
+          fxTotal: 149,
+          iconKey: 'Hong Kong',
+        },
+        {
+          country: 'Switzerland',
+          fxTotal: 85,
+          iconKey: 'Switzerland',
+        },
+        {
+          country: 'Germany',
+          fxTotal: 74,
+          iconKey: 'Germany',
+        },
+        {
+          country: 'Japan',
+          fxTotal: 71,
+          iconKey: 'Japan',
+        },
+        {
+          country: 'Australia',
+          fxTotal: 40,
+          iconKey: 'Australia',
+        },
+        {
+          country: 'France',
+          fxTotal: 27,
+          iconKey: 'France',
+        },
+        {
+          country: 'Canada',
+          fxTotal: 24,
+          iconKey: 'Canada',
+        },
+        {
+          country: 'Other',
+          fxTotal: 154,
+          iconKey: 'Other',
+        },
+      ],
+      width: 960,
+      height: 600,
+      background: {
+        // linearGradient: {
+        //   direction: 'left-right',
+        //   colors: ['red', 'green'],
+        // },
+        // color: '#f5f7fb',
+        opacity: 0.1,
+        image:
+          'https://cdn.pixabay.com/photo/2015/11/25/01/09/abstract-background-1061100_1280.jpg',
+      },
+      theme: 'fresh',
+      colors: ['#1971c2', '#1098ad', '#40c057', '#fab005', '#e8590c', '#adb5bd'],
+      legend: {
+        visible: false,
+      },
+      categoryField: 'country',
+      valueField: 'fxTotal',
+      node: {
+        gap: 3,
+        padding: 6,
+        cornerRadius: 4,
+      },
+      rank: {
+        visible: true,
+        position: 'top-left',
+        style: {
+          fontSize: 14,
+          fill: '#ffffff',
+          fontWeight: 700,
+          backgroundColor: 'rgba(15, 23, 42, 0.45)',
+        },
+      },
+      icon: {
+        visible: true,
+        position: 'top-right',
+        field: 'iconKey',
+        map: {
+          UK: 'https://api.iconify.design/twemoji/flag-united-kingdom.svg',
+          'U.S.': 'https://api.iconify.design/twemoji/flag-united-states.svg',
+          Singapore: 'https://api.iconify.design/twemoji/flag-singapore.svg',
+          'Hong Kong': 'https://api.iconify.design/twemoji/flag-hong-kong-sar-china.svg',
+          Switzerland: 'https://api.iconify.design/twemoji/flag-switzerland.svg',
+          Germany: 'https://api.iconify.design/twemoji/flag-germany.svg',
+          Japan: 'https://api.iconify.design/twemoji/flag-japan.svg',
+          Australia: 'https://api.iconify.design/twemoji/flag-australia.svg',
+          France: 'https://api.iconify.design/twemoji/flag-france.svg',
+          Canada: 'https://api.iconify.design/twemoji/flag-canada.svg',
+          Other: 'https://api.iconify.design/twemoji/globe-showing-europe-africa.svg',
+        },
+        size: 24,
+        offset: 8,
+        style: {
+          lineWidth: 1,
+          stroke: 'rgba(255, 255, 255, 0.8)',
+        },
+      },
+      label: {
+        visible: true,
+        format: '{name}\n{value}',
+        showPercent: true,
+        minVisible: 30,
+      },
+      nodeBackground: {
+        visible: true,
+        field: 'country',
+        map: {
+          UK: 'https://pixabay.com/get/g4d46fecf2fdd9ca6e2b32c99b152e2db1bf72625bfd6a729f2f7cd2f28c81050698bd067a4a0a9cf7c9425478eb608caa8275abf24d85a1c6dce25a530b645cc_1280.png',
+          'U.S.':
+            'https://pixabay.com/get/g1f98a1e2c32c6f3b5500ac707a3a6d7cf16e613229cb1b1becace40d82c904d315bf512496d79cc2fff100ef0c7a08dad432057db79f5a95e208cf97627ff882_1280.png',
+          Singapore:
+            'https://pixabay.com/get/g38bcdbc51f81b4d4c105cd85bfe6dff6cf1ca9d9b66c36aaacceabb170272de70a3377aab4b326afd3f7740edc0b4bed53143520e1f31e4d7c9e2e7aea3c183e_1280.png',
+        },
+        opacity: 0.3,
+      },
+    },
+  },
 ];

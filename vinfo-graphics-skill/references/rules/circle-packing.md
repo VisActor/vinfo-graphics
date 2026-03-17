@@ -1,17 +1,95 @@
 # CirclePacking 圆形闭包图生成规则
 
 > 生成或编辑 circlePacking 圆形闭包图时，必须遵守以下规则。
-> 参考信息图风格：大面积圆形气泡 + 语义化背景/图标 + 名称与数值标签 + 主题色彩编码。
+> 核心目标：生成**杂志级信息图效果**，而非普通数据图表。
+> 两种视觉风格：**突出数值风格**（大号数值 + 主题背景）和**数据丰富风格**（每圆背景图/图标 + 排名）。
 
 ---
 
-## 规则 1：尽量生成有含义的 circleBackground
+## 规则 0（最高优先级）：选择视觉风格
 
-圆形闭包图支持 `circleBackground` 为每个叶子节点设置背景图片，这是该图表的核心特色功能，**必须默认生成**。优秀的信息图圆形闭包图几乎都会为圆形设置头像、旗帜、产品图等视觉丰富的背景图。
+CirclePacking 信息图有两种核心风格，**必须在生成前根据数据特征选定一种**：
 
-### 配置方式
+### 风格 A：突出数值风格（Magazine Style）
 
-`circleBackground` 使用与 icon 类似的 field + map 结构：
+**适用场景**：数据重点是百分比/占比/金额等数值，数据量 ≤ 10 条。
+
+**视觉特征**：
+
+- 所有圆使用统一色系（单色/渐变），半透明（`fillOpacity: 0.75 ~ 0.85`）
+- 标签使用 `prominent-value` 布局：大号数值 + 小号名称，分行显示
+- 整体背景使用主题相关图片（如地图、场景图），通过半透明圆形透出
+- **不使用** circleBackground（单圆背景图）
+- **不使用** icon
+- **不使用** rank
+
+**核心配置**：
+
+```json
+{
+  "label": {
+    "layout": "prominent-value",
+    "showPercent": true,
+    "valueStyle": { "fill": "#ffffff", "fontWeight": "bold" },
+    "nameStyle": { "fill": "#ffffff", "fontWeight": "normal" }
+  },
+  "circle": { "fillOpacity": 0.8, "strokeWidth": 2, "strokeColor": "rgba(255,255,255,0.3)" },
+  "background": { "image": "主题相关背景图URL" },
+  "colors": ["#E11D48"]
+}
+```
+
+**参考效果**：数据 = 全球大宗商品流动份额，背景 = 深蓝色中东地图，圆 = 半透明粉红色，标签 = 大号 "38%" + 小号 "Crude oil"。
+
+### 风格 B：数据丰富风格（Data-Rich Style）
+
+**适用场景**：每个数据项有可辨识的实体（人物、品牌、国家），数据量 5 ~ 20 条。
+
+**视觉特征**：
+
+- 每个圆有独立 circleBackground（头像/旗帜/产品图）
+- 可选 icon（角标/标志）
+- 标签使用默认布局（`{name}\n{value}` 或 `{name}\n{percent}`）
+- 背景为纯色或渐变，配合 brandImage 装饰
+
+**核心配置**：
+
+```json
+{
+  "label": { "format": "{name}\\n{value}", "showPercent": false },
+  "circleBackground": { "field": "bgKey", "map": {...}, "opacity": 0.3 },
+  "icon": { "field": "iconKey", "map": {...}, "position": "top-left" },
+  "background": { "color": "#1e1b4b" }
+}
+```
+
+### 风格选择决策表
+
+| 数据特征                      | 选择风格   | 理由                           |
+| ----------------------------- | ---------- | ------------------------------ |
+| 百分比/占比数据，数据量 ≤ 10  | **风格 A** | 数值本身是核心信息，突出展示   |
+| 金额/排行数据，实体图片可获取 | **风格 B** | 每个实体有视觉辨识度           |
+| 抽象类目（部门、季度、类别）  | **风格 A** | 无法为每个类目找到有意义的图片 |
+| 人物/品牌/国家排行            | **风格 B** | 实体有对应头像/Logo/国旗       |
+| 能源/经济/地理主题占比        | **风格 A** | 用地图/主题背景营造氛围        |
+
+---
+
+## 规则 1：circleBackground 仅在风格 B 中使用，且必须语义匹配
+
+### 什么时候用 circleBackground
+
+- **仅风格 B** 使用 circleBackground
+- 每个数据项必须有**可辨识的、不重复的**背景图
+- 背景图必须与该数据项语义**直接相关**（人物用头像，国家用国旗/地标，品牌用Logo）
+
+### 什么时候不用 circleBackground
+
+- 风格 A **禁止**使用 circleBackground（用整体 background.image 代替）
+- 数据类目是抽象概念（如"原油"、"天然气"、"化学品"）时**不用** —— 无法找到有意义的单圆背景
+- 预置图片库无法为每个类目提供**语义不同**的图片时**不用**
+
+### 配置方式（风格 B 专用）
 
 ```json
 {
@@ -19,37 +97,77 @@
     "visible": true,
     "field": "bgKey",
     "map": {
-      "手机": "https://cdn.pixabay.com/photo/xxx/xxx_1280.jpg",
-      "电脑": "https://cdn.pixabay.com/photo/yyy/yyy_1280.jpg"
+      "频道A": "https://cdn.pixabay.com/photo/xxx_1280.jpg",
+      "频道B": "https://cdn.pixabay.com/photo/yyy_1280.jpg"
     },
     "opacity": 0.3
   }
 }
 ```
 
-### 图片来源选择
-
-| 数据类型                     | 图片来源                              | 说明                                 |
-| ---------------------------- | ------------------------------------- | ------------------------------------ |
-| 人物/频道/博主               | 从预置图片库选择对应分类图片          | 从 general 或 sports 分类选择        |
-| 国家/地区                    | 从预置图片库选择或使用国旗 icon       | 优先使用国旗 icon/图片，增强辨识度   |
-| 具体实体（产品、城市、食物） | 从预置图片库对应分类选择              | 从 technology、nature、food 分类选择 |
-| 品牌/公司                    | 从预置图片库 business 分类选择        | 体现品牌特色                         |
-| 抽象类目（部门、季度）       | 从预置图片库 general 分类选择         | 使用抽象装饰图片                     |
-
 ### 注意事项
 
-- `opacity` 推荐设置 `0.2` ~ `0.4`，避免背景图太亮影响标签可读性
-- 如果背景图本身视觉较丰富（如人物头像），建议 `opacity: 0.25 ~ 0.35`
-- data 中需要添加 `bgKey` 字段（或复用 categoryField 的值作为 map key）
-- **circleBackground 中每个圆的图片必须与该数据项语义相关**（如 YouTube 频道 → 选择相关主题图片，而非通用图片）
-- **circleBackground 中的图片不可与 background.image 重复**
-- **不同圆之间的图片也不可重复**
-- 如预置图片库中没有匹配的图片，可跳过 circleBackground 配置
+- `opacity` 推荐 `0.2 ~ 0.4`
+- **不同圆之间的图片不可重复**
+- **circleBackground 图片不可与 background.image 重复**
+- 如无法为每个圆找到语义不同的图片，**必须跳过 circleBackground 并切换到风格 A**
 
 ---
 
-## 规则 2：icon、label、rank 位置不可重叠
+## 规则 2：label 必须使用 prominent-value 布局（风格 A）或分行格式（风格 B）
+
+### 风格 A：prominent-value 布局（强制）
+
+使用 `layout: "prominent-value"` 实现大号数值 + 小号名称的双行显示。数值字体会**自动按圆半径缩放**，大圆显示大字，小圆显示小字。
+
+```json
+{
+  "label": {
+    "visible": true,
+    "layout": "prominent-value",
+    "showPercent": true,
+    "valueStyle": {
+      "fill": "#ffffff",
+      "fontWeight": "bold"
+    },
+    "nameStyle": {
+      "fill": "rgba(255,255,255,0.9)",
+      "fontWeight": "normal"
+    }
+  }
+}
+```
+
+| 参数                    | 说明                           | 推荐值                                        |
+| ----------------------- | ------------------------------ | --------------------------------------------- |
+| `valueStyle.fontSize`   | 留空则自动按圆半径缩放（推荐） | 不设置                                        |
+| `valueStyle.fill`       | 数值颜色                       | `#ffffff`（深色背景）或 `#1e1b4b`（浅色背景） |
+| `valueStyle.fontWeight` | 粗细                           | `"bold"`                                      |
+| `nameStyle.fontSize`    | 留空则自动缩放                 | 不设置                                        |
+| `nameStyle.fill`        | 名称颜色                       | `rgba(255,255,255,0.9)` 或更浅                |
+
+### 风格 B：分行默认布局
+
+```json
+{
+  "label": {
+    "visible": true,
+    "format": "{name}\\n{value}",
+    "showPercent": false
+  }
+}
+```
+
+当有 circleBackground 时，label 文字应使用白色 + 深色背景下的高对比度。
+
+### 禁止
+
+- **禁止**在风格 A 中使用默认布局 —— 默认布局无法突出数值
+- **禁止** `{name} {percent}%` 单行格式 —— 信息图必须分行显示
+
+---
+
+## 规则 3：icon、label、rank 位置不可重叠
 
 圆形闭包图中 icon、label、rank 共享有限的圆内空间，必须合理分配位置。
 
@@ -68,72 +186,36 @@
 
 ### 禁止搭配
 
-- `icon.position` 和 `rank.position` **不可相同**（如都是 `top-left`）
-- `icon.position = center` 时 `rank.position` **不可**也设为 `center`（标签区域重叠）
-- 如果 `icon.position = center`，label 会被推到下方，确保圆形足够大能容纳
-
-### 有 circleBackground 时的额外注意
-
-当同时使用 `circleBackground` 和 `icon` 时：
-
-- icon 推荐使用 `top-left` 或 `top-right`，避免 `center` 与背景图中心内容冲突
-- 调低 `circleBackground.opacity`（0.2~0.3），确保 icon 和 label 可见
+- `icon.position` 和 `rank.position` **不可相同**
+- `icon.position = center` 时 `rank.position` **不可**也设为 `center`
+- **风格 A 不使用 icon 和 rank**，此规则仅适用于风格 B
 
 ---
 
-## 规则 3：label 格式应包含名称和数值（带单位）
+## 规则 4：颜色策略 — 风格决定配色方案
 
-参考优秀信息图风格，circlePacking 的 label 应同时展示**类目名称**和**数值（带单位缩写）**，让用户一眼获取关键信息。
+### 风格 A：单色/双色系
 
-### 推荐 format
+圆形使用**统一颜色**（1~2 个色值），通过 `fillOpacity` 实现通透效果。
 
 ```json
 {
-  "label": {
-    "visible": true,
-    "format": "{name}\n{value}",
-    "showPercent": false
-  }
+  "colors": ["#E11D48"],
+  "circle": { "fillOpacity": 0.8 }
 }
 ```
 
-| 数据场景      | 推荐 format                      | 效果示例           |
-| ------------- | -------------------------------- | ------------------ |
-| 粉丝/订阅人数 | `"{name}\n{value}"`              | "Mikecrack\n57.7M" |
-| 金额/财富     | `"{name}\n{value}"`              | "Monaco\n$12.4m"   |
-| 占比数据      | `"{name}"` + `showPercent: true` | "产品A\n30%"       |
-| 人口/数量     | `"{name}\n{value}"`              | "中国\n14.1亿"     |
-| 通用          | `"{name}\n{value}"`              | "类目\n数值"       |
+| 主题      | 推荐圆色          | 背景色         | 效果                  |
+| --------- | ----------------- | -------------- | --------------------- |
+| 能源/石油 | `#E11D48`（粉红） | 深蓝 `#0F172A` | 粉红圆 + 蓝色背景地图 |
+| 金融/财富 | `#F59E0B`（金色） | 深灰 `#1F2937` | 金色圆 + 暗色背景     |
+| 科技/数据 | `#3B82F6`（蓝色） | 深紫 `#1E1B4B` | 蓝色圆 + 紫色背景     |
+| 环保/自然 | `#10B981`（绿色） | 深绿 `#064E3B` | 绿色圆 + 自然背景     |
+| 医疗/健康 | `#06B6D4`（青色） | 白色 `#F8FAFC` | 青色圆 + 浅色背景     |
 
-### 数值格式化要求
+### 风格 B：多色配色
 
-- **数据中的值应预先格式化为带单位的字符串**，例如 `"57.7M"`、`"$12.4m"`、`"3.5B"`
-- 如果原始数据是纯数字（如 `57700000`），需要在 data 中添加一个格式化后的字段用于显示，或者直接在 data 的 valueField 中使用已格式化的字符串
-- 当数值本身已包含单位时，`showPercent` 设为 `false`，避免重复显示
-
-### 注意事项
-
-- 优先使用 `{name}\n{value}` 格式，名称在上、数值在下
-- 当 `circleBackground` 可见时，label 颜色应与背景图有足够对比度（推荐白色文字 + 深色描边或阴影效果）
-
----
-
-## 规则 4：颜色编码策略 — 用色彩传达额外维度
-
-优秀的圆形闭包图常常使用颜色来编码一个**额外维度**（如国家/地区、行业、类别），而非仅作装饰。
-
-### 颜色编码场景
-
-| 数据特征                      | 颜色策略                              | 说明                                          |
-| ----------------------------- | ------------------------------------- | --------------------------------------------- |
-| 数据有国家/地区属性           | 按国家/地区分配颜色，配合 legend 展示 | 如 YouTube 频道按国籍着色：西班牙=绿, 美国=蓝 |
-| 数据有行业/类别属性           | 按行业着色，legend 展示类别           | 如加密货币按 Layer1/DeFi/Stablecoin 分组着色  |
-| 数据有统一主题（如金融/黄金） | 使用统一主题色系                      | 如"进入最富1%所需财富"全部用金色系            |
-| 数据无明显分组                | 使用主题相关的多色配色方案            | 让每个圆视觉上有区分即可                      |
-
-### 配置方式
-
-**方式一：通过 `colors` 数组直接指定**（适用于无分组维度或数据量较少时）
+每个圆使用不同颜色，通过 `colors` 数组分配。
 
 ```json
 {
@@ -141,60 +223,62 @@
 }
 ```
 
-**方式二：通过 `groupField` + `colors` 编码分组**（适用于有明确分组维度时）
+### legend 策略
 
-当数据有额外分组维度（如国家），在 data 中添加分组字段，并使用 `groupField`：
-
-```json
-{
-  "groupField": "country",
-  "colors": ["#2ecc71", "#e74c3c", "#3498db", "#f1c40f", "#9b59b6"],
-  "legend": { "visible": true, "position": "top" }
-}
-```
-
-### 注意事项
-
-- 颜色数量应 ≥ 分组类别数，避免颜色复用导致混淆
-- 使用 `legend` 展示颜色到类目的映射关系；若颜色仅为装饰，legend 可关闭
-- 带 `circleBackground` 时，圆形填充色 + 背景图共同呈现，需确保颜色不遮挡背景图关键内容
+| 场景                  | legend 建议                      |
+| --------------------- | -------------------------------- |
+| 风格 A（单色）        | `visible: false`                 |
+| 风格 B + 颜色编码分组 | `visible: true, position: "top"` |
+| 风格 B + 仅装饰       | `visible: false`                 |
 
 ---
 
-## 规则 5：推荐使用 background 整体背景 + brandImage 装饰
+## 规则 5：background 必须营造信息图氛围
 
-优秀的信息图闭包图通常搭配**主题化背景**和**装饰元素**来提升视觉层次。
+### 风格 A 的 background（强制使用主题背景图）
 
-### background（整体背景）
-
-```json
-{
-  "background": {
-    "color": "#1e1b4b"
-  }
-}
-```
-
-或搭配预置图片库背景图：
+风格 A **必须**使用 `background.image`，且图片必须与数据主题强相关：
 
 ```json
 {
   "background": {
-    "color": "#1e1b4b",
     "image": "https://cdn.pixabay.com/photo/xxx/xxx_1280.jpg"
   }
 }
 ```
 
-### brandImage（装饰图片）
+| 数据主题      | 推荐 background.image 分类 | 推荐效果                   |
+| ------------- | -------------------------- | -------------------------- |
+| 全球贸易/地理 | 世界地图/区域地图          | 深色地图做底，圆形悬浮其上 |
+| 能源/石油     | 油田/管道/工厂             | 深色工业场景               |
+| 金融/股票     | 金融图表/城市天际线        | 高反差金融氛围             |
+| 科技/互联网   | 电路板/数据中心            | 科技感深色背景             |
+| 体育/赛事     | 运动场/球场                | 体育场氛围                 |
+| 食品/农业     | 田野/市场                  | 暖色调自然场景             |
 
-从预置图片库的 illustrations 分类中选择装饰元素：
+**关键要求**：
+
+- 背景图应偏暗色调（或通过深色 `background.color` 叠加），确保圆形和文字清晰
+- 背景图与圆形之间通过 `fillOpacity` 形成层次感（圆半透明，背景若隐若现）
+- 图片从预置图片库的 `backgrounds.categories` 中选择
+
+### 风格 B 的 background
+
+可使用纯色或渐变，配合 brandImage 装饰：
+
+```json
+{
+  "background": { "color": "#1e1b4b" }
+}
+```
+
+### brandImage（两种风格均推荐）
 
 ```json
 {
   "brandImage": {
     "visible": true,
-    "url": "https://pixabay.com/get/xxx_1280.png",
+    "url": "主题相关插图URL",
     "width": 200,
     "height": 200,
     "align": "right",
@@ -204,56 +288,31 @@
 }
 ```
 
-### 背景搭配策略
-
-| 数据主题      | 推荐 background        | 推荐 brandImage        |
-| ------------- | ---------------------- | ---------------------- |
-| 游戏/科技     | 深色渐变（深紫、深蓝） | 游戏手柄、电脑等装饰图 |
-| 金融/财富     | 浅色/金色调            | 金币、世界地图等       |
-| 体育/运动     | 深色 + 运动场馆图      | 奖杯、球类等           |
-| 社交媒体/网红 | 主题色渐变             | 手机、相机等           |
-| 地理/国家排名 | 浅色 + 世界地图轮廓    | 地球仪、指南针等       |
-| 食品/美食     | 暖色调                 | 餐具、食材等           |
-
-### 注意事项
-
-- 深色背景时，label 和 title 推荐使用浅色/白色文字
-- 浅色背景时，label 和 title 推荐使用深色文字
-- brandImage 推荐 `asForeground: false` 放在背景层，不遮挡气泡
-
 ---
 
-## 规则 6：单层模式 vs 分组模式选择
+## 规则 6：circle 圆形样式
 
-根据数据结构和设计目标选择合适的模式。
+### 风格 A 的 circle 配置
 
-| 数据特征                                 | 推荐模式     | groupField 配置 | 说明                             |
-| ---------------------------------------- | ------------ | --------------- | -------------------------------- |
-| 排名/Top N 列表（如 Top 20 YouTube频道） | **单层模式** | 不设置          | 每个圆独立展示，大小直接反映数值 |
-| 国家/地区数据排名（如各国财富门槛）      | **单层模式** | 不设置          | 单层 + 颜色编码国家，简洁直观    |
-| 数据有明确分类层级（如按行业分组的公司） | **分组模式** | 设为分类字段    | 同组颜色一致，有层级感           |
-| 数据量 > 15 且有自然分类                 | **分组模式** | 按自然分类      | 分组让大量数据更有结构           |
-| 数据量 ≤ 15 且无明显分组                 | **单层模式** | 不设置          | 简洁直观，每个圆独立着色         |
+```json
+{
+  "circle": {
+    "padding": 5,
+    "strokeWidth": 2,
+    "strokeColor": "rgba(255,255,255,0.3)",
+    "fillOpacity": 0.8
+  }
+}
+```
 
-### 单层模式特点
+| 参数          | 推荐值                  | 说明                     |
+| ------------- | ----------------------- | ------------------------ |
+| `fillOpacity` | `0.75 ~ 0.85`           | 让背景图透出，形成层次感 |
+| `strokeColor` | `rgba(255,255,255,0.3)` | 半透明白色描边，视觉柔和 |
+| `strokeWidth` | `2 ~ 3`                 | 清晰分隔圆形             |
+| `padding`     | `3 ~ 6`                 | 适度间距                 |
 
-- 所有数据扁平展示，圆形大小直接反映 valueField
-- 支持 rank 排名标签（可选）
-- 支持 icon + circleBackground + label 完整配置
-- **颜色可通过 `colors` 数组为每个圆分配不同颜色**
-
-### 分组模式特点
-
-- 数据按 `groupField` 聚合为嵌套结构
-- 同组圆形颜色一致，不同组颜色不同
-- **必须配合 `legend` 使用**，展示分组名称
-- 子圆形共享父圆形空间，适合展示层级关系
-
----
-
-## 规则 7：圆形样式推荐
-
-### circle 配置推荐值
+### 风格 B 的 circle 配置
 
 ```json
 {
@@ -265,53 +324,134 @@
 }
 ```
 
-| 参数          | 推荐值                | 说明                                                    |
-| ------------- | --------------------- | ------------------------------------------------------- |
-| `padding`     | `3` ~ `8`             | 圆形间距，太大浪费空间，太小圆形贴在一起                |
-| `strokeWidth` | `1` ~ `3`             | 描边宽度，有 circleBackground 时推荐 2~3 增加边界清晰度 |
-| `strokeColor` | `#fff` 或与背景对比色 | 深色背景用白色描边，浅色背景用深色或主题色描边          |
+---
 
-### 有 circleBackground 时的样式建议
+## 规则 7：单层模式 vs 分组模式选择
 
-- `strokeWidth` 适当加大（2~3），帮助圆形与背景分离
-- 如果背景图色彩丰富，`strokeColor` 应有足够对比度
-- `padding` 适当加大（5~8），避免带背景的圆形紧贴在一起
+| 数据特征                  | 推荐模式 | groupField 配置 |
+| ------------------------- | -------- | --------------- |
+| 排名/Top N（如频道排行）  | 单层模式 | 不设置          |
+| 百分比/占比（如商品份额） | 单层模式 | 不设置          |
+| 有明确分类层级            | 分组模式 | 设为分类字段    |
+| 数据量 > 15 且有自然分类  | 分组模式 | 按自然分类      |
+
+注意：**风格 A 仅支持单层模式**，分组模式请使用风格 B。
 
 ---
 
 ## 规则 8：数据量与 rank 显示策略
 
-| 数据量         | rank 显示建议           | 说明                                          |
-| -------------- | ----------------------- | --------------------------------------------- |
-| ≤ 10 条        | rank 可选               | 数据量小，排名一目了然                        |
-| 10 ~ 20 条     | 推荐关闭 rank           | 数值标签本身已传达大小信息，rank 增加视觉噪音 |
-| > 20 条        | 推荐关闭 rank           | 过多排名标签互相挤压，降低可读性              |
-| 需要强调排名时 | 开启 rank（仅单层模式） | 如"Top 10 排行榜"场景                         |
-
-### 当关闭 rank 时
-
-- 设置 `rank: { visible: false }` 或不配置 rank
-- 通过 label 的 `{value}` 展示数值，让用户通过圆形大小 + 数值自行判断排名
-- 信息图风格的 circlePacking 通常不需要显式排名编号
+| 数据量     | rank 显示建议 | 说明                 |
+| ---------- | ------------- | -------------------- |
+| ≤ 10 条    | rank 可选     | 风格 A 禁用 rank     |
+| 10 ~ 20 条 | 推荐关闭      | 数值标签已传达信息   |
+| > 20 条    | 推荐关闭      | 过多排名标签互相挤压 |
 
 ---
 
-## 规则 9：legend 配置策略
+## 规则 9：title 必须有信息图层次感
 
-| 场景                               | legend 建议                      | 说明             |
-| ---------------------------------- | -------------------------------- | ---------------- |
-| 颜色编码了额外维度（国家、行业等） | `visible: true`，position: `top` | 必须展示颜色含义 |
-| 分组模式                           | `visible: true`，position: `top` | 展示各分组名称   |
-| 颜色仅为装饰/区分，无额外语义      | `visible: false`                 | 不需要图例       |
-| 统一主题色（如全部金色）           | `visible: false`                 | 颜色无分类含义   |
+信息图标题应该有**视觉冲击力**，而非仅仅是数据描述。
+
+### 推荐配置
+
+```json
+{
+  "title": {
+    "text": "The Global Energy Bottleneck",
+    "subtext": "A look at the share of global commodities passing through the Strait of Hormuz",
+    "position": "center"
+  }
+}
+```
+
+### 标题撰写原则
+
+| 原则          | 好的标题                                        | 差的标题                               |
+| ------------- | ----------------------------------------------- | -------------------------------------- |
+| 使用观点/洞察 | "The Global Energy Bottleneck"                  | "全球大宗商品流动份额"                 |
+| 具体化        | "Strait of Hormuz Controls 38% of Global Crude" | "商品占比数据"                         |
+| 简洁有力      | "Where the World's Oil Flows"                   | "各类商品通过霍尔木兹海峡的占比统计图" |
+
+- 深色背景 → 浅色/白色标题
+- 浅色背景 → 深色标题
+- 推荐添加 `subtext` 作为副标题补充说明
 
 ---
 
-## 完整推荐配置参考
+## 规则 10：footnote 添加数据来源
+
+信息图**必须**添加脚注标注数据来源，提升可信度。
+
+```json
+{
+  "footnote": {
+    "text": "Source: UN Trade and Development (UNCTAD), 2026"
+  }
+}
+```
+
+---
 
 结合以上所有规则的两种典型 circlePacking 配置骨架：
 
-### 风格一：深色主题 + 排名列表（如 YouTube 频道排行）
+### 风格 A 完整示例：突出数值风格（Magazine Style）— 全球大宗商品份额
+
+```json
+{
+  "chartType": "circlePacking",
+  "title": {
+    "text": "The Global Energy Bottleneck",
+    "subtext": "Share of global commodities passing through the Strait of Hormuz",
+    "position": "center"
+  },
+  "data": [
+    { "trade": "Crude oil", "share": 38 },
+    { "trade": "Liquefied petroleum gas", "share": 29 },
+    { "trade": "Liquefied natural gas", "share": 19 },
+    { "trade": "Refined oil products", "share": 19 },
+    { "trade": "Chemicals, including fertilizers", "share": 13 },
+    { "trade": "Container", "share": 2.8 },
+    { "trade": "Dry bulk, including grains", "share": 2.4 }
+  ],
+  "categoryField": "trade",
+  "valueField": "share",
+  "theme": "dark",
+  "colors": ["#E11D48"],
+  "legend": { "visible": false },
+  "circle": {
+    "padding": 5,
+    "strokeWidth": 2,
+    "strokeColor": "rgba(255,255,255,0.3)",
+    "fillOpacity": 0.8
+  },
+  "label": {
+    "visible": true,
+    "layout": "prominent-value",
+    "showPercent": true,
+    "valueStyle": { "fill": "#ffffff", "fontWeight": "bold" },
+    "nameStyle": { "fill": "rgba(255,255,255,0.9)" }
+  },
+  "rank": { "visible": false },
+  "background": {
+    "image": "预置图片库-energy或city分类-深蓝色地图/工业背景"
+  },
+  "brandImage": {
+    "visible": true,
+    "url": "预置图片库-illustrations-energy/business分类",
+    "width": 180,
+    "height": 180,
+    "align": "right",
+    "verticalAlign": "bottom",
+    "asForeground": false
+  },
+  "footnote": {
+    "text": "Source: UN Trade and Development (UNCTAD), based on Clarksons Research 2026"
+  }
+}
+```
+
+### 风格 B 完整示例：数据丰富风格 — YouTube 频道排行
 
 ```json
 {
@@ -363,49 +503,5 @@
     "verticalAlign": "top"
   },
   "footnote": { "text": "Source: Social Blade" }
-}
-```
-
-### 风格二：浅色/金色主题 + 统一风格（如财富/金融排名）
-
-```json
-{
-  "chartType": "circlePacking",
-  "title": { "text": "Wealth Needed to Be in the Richest 1%", "position": "center" },
-  "data": [
-    { "name": "Monaco", "wealth": "$12.4m", "value": 12.4, "bgKey": "Monaco" },
-    { "name": "Switzerland", "wealth": "$6.6m", "value": 6.6, "bgKey": "Switzerland" }
-  ],
-  "categoryField": "name",
-  "valueField": "value",
-  "background": { "color": "#f5f0e1" },
-  "theme": "light",
-  "colors": ["#d4a017", "#c7923e", "#b8860b", "#daa520", "#cd950c"],
-  "legend": { "visible": false },
-  "circle": { "padding": 5, "strokeWidth": 2, "strokeColor": "#d4a017" },
-  "rank": { "visible": false },
-  "icon": {
-    "visible": true,
-    "position": "center",
-    "field": "bgKey",
-    "map": { "Monaco": "flag-url", "Switzerland": "flag-url" }
-  },
-  "label": { "visible": true, "format": "{name}\n{value}", "showPercent": false },
-  "circleBackground": {
-    "visible": true,
-    "field": "bgKey",
-    "map": { "Monaco": "...", "Switzerland": "..." },
-    "opacity": 0.25
-  },
-  "brandImage": {
-    "visible": true,
-    "url": "world-map-url",
-    "width": 600,
-    "height": 400,
-    "align": "center",
-    "verticalAlign": "center",
-    "asForeground": false
-  },
-  "footnote": { "text": "Source: Knight Frank Wealth Report (2023)" }
 }
 ```

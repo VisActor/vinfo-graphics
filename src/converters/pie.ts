@@ -39,7 +39,7 @@ export class PieChartConverter extends BaseConverter<PieChartSchema> {
     }
 
     // 背景
-    spec.background = this.processBackground(schema.background);
+    this.processBackground(schema.background, spec);
 
     // 颜色
     const colors = schema.colors ?? this.getThemeConfig().colors;

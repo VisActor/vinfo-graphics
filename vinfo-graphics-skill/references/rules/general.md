@@ -60,9 +60,12 @@
 2. **再选数据项图片**：从对应分类的 `illustrations` 中选择，确保与 background 不同
 
 **核心原则**：
-- 匹配则使用：主题与预置分类匹配时才使用图片
-- 不匹配则跳过：无匹配分类时不生成图片，不降级搜索
+
+- 优先匹配：主题与预置分类匹配时优先使用对应图片
+- 分级回退：无精确匹配时回退到 `abstract`（背景）或 `business`（插图）
+- 至少一项装饰：`background` 与 `brandImage` 不可同时缺失
 - 去重：background 和 brandImage 使用不同图片，数据项之间图片也应不同
+- **`brandImage` 写了就必须显示**：若不想显示，直接省略该字段；禁止写 `{ "visible": false }` 的 brandImage
 
 ### 常见错误
 

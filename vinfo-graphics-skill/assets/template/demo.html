@@ -495,29 +495,6 @@
         document.body.classList.toggle('is-light', mode === 'light');
       }
 
-      function applyBackground(schemaConfig) {
-        const wrapper = document.getElementById('chart-wrapper');
-        if (schemaConfig?.background?.image) {
-          wrapper.style.backgroundImage = `url(${schemaConfig.background.image})`;
-          wrapper.style.backgroundSize = 'cover';
-          wrapper.style.backgroundPosition = 'center';
-        } else if (schemaConfig?.background?.linearGradient) {
-          const gradient = schemaConfig.background.linearGradient;
-          let direction = 'to bottom';
-          if (gradient.direction === 'left-right') direction = 'to right';
-          else if (gradient.direction === 'right-left') direction = 'to left';
-          else if (gradient.direction === 'bottom-top') direction = 'to top';
-
-          const colors = gradient.colors.join(', ');
-          wrapper.style.backgroundImage = `linear-gradient(${direction}, ${colors})`;
-        } else if (schemaConfig?.background?.color) {
-          wrapper.style.backgroundColor = schemaConfig.background.color;
-          wrapper.style.backgroundImage = 'none';
-        } else {
-          wrapper.style.backgroundImage = 'none';
-        }
-      }
-
       async function renderChart() {
         const codeInput = document.getElementById('code-input').value;
 
@@ -551,9 +528,6 @@
         // Apply theme
         const preferredTheme = resolveThemeMode(parsedSchema);
         applyPageTheme(preferredTheme);
-
-        // Apply background
-        applyBackground(parsedSchema);
 
         // Render new chart
         const container = document.getElementById('chart');

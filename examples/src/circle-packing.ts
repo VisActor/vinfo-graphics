@@ -298,4 +298,54 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
       colors: ['#1f3b5c', '#2f4f6f', '#3d6b57', '#545e75', '#7a6a4f'],
     },
   },
+
+  // ============ 风格 A：突出数值（Magazine Style）============
+
+  {
+    name: '全球大宗商品流动份额（霍尔木兹海峡）',
+    schema: {
+      chartType: 'circlePacking',
+      width: 900,
+      height: 700,
+      title: {
+        text: 'The Global Energy Bottleneck',
+        subtext: 'Share of global commodities passing through the Strait of Hormuz',
+        position: 'center',
+      },
+      data: [
+        { trade: 'Crude oil', share: 38 },
+        { trade: 'Liquefied petroleum gas', share: 29 },
+        { trade: 'Liquefied natural gas', share: 19 },
+        { trade: 'Refined oil products', share: 19 },
+        { trade: 'Chemicals, including fertilizers', share: 13 },
+        { trade: 'Container', share: 2.8 },
+        { trade: 'Dry bulk, including grains', share: 2.4 },
+      ],
+      categoryField: 'trade',
+      valueField: 'share',
+      theme: 'dark',
+      colors: ['#E11D48'],
+      legend: { visible: false },
+      circle: {
+        padding: 5,
+        strokeWidth: 2,
+        strokeColor: 'rgba(255,255,255,0.3)',
+        fillOpacity: 0.8,
+      },
+      label: {
+        visible: true,
+        layout: 'prominent-value',
+        showPercent: true,
+        valueStyle: { fill: '#ffffff', fontWeight: 'bold' },
+        nameStyle: { fill: 'rgba(255,255,255,0.9)' },
+      },
+      rank: { visible: false },
+      background: {
+        image: 'https://images.pexels.com/photos/1148820/pexels-photo-1148820.jpeg',
+      },
+      footnote: {
+        text: 'Source: UN Trade and Development (UNCTAD), based on Clarksons Research 2026',
+      },
+    },
+  },
 ];
