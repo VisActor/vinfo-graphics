@@ -305,27 +305,56 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
     name: '全球大宗商品流动份额（霍尔木兹海峡）',
     schema: {
       chartType: 'circlePacking',
-      width: 900,
-      height: 700,
       title: {
-        text: 'The Global Energy Bottleneck',
-        subtext: 'Share of global commodities passing through the Strait of Hormuz',
+        text: '全球大宗商品流向占比：圆圈图',
         position: 'center',
       },
+      footnote: {
+        text: '数据来源：示例数据（仅用于可视化展示）',
+      },
       data: [
-        { trade: 'Crude oil', share: 38 },
-        { trade: 'Liquefied petroleum gas', share: 29 },
-        { trade: 'Liquefied natural gas', share: 19 },
-        { trade: 'Refined oil products', share: 19 },
-        { trade: 'Chemicals, including fertilizers', share: 13 },
-        { trade: 'Container', share: 2.8 },
-        { trade: 'Dry bulk, including grains', share: 2.4 },
+        {
+          trade: 'Crude oil',
+          share: 38,
+        },
+        {
+          trade: 'Liquefied petroleum gas',
+          share: 29,
+        },
+        {
+          trade: 'Liquefied natural gas',
+          share: 19,
+        },
+        {
+          trade: 'Refined oil products',
+          share: 19,
+        },
+        {
+          trade: 'Chemicals, including fertilizers',
+          share: 13,
+        },
+        {
+          trade: 'Container',
+          share: 2.8,
+        },
+        {
+          trade: 'Dry bulk, including grains',
+          share: 2.4,
+        },
       ],
+      width: 1200,
+      height: 800,
+      background: {
+        image:
+          'https://images.pexels.com/photos/26771257/pexels-photo-26771257.jpeg?w=1920&h=1080&fit=crop',
+      },
+      theme: 'light',
       categoryField: 'trade',
       valueField: 'share',
-      theme: 'dark',
-      colors: ['#E11D48'],
-      legend: { visible: false },
+      legend: {
+        visible: true,
+        position: 'right',
+      },
       circle: {
         padding: 5,
         strokeWidth: 2,
@@ -334,17 +363,33 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
       },
       label: {
         visible: true,
-        layout: 'prominent-value',
-        showPercent: true,
-        valueStyle: { fill: '#ffffff', fontWeight: 'bold' },
-        nameStyle: { fill: 'rgba(255,255,255,0.9)' },
+        layout: 'default',
+        format: '{name}\n{value}%',
+        showPercent: false,
+        minVisible: 12,
       },
-      rank: { visible: false },
-      background: {
-        image: 'https://images.pexels.com/photos/1148820/pexels-photo-1148820.jpeg',
+      rank: {
+        visible: false,
       },
-      footnote: {
-        text: 'Source: UN Trade and Development (UNCTAD), based on Clarksons Research 2026',
+      icon: {
+        visible: true,
+        field: 'trade',
+        size: 22,
+        position: 'top-left',
+        offset: 4,
+        style: {
+          lineWidth: 1,
+          stroke: 'rgba(15,23,42,0.8)',
+        },
+        map: {
+          'Crude oil': 'https://api.iconify.design/mdi/oil-barrel.svg',
+          'Liquefied petroleum gas': 'https://api.iconify.design/mdi/gas-cylinder.svg',
+          'Liquefied natural gas': 'https://api.iconify.design/mdi/gas.svg',
+          'Refined oil products': 'https://api.iconify.design/mdi/gas-station.svg',
+          'Chemicals, including fertilizers': 'https://api.iconify.design/mdi/flask.svg',
+          Container: 'https://api.iconify.design/mdi/cargo-ship.svg',
+          'Dry bulk, including grains': 'https://api.iconify.design/mdi/wheat.svg',
+        },
       },
     },
   },

@@ -189,7 +189,8 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
           return schema.label.format
             .replace(/{name}/g, String(name))
             .replace(/{value}/g, String(value))
-            .replace(/{percent}/g, `${percent}%`);
+            .replace(/{percent}/g, `${percent}%`)
+            .split('\n');
         }
         return `${name}\n${percent}%`;
       };
@@ -198,7 +199,8 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
         const originalDatum = datum.datum[datum.datum.length - 1];
         return schema
           .label!.format!.replace(/{name}/g, String(originalDatum[schema.categoryField] ?? ''))
-          .replace(/{value}/g, String(originalDatum[schema.valueField] ?? ''));
+          .replace(/{value}/g, String(originalDatum[schema.valueField] ?? ''))
+          .split('\n');
       };
     }
 

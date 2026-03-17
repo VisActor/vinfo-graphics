@@ -53,7 +53,9 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
     this.processBrandImage(schema, spec);
 
     // 图例
-    spec.legends = this.processLegend(schema.legend ?? false);
+    spec.legends = this.processLegend(
+      (spec.color as unknown as string[]).length > 1 ? (schema.legend ?? false) : false
+    );
 
     // 图标
     this.processIcon(schema, spec);
@@ -124,8 +126,11 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
   private processColors(schema: BarChartSchema, spec: Record<string, unknown>): void {
     const colors = schema.colors ?? this.getThemeConfig().colors;
 
-    if (colors && colors.length > 0) {
+    if (colors && colors.length > 0 && colors.length >= schema.data.length) {
       spec.color = colors;
+      spec.seriesField = schema.categoryField;
+    } else {
+      spec.color = [colors[0]];
       spec.seriesField = schema.categoryField;
     }
   }
@@ -572,11 +577,16 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
   /**
    * 格式化标签
    */
-  private formatLabel(format: string, datum: Record<string, unknown>, valueField: string): string {
+  private formatLabel(
+    format: string,
+    datum: Record<string, unknown>,
+    valueField: string
+  ): string[] {
     return format
       .replace(/{value}/g, String(datum[valueField] ?? ''))
       .replace(/{name}/g, String(datum['name'] ?? ''))
-      .replace(/{category}/g, String(datum['category'] ?? ''));
+      .replace(/{category}/g, String(datum['category'] ?? ''))
+      .split('\n');
   }
 
   /**

@@ -66,7 +66,8 @@ export class PieChartConverter extends BaseConverter<PieChartSchema> {
           return schema
             .label!.format!.replace('{name}', datum[schema.categoryField])
             .replace('{value}', datum[schema.valueField])
-            .replace('{percent}', (datum['percent'] * 100).toFixed(1) + '%');
+            .replace('{percent}', (datum['__VCHART_ARC_RATIO'] * 100).toFixed(1) + '%')
+            .split('\\n');
         };
       }
       if (schema.label.minVisible !== undefined) {

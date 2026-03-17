@@ -838,4 +838,170 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
       },
     },
   },
+  {
+    name: '抑郁数据',
+    schema: {
+      chartType: 'bar',
+      title: {
+        text: 'The State of Depression in Latin America',
+        position: 'center',
+      },
+      footnote: {
+        text: '数据来源：用户提供',
+        layout: 'left',
+      },
+      width: 900,
+      height: 800,
+      data: [
+        {
+          country: 'Chile',
+          rate: 5.4613,
+        },
+        {
+          country: 'Argentina',
+          rate: 4.6962,
+        },
+        {
+          country: 'Dominican Republic',
+          rate: 4.5757,
+        },
+        {
+          country: 'Haiti',
+          rate: 4.4947,
+        },
+        {
+          country: 'Cuba',
+          rate: 4.4922,
+        },
+        {
+          country: 'Brazil',
+          rate: 4.4136,
+        },
+        {
+          country: 'Venezuela',
+          rate: 4.2027,
+        },
+        {
+          country: 'Uruguay',
+          rate: 4.1463,
+        },
+        {
+          country: 'Guatemala',
+          rate: 4.101,
+        },
+        {
+          country: 'Costa Rica',
+          rate: 3.9136,
+        },
+        {
+          country: 'Ecuador',
+          rate: 3.8073,
+        },
+        {
+          country: 'Peru',
+          rate: 3.7131,
+        },
+        {
+          country: 'Paraguay',
+          rate: 3.5947,
+        },
+        {
+          country: 'Mexico',
+          rate: 3.5799,
+        },
+        {
+          country: 'El Salvador',
+          rate: 3.4169,
+        },
+        {
+          country: 'Honduras',
+          rate: 3.3896,
+        },
+        {
+          country: 'Panama',
+          rate: 3.3188,
+        },
+        {
+          country: 'Nicaragua',
+          rate: 3.2687,
+        },
+        {
+          country: 'Bolivia',
+          rate: 3.2373,
+        },
+        {
+          country: 'Colombia',
+          rate: 2.8023,
+        },
+      ],
+      categoryField: 'country',
+      valueField: 'rate',
+      sort: 'desc',
+      theme: 'pastel',
+      background: {
+        image:
+          'https://images.pexels.com/photos/2526097/pexels-photo-2526097.jpeg?w=1920&h=1080&fit=crop',
+        // opacity: 0.1,
+      },
+      legend: {
+        visible: true,
+        position: 'top',
+      },
+      icon: {
+        field: 'country',
+        map: {
+          Chile: 'https://api.iconify.design/twemoji/flag-chile.svg',
+          Argentina: 'https://api.iconify.design/twemoji/flag-argentina.svg',
+          'Dominican Republic': 'https://api.iconify.design/twemoji/flag-dominican-republic.svg',
+          Haiti: 'https://api.iconify.design/twemoji/flag-haiti.svg',
+          Cuba: 'https://api.iconify.design/twemoji/flag-cuba.svg',
+          Brazil: 'https://api.iconify.design/twemoji/flag-brazil.svg',
+          Venezuela: 'https://api.iconify.design/twemoji/flag-venezuela.svg',
+          Uruguay: 'https://api.iconify.design/twemoji/flag-uruguay.svg',
+          Guatemala: 'https://api.iconify.design/twemoji/flag-guatemala.svg',
+          'Costa Rica': 'https://api.iconify.design/twemoji/flag-costa-rica.svg',
+          Ecuador: 'https://api.iconify.design/twemoji/flag-ecuador.svg',
+          Peru: 'https://api.iconify.design/twemoji/flag-peru.svg',
+          Paraguay: 'https://api.iconify.design/twemoji/flag-paraguay.svg',
+          Mexico: 'https://api.iconify.design/twemoji/flag-mexico.svg',
+          'El Salvador': 'https://api.iconify.design/twemoji/flag-el-salvador.svg',
+          Honduras: 'https://api.iconify.design/twemoji/flag-honduras.svg',
+          Panama: 'https://api.iconify.design/twemoji/flag-panama.svg',
+          Nicaragua: 'https://api.iconify.design/twemoji/flag-nicaragua.svg',
+          Bolivia: 'https://api.iconify.design/twemoji/flag-bolivia.svg',
+          Colombia: 'https://api.iconify.design/twemoji/flag-colombia.svg',
+        },
+        visible: true,
+        position: 'start',
+        size: 24,
+      },
+      bar: {
+        cornerRadius: 8,
+        gap: 8,
+      },
+      rank: {
+        visible: true,
+        position: 'yAxis',
+        style: {
+          fontSize: 12,
+          fill: '#F9FAFB',
+          fontWeight: 600,
+          backgroundColor: '#0F172A',
+          cornerRadius: 8,
+        },
+      },
+      label: {
+        visible: true,
+        position: 'right',
+        format: '{value}',
+        minVisible: 0,
+      },
+      xAxis: {
+        visible: true,
+      },
+      yAxis: {
+        visible: true,
+      },
+    },
+  },
 ];

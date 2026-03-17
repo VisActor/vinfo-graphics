@@ -407,11 +407,16 @@ export class ColumnChartConverter extends BaseConverter<ColumnChartSchema> {
   /**
    * 格式化标签
    */
-  private formatLabel(format: string, datum: Record<string, unknown>, valueField: string): string {
+  private formatLabel(
+    format: string,
+    datum: Record<string, unknown>,
+    valueField: string
+  ): string[] {
     return format
       .replace(/{value}/g, String(datum[valueField] ?? ''))
       .replace(/{name}/g, String(datum['name'] ?? ''))
-      .replace(/{category}/g, String(datum['category'] ?? ''));
+      .replace(/{category}/g, String(datum['category'] ?? ''))
+      .split('\n');
   }
 
   /**

@@ -302,7 +302,9 @@ export abstract class BaseConverter<T extends BaseChartSchema> {
         return;
       }
 
-      result.background = background.image;
+      spec.background = background.image;
+
+      return;
     } else if (background.linearGradient) {
       result.fill = this.processLinearGradient(background.linearGradient);
       result.opacity = background.opacity ?? 1;
