@@ -199,13 +199,13 @@ python <SKILL_DIR>/scripts/generate_demo_html.py \
 
 用户："换个科技感的背景"
 
-1. 查阅 `references/unsplash/images.json` 找到科技类图片
+1. 查阅 `references/images/images.json` 按 keywords/tags 匹配科技主题图片（详见 `subprocess-select-background.md`）
 2. 修改 schema：
 
 ```json
 {
   "background": {
-    "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&h=1080&fit=crop"
+    "image": "https://images.pexels.com/photos/xxx/pexels-photo-xxx.jpeg?w=1920&h=1080&fit=crop"
   }
 }
 ```

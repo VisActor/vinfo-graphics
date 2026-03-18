@@ -29,7 +29,7 @@ export class ColumnChartConverter extends BaseConverter<ColumnChartSchema> {
     }
 
     // 背景
-    spec.background = this.processBackground(schema.background);
+    this.processBackground(schema.background, spec);
 
     // 颜色
     this.processColors(schema, spec);
@@ -172,17 +172,12 @@ export class ColumnChartConverter extends BaseConverter<ColumnChartSchema> {
 
     const labelSpec: Record<string, unknown> = {
       visible: true,
-      position: labelPosition,
+      position: labelPosition === 'middle' ? 'inside' : labelPosition,
       style: {},
     };
 
     if (this.getThemeConfig().secondaryTextColor) {
       (labelSpec.style as any).fill = this.getThemeConfig()!.secondaryTextColor;
-    }
-
-    // 内标签用白色文字
-    if (labelPosition?.startsWith('inside')) {
-      (labelSpec.style as any).fill = '#fff';
     }
 
     // 格式化
@@ -341,7 +336,28 @@ export class ColumnChartConverter extends BaseConverter<ColumnChartSchema> {
         },
         size: (datum: any, ctx: any) =>
           typeof size === 'number' ? Math.min(size, ctx.xBandwidth()) : ctx.xBandwidth(),
-        background: (datum: any) => {
+      },
+    });
+
+    (spec.extensionMark as Record<string, unknown>[]).push({
+      type: 'image',
+      dataIndex: 0,
+      style: {
+        visible: (datum: any) => {
+          const iconKey = String(datum[schema.icon!.field!]);
+          return !!iconKey;
+        },
+        x: (datum: any, ctx: any) => {
+          return ctx.valueToX(datum[schema.categoryField]) + ctx.xBandwidth() * 0.1;
+        },
+        y: (datum: any, ctx: any) => {
+          return position === 'top'
+            ? ctx.valueToY(datum[schema.valueField]) - ctx.xBandwidth() * 0.9
+            : ctx.valueToY(datum[schema.valueField]) + ctx.xBandwidth() * 0.1;
+        },
+        width: (datum: any, ctx: any) => ctx.xBandwidth() * 0.8,
+        height: (datum: any, ctx: any) => ctx.xBandwidth() * 0.8,
+        image: (datum: any) => {
           const iconKey = String(datum[schema.icon!.field!]);
           return schema.icon!.map![iconKey];
         },
@@ -391,11 +407,16 @@ export class ColumnChartConverter extends BaseConverter<ColumnChartSchema> {
   /**
    * 格式化标签
    */
-  private formatLabel(format: string, datum: Record<string, unknown>, valueField: string): string {
+  private formatLabel(
+    format: string,
+    datum: Record<string, unknown>,
+    valueField: string
+  ): string[] {
     return format
       .replace(/{value}/g, String(datum[valueField] ?? ''))
       .replace(/{name}/g, String(datum['name'] ?? ''))
-      .replace(/{category}/g, String(datum['category'] ?? ''));
+      .replace(/{category}/g, String(datum['category'] ?? ''))
+      .split('\n');
   }
 
   /**

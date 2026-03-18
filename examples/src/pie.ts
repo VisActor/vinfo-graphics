@@ -377,4 +377,98 @@ export const pieExamples: { name: string; schema: PieChartSchema }[] = [
       },
     },
   },
+  {
+    name: 'test',
+    schema: {
+      chartType: 'pie',
+      title: {
+        text: '2025 年全球原油及其他液体燃料产量占比（按地区）',
+        position: 'center',
+      },
+      width: 800,
+      height: 600,
+      data: [
+        {
+          region: 'North America',
+          productionMbpd: 31.8,
+          sharePercent: 29.9,
+        },
+        {
+          region: 'Middle East',
+          productionMbpd: 31,
+          sharePercent: 29.1,
+        },
+        {
+          region: 'Eurasia (Russia, Kazakhstan, Azerbaijan)',
+          productionMbpd: 13.6,
+          sharePercent: 12.8,
+        },
+        {
+          region: 'Asia-Pacific',
+          productionMbpd: 9.4,
+          sharePercent: 8.9,
+        },
+        {
+          region: 'Central & South America',
+          productionMbpd: 8.9,
+          sharePercent: 8.4,
+        },
+        {
+          region: 'Africa',
+          productionMbpd: 7.6,
+          sharePercent: 7.2,
+        },
+        {
+          region: 'Europe',
+          productionMbpd: 4,
+          sharePercent: 3.7,
+        },
+      ],
+      categoryField: 'region',
+      valueField: 'sharePercent',
+      innerRadius: 0.55,
+      outerRadius: 0.85,
+      background: {
+        image:
+          'https://images.pexels.com/photos/3855962/pexels-photo-3855962.jpeg?w=1920&h=1080&fit=crop',
+      },
+      theme: 'energy',
+      legend: {
+        visible: true,
+        position: 'top',
+      },
+      label: {
+        visible: true,
+        position: 'spider',
+        format: '{name} {percent}',
+        minVisible: 2,
+      },
+      icon: {
+        visible: true,
+        field: 'region',
+        size: 24,
+        position: 'inside-inner',
+        map: {
+          'North America': 'https://api.iconify.design/mdi/oil.svg?color=%23ffffff',
+          'Central & South America': 'https://api.iconify.design/mdi/oil-lamp.svg?color=%23ffffff',
+          Europe: 'https://api.iconify.design/mdi/oil-level.svg?color=%23ffffff',
+          'Eurasia (Russia, Kazakhstan, Azerbaijan)':
+            'https://api.iconify.design/mdi/oil-truck.svg?color=%23ffffff',
+          'Middle East': 'https://api.iconify.design/mdi/oil-saver.svg?color=%23ffffff',
+          Africa: 'https://api.iconify.design/mdi/oil-barrel.svg?color=%23ffffff',
+          'Asia-Pacific': 'https://api.iconify.design/mdi/oil-barrel-outline.svg?color=%23ffffff',
+        },
+      },
+      centerImage: {
+        visible: true,
+        url: 'https://images.unsplash.com/vector-1769600501923-924c765e35fd?w=300&h=300&fit=crop',
+        width: 80,
+        height: 80,
+      },
+      footnote: {
+        text: '总量：106.3 mb/d（mb/d=百万桶/日）；数据为 2025 年年平均值，占比为全球百分比。',
+        layout: 'left',
+      },
+    },
+  },
 ];

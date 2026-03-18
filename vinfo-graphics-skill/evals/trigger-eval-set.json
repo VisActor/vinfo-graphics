@@ -1,6 +1,6 @@
 [
   {
-    "query": "给我做一个环形信息图，数据是A 40、B 35、C 25，要有语义化 icon 和背景图。",
+    "query": "帮我做一个环形信息图，数据是A 40、B 35、C 25，要有语义化 icon 和背景图。",
     "should_trigger": true
   },
   {
@@ -16,11 +16,23 @@
     "should_trigger": true
   },
   {
-    "query": "帮我给信息图挑三张商务风 Unsplash 背景图，并推荐主题。",
+    "query": "帮我给信息图挑三张商务风背景图，并推荐主题。",
     "should_trigger": true
   },
   {
     "query": "做一个 treemap 信息图，字段 category/subcategory/amount，节点加 icon。",
+    "should_trigger": true
+  },
+  {
+    "query": "从 images.json 找一张科技感背景图，给 pie 图用",
+    "should_trigger": true
+  },
+  {
+    "query": "用 fetch_icons.py 查一下 mdi 图标集里有哪些关于音乐的图标",
+    "should_trigger": true
+  },
+  {
+    "query": "参照 column.md 规则，生成一个蓝色渐变的柱状图",
     "should_trigger": true
   },
   {
@@ -45,6 +57,10 @@
   },
   {
     "query": "请把这个英文段落翻译成中文并润色。",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我算一下 1+1 等于几",
     "should_trigger": false
   }
 ]

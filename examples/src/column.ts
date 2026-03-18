@@ -222,4 +222,150 @@ export const columnExamples: { name: string; schema: ColumnChartSchema }[] = [
       },
     },
   },
+  {
+    name: 'test',
+    schema: {
+      chartType: 'column',
+      title: {
+        text: 'The State of Depression in Latin America',
+        position: 'center',
+      },
+      data: [
+        {
+          country: 'Chile',
+          rate: 5.4613,
+        },
+        {
+          country: 'Argentina',
+          rate: 4.6962,
+        },
+        {
+          country: 'Dominican Republic',
+          rate: 4.5757,
+        },
+        {
+          country: 'Haiti',
+          rate: 4.4947,
+        },
+        {
+          country: 'Cuba',
+          rate: 4.4922,
+        },
+        {
+          country: 'Brazil',
+          rate: 4.4136,
+        },
+        {
+          country: 'Venezuela',
+          rate: 4.2027,
+        },
+        {
+          country: 'Uruguay',
+          rate: 4.1463,
+        },
+        {
+          country: 'Guatemala',
+          rate: 4.101,
+        },
+        {
+          country: 'Costa Rica',
+          rate: 3.9136,
+        },
+        {
+          country: 'Ecuador',
+          rate: 3.8073,
+        },
+        {
+          country: 'Peru',
+          rate: 3.7131,
+        },
+        {
+          country: 'Paraguay',
+          rate: 3.5947,
+        },
+        {
+          country: 'Mexico',
+          rate: 3.5799,
+        },
+        {
+          country: 'El Salvador',
+          rate: 3.4169,
+        },
+        {
+          country: 'Honduras',
+          rate: 3.3896,
+        },
+        {
+          country: 'Panama',
+          rate: 3.3188,
+        },
+        {
+          country: 'Nicaragua',
+          rate: 3.2687,
+        },
+        {
+          country: 'Bolivia',
+          rate: 3.2373,
+        },
+        {
+          country: 'Colombia',
+          rate: 2.8023,
+        },
+      ],
+      width: 840,
+      height: 600,
+      background: {
+        color: '#F9FAFB',
+      },
+      theme: 'fresh',
+      colors: ['#4F46E5'],
+      legend: {
+        visible: false,
+      },
+      categoryField: 'country',
+      valueField: 'rate',
+      sort: 'desc',
+      column: {
+        cornerRadius: [6, 6, 0, 0],
+        gap: 6,
+        linearGradient: {
+          direction: 'bottom-top',
+          colors: ['#4F46E5', '#818CF8'],
+        },
+      },
+      label: {
+        visible: true,
+        position: 'middle',
+        format: '{value}',
+      },
+      icon: {
+        field: 'country',
+        visible: true,
+        position: 'bottom',
+        size: 20,
+        map: {
+          Chile: 'https://api.iconify.design/twemoji/flag-chile.svg',
+          Argentina: 'https://api.iconify.design/twemoji/flag-argentina.svg',
+          'Dominican Republic': 'https://api.iconify.design/twemoji/flag-dominican-republic.svg',
+          Haiti: 'https://api.iconify.design/twemoji/flag-haiti.svg',
+          Cuba: 'https://api.iconify.design/twemoji/flag-cuba.svg',
+          Brazil: 'https://api.iconify.design/twemoji/flag-brazil.svg',
+          Venezuela: 'https://api.iconify.design/twemoji/flag-venezuela.svg',
+          Uruguay: 'https://api.iconify.design/twemoji/flag-uruguay.svg',
+          Guatemala: 'https://api.iconify.design/twemoji/flag-guatemala.svg',
+          'Costa Rica': 'https://api.iconify.design/twemoji/flag-costa-rica.svg',
+          Ecuador: 'https://api.iconify.design/twemoji/flag-ecuador.svg',
+          Peru: 'https://api.iconify.design/twemoji/flag-peru.svg',
+          Paraguay: 'https://api.iconify.design/twemoji/flag-paraguay.svg',
+          Mexico: 'https://api.iconify.design/twemoji/flag-mexico.svg',
+          'El Salvador': 'https://api.iconify.design/twemoji/flag-el-salvador.svg',
+          Honduras: 'https://api.iconify.design/twemoji/flag-honduras.svg',
+          Panama: 'https://api.iconify.design/twemoji/flag-panama.svg',
+          Nicaragua: 'https://api.iconify.design/twemoji/flag-nicaragua.svg',
+          Bolivia: 'https://api.iconify.design/twemoji/flag-bolivia.svg',
+          Colombia: 'https://api.iconify.design/twemoji/flag-colombia.svg',
+        },
+      },
+    },
+  },
 ];

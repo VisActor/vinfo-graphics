@@ -387,6 +387,11 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
         visible: true,
       },
       legend: { visible: false },
+      brandImage: {
+        url: 'https://images.unsplash.com/vector-1738237558950-a8f9e4fe946e',
+        width: 400,
+        height: 400,
+      },
     },
   },
   {
@@ -746,6 +751,257 @@ export const barExamples: { name: string; schema: BarChartSchema }[] = [
         visible: true,
       },
       legend: { visible: false },
+    },
+  },
+  {
+    name: '复刻图片',
+    schema: {
+      chartType: 'bar',
+      title: {
+        text: "Gen Z's Digital Entertainment",
+        subtext: '% of U.S. Gen Z population engaged in digital activity at least once a month...',
+        position: 'center',
+      },
+      footnote: {
+        text: 'Source: EMARKETER. Data as of May 2024. Digital buyers are users who have made one purchase through any digital channel.',
+        layout: 'left',
+        fontSize: 12,
+        fill: '#4B5563',
+      },
+      width: 800,
+      height: 600,
+      background: {
+        color: '#D6FF57',
+      },
+      theme: 'fresh',
+      colors: ['#8B5CF6'],
+      data: [
+        {
+          category: 'Digital video viewers',
+          value: 96,
+          iconKey: 'Digital video viewers',
+        },
+        {
+          category: 'Social network users',
+          value: 88,
+          iconKey: 'Social network users',
+        },
+        {
+          category: 'Digital buyers',
+          value: 82,
+          iconKey: 'Digital buyers',
+        },
+        {
+          category: 'Podcast listeners',
+          value: 57,
+          iconKey: 'Podcast listeners',
+        },
+        {
+          category: 'VR/AR users',
+          value: 37,
+          iconKey: 'VR/AR users',
+        },
+      ],
+      categoryField: 'category',
+      valueField: 'value',
+      sort: 'desc',
+      bar: {
+        cornerRadius: 8,
+        gap: 10,
+        linearGradient: {
+          direction: 'left-right',
+          colors: ['#8B5CF6', '#C4B5FD'],
+        },
+      },
+      label: {
+        visible: true,
+        position: 'inside-right',
+        format: '{value}%',
+        minVisible: 0,
+      },
+      icon: {
+        field: 'iconKey',
+        map: {
+          'Digital video viewers': 'https://api.iconify.design/mdi/clock-digital.svg',
+          'Social network users': 'https://api.iconify.design/mdi/digital-ocean.svg',
+          'Digital buyers': 'https://api.iconify.design/mdi/perm-media.svg',
+          'Podcast listeners': 'https://api.iconify.design/mdi/folder-media.svg',
+          'VR/AR users': 'https://api.iconify.design/mdi/folder-media-outline.svg',
+        },
+        visible: true,
+        position: 'start',
+        size: 24,
+        style: {
+          lineWidth: 2,
+          stroke: '#FFFFFF',
+        },
+      },
+    },
+  },
+  {
+    name: '抑郁数据',
+    schema: {
+      chartType: 'bar',
+      title: {
+        text: 'The State of Depression in Latin America',
+        position: 'center',
+      },
+      footnote: {
+        text: '数据来源：用户提供',
+        layout: 'left',
+      },
+      width: 900,
+      height: 800,
+      data: [
+        {
+          country: 'Chile',
+          rate: 5.4613,
+        },
+        {
+          country: 'Argentina',
+          rate: 4.6962,
+        },
+        {
+          country: 'Dominican Republic',
+          rate: 4.5757,
+        },
+        {
+          country: 'Haiti',
+          rate: 4.4947,
+        },
+        {
+          country: 'Cuba',
+          rate: 4.4922,
+        },
+        {
+          country: 'Brazil',
+          rate: 4.4136,
+        },
+        {
+          country: 'Venezuela',
+          rate: 4.2027,
+        },
+        {
+          country: 'Uruguay',
+          rate: 4.1463,
+        },
+        {
+          country: 'Guatemala',
+          rate: 4.101,
+        },
+        {
+          country: 'Costa Rica',
+          rate: 3.9136,
+        },
+        {
+          country: 'Ecuador',
+          rate: 3.8073,
+        },
+        {
+          country: 'Peru',
+          rate: 3.7131,
+        },
+        {
+          country: 'Paraguay',
+          rate: 3.5947,
+        },
+        {
+          country: 'Mexico',
+          rate: 3.5799,
+        },
+        {
+          country: 'El Salvador',
+          rate: 3.4169,
+        },
+        {
+          country: 'Honduras',
+          rate: 3.3896,
+        },
+        {
+          country: 'Panama',
+          rate: 3.3188,
+        },
+        {
+          country: 'Nicaragua',
+          rate: 3.2687,
+        },
+        {
+          country: 'Bolivia',
+          rate: 3.2373,
+        },
+        {
+          country: 'Colombia',
+          rate: 2.8023,
+        },
+      ],
+      categoryField: 'country',
+      valueField: 'rate',
+      sort: 'desc',
+      theme: 'pastel',
+      background: {
+        image:
+          'https://images.pexels.com/photos/2526097/pexels-photo-2526097.jpeg?w=1920&h=1080&fit=crop',
+        // opacity: 0.1,
+      },
+      legend: {
+        visible: true,
+        position: 'top',
+      },
+      icon: {
+        field: 'country',
+        map: {
+          Chile: 'https://api.iconify.design/twemoji/flag-chile.svg',
+          Argentina: 'https://api.iconify.design/twemoji/flag-argentina.svg',
+          'Dominican Republic': 'https://api.iconify.design/twemoji/flag-dominican-republic.svg',
+          Haiti: 'https://api.iconify.design/twemoji/flag-haiti.svg',
+          Cuba: 'https://api.iconify.design/twemoji/flag-cuba.svg',
+          Brazil: 'https://api.iconify.design/twemoji/flag-brazil.svg',
+          Venezuela: 'https://api.iconify.design/twemoji/flag-venezuela.svg',
+          Uruguay: 'https://api.iconify.design/twemoji/flag-uruguay.svg',
+          Guatemala: 'https://api.iconify.design/twemoji/flag-guatemala.svg',
+          'Costa Rica': 'https://api.iconify.design/twemoji/flag-costa-rica.svg',
+          Ecuador: 'https://api.iconify.design/twemoji/flag-ecuador.svg',
+          Peru: 'https://api.iconify.design/twemoji/flag-peru.svg',
+          Paraguay: 'https://api.iconify.design/twemoji/flag-paraguay.svg',
+          Mexico: 'https://api.iconify.design/twemoji/flag-mexico.svg',
+          'El Salvador': 'https://api.iconify.design/twemoji/flag-el-salvador.svg',
+          Honduras: 'https://api.iconify.design/twemoji/flag-honduras.svg',
+          Panama: 'https://api.iconify.design/twemoji/flag-panama.svg',
+          Nicaragua: 'https://api.iconify.design/twemoji/flag-nicaragua.svg',
+          Bolivia: 'https://api.iconify.design/twemoji/flag-bolivia.svg',
+          Colombia: 'https://api.iconify.design/twemoji/flag-colombia.svg',
+        },
+        visible: true,
+        position: 'start',
+        size: 24,
+      },
+      bar: {
+        cornerRadius: 8,
+        gap: 8,
+      },
+      rank: {
+        visible: true,
+        position: 'yAxis',
+        style: {
+          fontSize: 12,
+          fill: '#F9FAFB',
+          fontWeight: 600,
+          backgroundColor: '#0F172A',
+          cornerRadius: 8,
+        },
+      },
+      label: {
+        visible: true,
+        position: 'right',
+        format: '{value}',
+        minVisible: 0,
+      },
+      xAxis: {
+        visible: true,
+      },
+      yAxis: {
+        visible: true,
+      },
     },
   },
 ];

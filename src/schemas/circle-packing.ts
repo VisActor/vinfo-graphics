@@ -7,6 +7,15 @@ import { baseChartSchema } from './base';
  * 与 src/types/circle-packing.ts 保持一致
  */
 
+// 文字样式（用于 prominent-value 布局）
+const circlePackingTextStyleSchema = z
+  .object({
+    fontSize: z.number().optional(),
+    fontWeight: z.union([z.number(), z.string()]).optional(),
+    fill: z.string().optional(),
+  })
+  .optional();
+
 // 圆形闭包图标签配置
 const circlePackingLabelSchema = z
   .object({
@@ -15,6 +24,9 @@ const circlePackingLabelSchema = z
     format: z.string().optional(),
     minVisible: z.number().optional(),
     showPercent: z.boolean().optional(),
+    layout: z.enum(['default', 'prominent-value']).optional(),
+    valueStyle: circlePackingTextStyleSchema,
+    nameStyle: circlePackingTextStyleSchema,
   })
   .optional();
 
@@ -58,6 +70,7 @@ const circleStyleSchema = z
     padding: z.number().optional(),
     strokeWidth: z.number().optional(),
     strokeColor: z.string().optional(),
+    fillOpacity: z.number().min(0).max(1).optional(),
   })
   .optional();
 

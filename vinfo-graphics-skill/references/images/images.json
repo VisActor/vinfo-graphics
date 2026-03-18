@@ -1,0 +1,284 @@
+[
+  {
+    "url": "https://images.pexels.com/photos/7640901/pexels-photo-7640901.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "black noise"
+  },
+  {
+    "url": "https://images.pexels.com/photos/26771257/pexels-photo-26771257.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "blue sea"
+  },
+  {
+    "url": "https://images.pexels.com/photos/12602063/pexels-photo-12602063.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "blue sky"
+  },
+  {
+    "url": "https://images.pexels.com/photos/7794365/pexels-photo-7794365.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "grey gradient"
+  },
+  {
+    "url": "https://images.pexels.com/photos/10330757/pexels-photo-10330757.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "grey sky"
+  },
+  {
+    "url": "https://images.pexels.com/photos/17507670/pexels-photo-17507670.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "car",
+    "tags": ["car", "white", "night"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2631489/pexels-photo-2631489.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "car",
+    "tags": ["car", "red"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/3855962/pexels-photo-3855962.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "石油",
+    "tags": ["石油", "能源", "工业", "黑色"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "棕色",
+    "tags": ["棕色", "纸张"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1831234/pexels-photo-1831234.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "棕色",
+    "tags": ["粉色", "云朵", "天空"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2088208/pexels-photo-2088208.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "粉色",
+    "tags": ["粉色", "山峦", "星星"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/4041285/pexels-photo-4041285.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "粉色",
+    "tags": ["粉色", "花瓣"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2680270/pexels-photo-2680270.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "藏蓝",
+    "tags": ["藏蓝", "微光"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1456291/pexels-photo-1456291.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "藏蓝",
+    "tags": ["藏蓝", "大海", "渐变"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/3418400/pexels-photo-3418400.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "藏蓝",
+    "tags": ["藏蓝", "油画", "深邃"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/3418400/pexels-photo-3418400.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "藏蓝",
+    "tags": ["藏蓝", "陶器", "碟子", "重复"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/7233109/pexels-photo-7233109.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "紫色",
+    "tags": ["紫色", "羽毛"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/8823483/pexels-photo-8823483.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "紫色",
+    "tags": ["紫色", "纸张", "纹理", "褶皱"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/4424355/pexels-photo-4424355.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "紫色",
+    "tags": ["紫色", "光线", "科技"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2526097/pexels-photo-2526097.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "紫色",
+    "tags": ["紫色", "花朵", "健康"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "紫色",
+    "tags": ["紫色", "自然", "湖面", "山峦"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2098427/pexels-photo-2098427.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深蓝",
+    "tags": ["深蓝", "夜空", "山峰", "星河"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/956981/pexels-photo-956981.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深蓝",
+    "tags": ["深蓝", "银河", "夜空"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/747101/pexels-photo-747101.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深蓝",
+    "tags": ["深蓝", "夜景", "建筑", "灯光"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1687341/pexels-photo-1687341.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深绿",
+    "tags": ["深绿", "植物", "自然"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1556796/pexels-photo-1556796.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深绿",
+    "tags": ["深绿", "海洋", "游泳"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/21243784/pexels-photo-21243784.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深绿",
+    "tags": ["深绿", "渐变", "抽象"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/40896/pexels-photo-40896.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "深绿",
+    "tags": ["绿色", "嫩芽", "植物"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/48884/pexels-photo-48884.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "煤炭",
+    "tags": ["黑色", "煤炭", "能源"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1843717/pexels-photo-1843717.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "白色",
+    "tags": ["白色", "浮雕", "乳胶漆"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2333293/pexels-photo-2333293.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "黄色",
+    "tags": ["黄色", "线条", "阳光"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/35468833/pexels-photo-35468833.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "黄色",
+    "tags": ["黄色", "重叠", "阳光"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/14182648/pexels-photo-14182648.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "墨绿",
+    "tags": ["墨绿", "流动", "黄色"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/3616764/pexels-photo-3616764.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "灰色",
+    "tags": ["灰色", "水墨", "清淡"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/6985185/pexels-photo-6985185.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "浅绿",
+    "tags": ["浅绿", "渐变"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/5913897/pexels-photo-5913897.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "红色",
+    "tags": ["红色", "纹理", "树叶"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "暗色",
+    "tags": ["暗色", "演唱会", "灯光", "人群"]
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1729089264257-adc4f9c9d256",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "美国",
+    "tags": ["美国", "国家", "自由女神"]
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1735989647938-056f5a438ef6",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "英语",
+    "tags": ["英国", "国家", "大本钟"]
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1722704656660-6c6be0b90eec",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "新加坡",
+    "tags": ["新加坡", "鱼尾狮", "国家"]
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1510332981392-36692ea3a195",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "中国",
+    "tags": ["中国", "长城", "建筑", "奇迹"]
+  }
+]

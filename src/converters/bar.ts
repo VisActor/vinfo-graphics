@@ -30,7 +30,7 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
 
     // 背景
 
-    spec.background = this.processBackground(schema.background);
+    this.processBackground(schema.background, spec);
 
     // 颜色
     this.processColors(schema, spec);
@@ -53,7 +53,9 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
     this.processBrandImage(schema, spec);
 
     // 图例
-    spec.legends = this.processLegend(schema.legend ?? false);
+    spec.legends = this.processLegend(
+      (spec.color as unknown as string[]).length > 1 ? (schema.legend ?? false) : false
+    );
 
     // 图标
     this.processIcon(schema, spec);
@@ -124,8 +126,11 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
   private processColors(schema: BarChartSchema, spec: Record<string, unknown>): void {
     const colors = schema.colors ?? this.getThemeConfig().colors;
 
-    if (colors && colors.length > 0) {
+    if (colors && colors.length > 0 && colors.length >= schema.data.length) {
       spec.color = colors;
+      spec.seriesField = schema.categoryField;
+    } else {
+      spec.color = [colors[0]];
       spec.seriesField = schema.categoryField;
     }
   }
@@ -183,11 +188,6 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
 
     if (this.getThemeConfig().secondaryTextColor) {
       (labelSpec.style as any).fill = this.getThemeConfig()!.secondaryTextColor;
-    }
-
-    // 内标签用白色文字
-    if (labelPosition?.startsWith('inside')) {
-      (labelSpec.style as any).fill = '#fff';
     }
 
     // 格式化
@@ -360,16 +360,15 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
    */
   private processAxes(schema: BarChartSchema, spec: Record<string, unknown>): void {
     // X 轴（数值轴）
-    if (schema.xAxis) {
-      spec.axes = spec.axes ?? [];
-      (spec.axes as Record<string, unknown>[]).push({
-        orient: 'bottom',
-        visible: schema.xAxis.visible !== false,
-        label: schema.xAxis.format
-          ? { formatMethod: (val: number) => this.formatValue(schema.xAxis!.format!, val) }
-          : undefined,
-      });
-    }
+    spec.axes = spec.axes ?? [];
+    (spec.axes as Record<string, unknown>[]).push({
+      orient: 'bottom',
+      visible: schema.xAxis?.visible !== false,
+      label: schema.xAxis?.format
+        ? { formatMethod: (val: number) => this.formatValue(schema.xAxis!.format!, val) }
+        : undefined,
+      grid: { visible: false },
+    });
 
     // Y 轴（分类轴）
     if (schema.yAxis) {
@@ -506,7 +505,29 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
           return ctx.valueToY(datum[schema.categoryField]) + ctx.yBandwidth() / 2;
         },
         size: (datum: any, ctx: any) => ctx.yBandwidth(),
-        background: (datum: any) => {
+      },
+    });
+
+    (spec.extensionMark as Record<string, unknown>[]).push({
+      type: 'image',
+      dataIndex: 0,
+      style: {
+        visible: (datum: any) => {
+          const iconKey = String(datum[schema.icon!.field!]);
+          return !!iconKey;
+        },
+        symbolType: 'circle',
+        x: (datum: any, ctx: any) => {
+          return position === 'end'
+            ? ctx.valueToX(datum[schema.valueField]) - 0.9 * ctx.yBandwidth()
+            : ctx.yBandwidth() * 0.1;
+        },
+        y: (datum: any, ctx: any) => {
+          return ctx.valueToY(datum[schema.categoryField]) + ctx.yBandwidth() * 0.1;
+        },
+        width: (datum: any, ctx: any) => ctx.yBandwidth() * 0.8,
+        height: (datum: any, ctx: any) => ctx.yBandwidth() * 0.8,
+        image: (datum: any, ctx: any) => {
           const iconKey = String(datum[schema.icon!.field!]);
           return schema.icon!.map![iconKey];
         },
@@ -556,11 +577,16 @@ export class BarChartConverter extends BaseConverter<BarChartSchema> {
   /**
    * 格式化标签
    */
-  private formatLabel(format: string, datum: Record<string, unknown>, valueField: string): string {
+  private formatLabel(
+    format: string,
+    datum: Record<string, unknown>,
+    valueField: string
+  ): string[] {
     return format
       .replace(/{value}/g, String(datum[valueField] ?? ''))
       .replace(/{name}/g, String(datum['name'] ?? ''))
-      .replace(/{category}/g, String(datum['category'] ?? ''));
+      .replace(/{category}/g, String(datum['category'] ?? ''))
+      .split('\n');
   }
 
   /**

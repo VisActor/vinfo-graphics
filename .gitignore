@@ -54,3 +54,6 @@ skills-lock.json
 # Generated knowledge files
 tools/knowledge/
 
+
+vinfo-graphics-skill/scripts/search_pixabay.py
+

@@ -1,6 +1,6 @@
 {
   "name": "@visactor/vinfo-graphics",
-  "version": "0.0.3",
+  "version": "0.0.8",
   "description": "A simplified, LLM-friendly chart library for infographics based on VChart",
   "main": "cjs/index.js",
   "module": "esm/index.js",
@@ -8,7 +8,7 @@
   "unpkg": "dist/index.umd.js",
   "jsdelivr": "dist/index.umd.js",
   "scripts": {
-    "build": "npm run clean && npm run build:lib && npm run build:umd",
+    "build": "node scripts/sync-version.cjs && npm run clean && npm run build:lib && npm run build:umd",
     "clean": "node -e \"const fs=require('fs');['dist','esm','cjs'].forEach((d)=>fs.rmSync(d,{recursive:true,force:true}));\"",
     "build:lib": "npm run build:esm && npm run build:cjs && npm run build:types && npm run build:cjs:pkg",
     "build:esm": "tsc -p tsconfig.build.esm.json",

@@ -20,5 +20,18 @@ export interface LabelConfig {
 export type CirclePackingLabelConfig = LabelConfig & {
   /** 是否显示百分比（仅单层模式有效） */
   showPercent?: boolean;
+
+  /**
+   * 标签布局模式
+   * - 'default': 默认布局，名称和数值在同一文本中（通过 format + \n 换行）
+   * - 'prominent-value': 突出数值布局，数值(大字)在上，名称(小字)在下，各自独立样式
+   */
+  layout?: 'default' | 'prominent-value';
+
+  /** 数值行样式（仅 prominent-value 模式有效） */
+  valueStyle?: CirclePackingTextStyle;
+
+  /** 名称行样式（仅 prominent-value 模式有效） */
+  nameStyle?: CirclePackingTextStyle;
 };
 ```

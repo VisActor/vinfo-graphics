@@ -11,10 +11,10 @@ describe('TreemapChart Schema', () => {
         data: [
           { dept: '技术部', budget: 250 },
           { dept: '市场部', budget: 180 },
-          { dept: '运营部', budget: 150 }
+          { dept: '运营部', budget: 150 },
         ],
         categoryField: 'dept',
-        valueField: 'budget'
+        valueField: 'budget',
       };
 
       const spec = toVChartSpec(schema);
@@ -33,8 +33,8 @@ describe('TreemapChart Schema', () => {
         node: {
           gap: 4,
           padding: 8,
-          cornerRadius: 4
-        }
+          cornerRadius: 4,
+        },
       };
 
       const spec = toVChartSpec(schema);
@@ -53,8 +53,8 @@ describe('TreemapChart Schema', () => {
         valueField: 'budget',
         label: {
           visible: true,
-          format: '{name}\n{value}'
-        }
+          format: '{name}\n{value}',
+        },
       };
 
       const spec = toVChartSpec(schema);
@@ -69,11 +69,11 @@ describe('TreemapChart Schema', () => {
         title: '部门预算分布',
         data: [
           { dept: '技术部', budget: 250 },
-          { dept: '市场部', budget: 180 }
+          { dept: '市场部', budget: 180 },
         ],
         categoryField: 'dept',
         valueField: 'budget',
-        colors: ['#5B8FF9', '#5AD8A6', '#F6BD16']
+        colors: ['#5B8FF9', '#5AD8A6', '#F6BD16'],
       };
 
       const spec = toVChartSpec(schema);
@@ -88,7 +88,7 @@ describe('TreemapChart Schema', () => {
         chartType: 'treemap',
         data: [{ dept: '技术部', budget: 250 }],
         categoryField: 'dept',
-        valueField: 'budget'
+        valueField: 'budget',
       };
 
       const result = validate(schema);
@@ -100,7 +100,7 @@ describe('TreemapChart Schema', () => {
       const schema: TreemapChartSchema = {
         chartType: 'treemap',
         data: [{ dept: '技术部', budget: 250 }],
-        valueField: 'budget'
+        valueField: 'budget',
       } as any;
 
       const result = validate(schema);

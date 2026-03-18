@@ -298,4 +298,99 @@ export const circlePackingExamples: { name: string; schema: CirclePackingChartSc
       colors: ['#1f3b5c', '#2f4f6f', '#3d6b57', '#545e75', '#7a6a4f'],
     },
   },
+
+  // ============ 风格 A：突出数值（Magazine Style）============
+
+  {
+    name: '全球大宗商品流动份额（霍尔木兹海峡）',
+    schema: {
+      chartType: 'circlePacking',
+      title: {
+        text: '全球大宗商品流向占比：圆圈图',
+        position: 'center',
+      },
+      footnote: {
+        text: '数据来源：示例数据（仅用于可视化展示）',
+      },
+      data: [
+        {
+          trade: 'Crude oil',
+          share: 38,
+        },
+        {
+          trade: 'Liquefied petroleum gas',
+          share: 29,
+        },
+        {
+          trade: 'Liquefied natural gas',
+          share: 19,
+        },
+        {
+          trade: 'Refined oil products',
+          share: 19,
+        },
+        {
+          trade: 'Chemicals, including fertilizers',
+          share: 13,
+        },
+        {
+          trade: 'Container',
+          share: 2.8,
+        },
+        {
+          trade: 'Dry bulk, including grains',
+          share: 2.4,
+        },
+      ],
+      width: 1200,
+      height: 800,
+      background: {
+        image:
+          'https://images.pexels.com/photos/26771257/pexels-photo-26771257.jpeg?w=1920&h=1080&fit=crop',
+      },
+      theme: 'light',
+      categoryField: 'trade',
+      valueField: 'share',
+      legend: {
+        visible: true,
+        position: 'right',
+      },
+      circle: {
+        padding: 5,
+        strokeWidth: 2,
+        strokeColor: 'rgba(255,255,255,0.3)',
+        fillOpacity: 0.8,
+      },
+      label: {
+        visible: true,
+        layout: 'default',
+        format: '{name}\n{value}%',
+        showPercent: false,
+        minVisible: 12,
+      },
+      rank: {
+        visible: false,
+      },
+      icon: {
+        visible: true,
+        field: 'trade',
+        size: 22,
+        position: 'top-left',
+        offset: 4,
+        style: {
+          lineWidth: 1,
+          stroke: 'rgba(15,23,42,0.8)',
+        },
+        map: {
+          'Crude oil': 'https://api.iconify.design/mdi/oil-barrel.svg',
+          'Liquefied petroleum gas': 'https://api.iconify.design/mdi/gas-cylinder.svg',
+          'Liquefied natural gas': 'https://api.iconify.design/mdi/gas.svg',
+          'Refined oil products': 'https://api.iconify.design/mdi/gas-station.svg',
+          'Chemicals, including fertilizers': 'https://api.iconify.design/mdi/flask.svg',
+          Container: 'https://api.iconify.design/mdi/cargo-ship.svg',
+          'Dry bulk, including grains': 'https://api.iconify.design/mdi/wheat.svg',
+        },
+      },
+    },
+  },
 ];
