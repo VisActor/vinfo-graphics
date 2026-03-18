@@ -252,5 +252,33 @@
     "type": ["background", "texture"],
     "keywords": "暗色",
     "tags": ["暗色", "演唱会", "灯光", "人群"]
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1729089264257-adc4f9c9d256",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "美国",
+    "tags": ["美国", "国家", "自由女神"]
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1735989647938-056f5a438ef6",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "英语",
+    "tags": ["英国", "国家", "大本钟"]
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1722704656660-6c6be0b90eec",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "新加坡",
+    "tags": ["新加坡", "鱼尾狮", "国家"]
+  },
+  {
+    "url": "https://images.unsplash.com/photo-1510332981392-36692ea3a195",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "中国",
+    "tags": ["中国", "长城", "建筑", "奇迹"]
   }
 ]

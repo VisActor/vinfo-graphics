@@ -39,11 +39,25 @@ import urllib.error
 from collections import Counter
 
 
-# 推荐的图标集（按优先级）
-PREFERRED_COLLECTIONS = ["mdi", "fa6-solid", "bi", "carbon", "tabler", "lucide", "ph"]
+# 推荐的通用图标集（按优先级）
+PREFERRED_COLLECTIONS = ["mdi", "fluent", "ph", "tabler", "solar", "fa6-solid", "carbon", "lucide", "bi"]
 
 # 国旗/地区专用图标集（按优先级）
 FLAG_COLLECTIONS = ["circle-flags", "flagpack", "flag", "twemoji", "emojione"]
+
+# 品牌/公司专用图标集（按优先级）
+BRAND_COLLECTIONS = ["simple-icons", "fa7-brands", "logos", "cib", "bxl"]
+
+# 编程语言/技术专用图标集（按优先级）
+PROGRAMMING_COLLECTIONS = ["devicon", "devicon-plain", "skill-icons", "vscode-icons"]
+
+# 主题专用图标集
+THEMATIC_COLLECTIONS = {
+    "game": ["game-icons"],
+    "health": ["healthicons"],
+    "weather": ["meteocons", "wi"],
+    "geo": ["gis", "map"],
+}
 
 # 中文类目到英文关键词的常见映射
 CATEGORY_KEYWORD_HINTS = {
