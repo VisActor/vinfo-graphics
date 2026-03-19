@@ -107,21 +107,21 @@
 数据主题 → 是否有匹配的预设主题？
   ├─ 是 → 只写 theme，不写 colors 和 background.color
   │       （background.image 仍可独立使用）
-  └─ 否 → 不写 theme，手动配置 colors + background.color（或 background.image）
+  └─ 否 → 不写 theme，手动配置颜色（见规则 7）
 ```
 
 ### 允许的组合
 
-| 组合                                        | 是否允许 | 说明                                      |
-| ------------------------------------------- | -------- | ----------------------------------------- |
-| `theme` 单独使用                            | ✅       | 主题提供全部配色，最简洁                  |
-| `theme` + `background.image`                | ✅       | 背景图是独立视觉层，不与主题冲突          |
-| `theme` + `brandImage`                      | ✅       | 装饰图是独立视觉层                        |
-| `colors` + `background.color`（无 theme）   | ✅       | 无合适主题时，手动配色                    |
-| `colors` + `background.image`（无 theme）   | ✅       | 手动配色 + 背景图                         |
-| ~~`theme` + `colors`~~                      | ❌       | 主题已含 colors，手写 colors 冗余         |
-| ~~`theme` + `background.color`~~            | ❌       | 主题已含 backgroundColor，手写 color 冗余 |
-| ~~`theme` + `colors` + `background.color`~~ | ❌       | 三者同时出现，完全冗余                    |
+| 组合                                        | 是否允许 | 说明                                                        |
+| ------------------------------------------- | -------- | ----------------------------------------------------------- |
+| `theme` 单独使用                            | ✅       | 主题提供全部配色，最简洁                                    |
+| `theme` + `background.image`                | ✅       | 背景图是独立视觉层，不与主题冲突                            |
+| `theme` + `brandImage`                      | ✅       | 装饰图是独立视觉层                                          |
+| `colors` + `background.color`（无 theme）   | ✅       | 无合适主题时，手动配色                                      |
+| `colors` + `background.image`（无 theme）   | ✅       | 手动配色 + 背景图                                           |
+| ~~`theme` + `colors`~~（品牌色覆盖除外）    | ❌       | 主题已含 colors，手写 colors 冗余；品牌色场景见下方「例外」 |
+| ~~`theme` + `background.color`~~            | ❌       | 主题已含 backgroundColor，手写 color 冗余                   |
+| ~~`theme` + `colors` + `background.color`~~ | ❌       | 三者同时出现，完全冗余                                      |
 
 ### 例外：品牌色覆盖
 
@@ -156,6 +156,34 @@
   "theme": "energy",
   "background": { "image": "https://images.pexels.com/photos/xxx?w=1920&h=1080&fit=crop" }
 }
+```
+
+---
+
+## 规则 5：colors 数量 — 1 个或 ≥ 数据类目数
+
+手动配置 `colors` 数组时，数组长度必须为 **1**（所有元素统一颜色）或 **≥ 数据类目数**（每个类目独立颜色）。**禁止 colors 数量在 2 到 (类目数 - 1) 之间**，这会导致部分类目共享颜色，视觉上混乱。
+
+### 规则
+
+| colors 数量      | 效果             | 是否允许   |
+| ---------------- | ---------------- | ---------- |
+| 1                | 所有元素统一颜色 | ✅         |
+| = 数据类目数     | 每个类目独立颜色 | ✅（推荐） |
+| > 数据类目数     | 每个类目独立颜色 | ✅         |
+| 2 ~ (类目数 - 1) | 部分类目共享颜色 | ❌         |
+
+### 示例（7 个数据类目）
+
+```json
+// ✅ 正确：1 个颜色，所有元素统一
+{ "colors": ["#E11D48"] }
+
+// ✅ 正确：7 个颜色，每个类目独立
+{ "colors": ["#F2C14F", "#1D4ED8", "#10B981", "#F97316", "#6366F1", "#14B8A6", "#9CA3AF"] }
+
+// ❌ 错误：3 个颜色给 7 个类目，导致 4 个类目复用颜色
+{ "colors": ["#F2C14F", "#1D4ED8", "#10B981"] }
 ```
 
 ---
@@ -199,28 +227,77 @@
 
 ---
 
-## 规则 5：colors 数量 — 1 个或 ≥ 数据类目数
+## 规则 7：需要自定义深色/浅色方案时，使用 customizedTheme 而非零散字段
 
-手动配置 `colors` 数组时，数组长度必须为 **1**（所有元素统一颜色）或 **≥ 数据类目数**（每个类目独立颜色）。**禁止 colors 数量在 2 到 (类目数 - 1) 之间**，这会导致部分类目共享颜色，视觉上混乱。
+当没有合适的预设 `theme`，且需要自定义深色或浅色配色方案时，**应使用 `customizedTheme` 而非分散地设置 `background.color` + `colors`**。
 
-### 规则
+### 为什么需要 customizedTheme
 
-| colors 数量      | 效果             | 是否允许   |
-| ---------------- | ---------------- | ---------- |
-| 1                | 所有元素统一颜色 | ✅         |
-| = 数据类目数     | 每个类目独立颜色 | ✅（推荐） |
-| > 数据类目数     | 每个类目独立颜色 | ✅         |
-| 2 ~ (类目数 - 1) | 部分类目共享颜色 | ❌         |
+仅设置 `background.color` + `colors` 时，**标题、标签、坐标轴等文字颜色仍由默认 light 主题控制**（颜色偏深），导致深色背景下文字不可读。`customizedTheme` 的 `type` 字段会联动控制全局文字颜色（`textColor`、`secondaryTextColor`），确保所有文字都适配背景色调。
 
-### 示例（7 个数据类目）
+### 典型错误场景
 
 ```json
-// ✅ 正确：1 个颜色，所有元素统一
-{ "colors": ["#E11D48"] }
-
-// ✅ 正确：7 个颜色，每个类目独立
-{ "colors": ["#F2C14F", "#1D4ED8", "#10B981", "#F97316", "#6366F1", "#14B8A6", "#9CA3AF"] }
-
-// ❌ 错误：3 个颜色给 7 个类目，导致 4 个类目复用颜色
-{ "colors": ["#F2C14F", "#1D4ED8", "#10B981"] }
+// ❌ 错误：background.color 设深色，但 title/label 文字仍是默认 light 主题的深色文字
+{
+  "background": { "color": "#0F172A" },
+  "colors": ["#0EA5E9", "#6366F1", "#22C55E"]
+}
+// 结果：标题颜色是 #1e293b，在深色背景上几乎不可见
 ```
+
+### 正确做法：用 customizedTheme 一次性配置完整主题
+
+```json
+// ✅ 正确：customizedTheme 同时设置背景色、图表颜色和文字颜色
+{
+  "customizedTheme": {
+    "type": "dark",
+    "backgroundColor": "#0F172A",
+    "colors": ["#0EA5E9", "#6366F1", "#22C55E", "#F97316", "#EC4899", "#FACC15", "#14B8A6"],
+    "textColor": "#F1F5F9",
+    "secondaryTextColor": "#94A3B8"
+  }
+}
+```
+
+### 决策流程
+
+```
+需要自定义配色方案？
+  ├─ 有匹配的预设主题 → 只写 theme（规则 4）
+  ├─ 无匹配主题，且背景为深色（#xxxxxx 亮度 < 0.3）→ 使用 customizedTheme（type: "dark"）
+  └─ 无匹配主题，且背景为浅色 → 使用 customizedTheme（type: "light"）或分散字段均可
+```
+
+### customizedTheme 字段说明
+
+| 字段                 | 类型                  | 说明                                   |
+| -------------------- | --------------------- | -------------------------------------- |
+| `type`               | `"light"` \| `"dark"` | **必填**，控制全局文字颜色方向         |
+| `backgroundColor`    | string                | 背景色（替代 `background.color`）      |
+| `colors`             | string[]              | 数据颜色数组（替代顶层 `colors` 字段） |
+| `textColor`          | string                | 标题、主标签颜色（深色主题用浅色）     |
+| `secondaryTextColor` | string                | 副标题、脚注、次要标签颜色             |
+
+### 与 background.image 的组合
+
+`customizedTheme` 与 `background.image` 可以同时使用：
+
+```json
+{
+  "customizedTheme": {
+    "type": "dark",
+    "backgroundColor": "#0F172A",
+    "colors": ["#0EA5E9", "#6366F1"],
+    "textColor": "#F1F5F9",
+    "secondaryTextColor": "#94A3B8"
+  },
+  "background": {
+    "image": "https://images.pexels.com/photos/xxx?w=1920&h=1080&fit=crop",
+    "opacity": 0.4
+  }
+}
+```
+
+`background.image` 作为独立视觉层叠加在 `customizedTheme.backgroundColor` 之上，两者不冲突。
