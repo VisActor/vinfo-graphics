@@ -20,18 +20,6 @@
 
 ---
 
-## 使用场景与尺寸参数
-
-选择图片后，**必须在 URL 末尾追加尺寸参数**：
-
-| 使用场景                                        | URL 后缀                  | 示例                           |
-| ----------------------------------------------- | ------------------------- | ------------------------------ |
-| `background.image`（全局背景）                  | `?w=1920&h=1080&fit=crop` | `{url}?w=1920&h=1080&fit=crop` |
-| `nodeBackground.map[*]`（treemap 节点）         | `?w=600&h=400&fit=crop`   | `{url}?w=600&h=400&fit=crop`   |
-| `circleBackground.map[*]`（circlePacking 圆形） | `?w=600&h=400&fit=crop`   | `{url}?w=600&h=400&fit=crop`   |
-
----
-
 ## 选择流程
 
 ### 步骤 1：读取图片库
@@ -55,6 +43,8 @@
 
 #### 数据主题 → keywords/tags 匹配参考
 
+**宏观主题匹配**（适用于 `background.image`）：
+
 | 数据/用户意图      | 推荐搜索 keywords/tags                  |
 | ------------------ | --------------------------------------- |
 | 科技、AI、互联网   | `紫色` + tags 含"科技"/"光线"           |
@@ -67,6 +57,17 @@
 | 海洋、航运         | `blue sea`、`藏蓝` + tags 含"大海"      |
 | 夜空、星空、宇宙   | `深蓝` + tags 含"夜空"/"星河"/"银河"    |
 | 暖色、阳光、正能量 | `黄色`、`红色`                          |
+
+**实体级匹配**（适用于 `nodeBackground.map` / `circleBackground.map`）：
+
+为每个数据项匹配图片时，应**用数据项的具体实体名称去搜索 tags**，而非只用宏观主题：
+
+| 数据项类型 | 匹配策略                                         | 示例                                               |
+| ---------- | ------------------------------------------------ | -------------------------------------------------- |
+| 国家/地区  | 用国家名称搜索 tags（中文或英文）                | "U.S." → 搜 tags 含 "美国"；"Singapore" → "新加坡" |
+| 品牌/公司  | 用品牌特征关键词搜索                             | "NVIDIA" → 搜 "科技""光线"；"Tesla" → "汽车"       |
+| 城市       | 用城市名称或地标搜索 tags                        | "上海" → 搜 "建筑""夜景"；"Paris" → "建筑"         |
+| 抽象类目   | 用主题相关的 tags 或选纹理图 (`type: "texture"`) | "投资" → 搜 "金融""数据"；"其他" → 纹理图          |
 
 ### 步骤 3：去重校验
 
@@ -95,16 +96,16 @@
 - 当图片 `isDark` 与主题 `type` **不匹配**（一深一浅）时，透明度必须设为低值（`0.10 ~ 0.25`），否则图文对比度会严重下降
 - `nodeBackground` 和 `circleBackground` 的 `opacity` 遵循同样逻辑（通常取 `0.25 ~ 0.4`，适当保留节点内容可读性）
 
-### 步骤 5：追加尺寸参数并集成到 Schema
+### 步骤 5：集成到 Schema
 
-根据使用场景追加对应尺寸参数（见上表），然后写入 schema。
+将选中的图片 URL 直接写入 schema（不需要追加任何尺寸参数）。
 
 #### background.image 示例（浅色主题 + 深色图片 → 低透明度）
 
 ```json
 {
   "background": {
-    "image": "https://images.pexels.com/photos/2098427/pexels-photo-2098427.jpeg?w=1920&h=1080&fit=crop",
+    "image": "https://images.pexels.com/photos/2098427/pexels-photo-2098427.jpeg",
     "opacity": 0.15
   }
 }
@@ -115,7 +116,7 @@
 ```json
 {
   "background": {
-    "image": "https://images.pexels.com/photos/2098427/pexels-photo-2098427.jpeg?w=1920&h=1080&fit=crop",
+    "image": "https://images.pexels.com/photos/2098427/pexels-photo-2098427.jpeg",
     "opacity": 0.55
   }
 }
@@ -129,8 +130,8 @@
     "visible": true,
     "field": "bgKey",
     "map": {
-      "Bitcoin": "https://images.pexels.com/photos/xxx/pexels-photo-xxx.jpeg?w=600&h=400&fit=crop",
-      "Ethereum": "https://images.pexels.com/photos/yyy/pexels-photo-yyy.jpeg?w=600&h=400&fit=crop"
+      "Bitcoin": "https://images.pexels.com/photos/xxx/pexels-photo-xxx.jpeg",
+      "Ethereum": "https://images.pexels.com/photos/yyy/pexels-photo-yyy.jpeg"
     },
     "opacity": 0.3
   }
@@ -145,8 +146,8 @@
     "visible": true,
     "field": "bgKey",
     "map": {
-      "频道A": "https://images.pexels.com/photos/xxx/pexels-photo-xxx.jpeg?w=600&h=400&fit=crop",
-      "频道B": "https://images.pexels.com/photos/yyy/pexels-photo-yyy.jpeg?w=600&h=400&fit=crop"
+      "频道A": "https://images.pexels.com/photos/xxx/pexels-photo-xxx.jpeg",
+      "频道B": "https://images.pexels.com/photos/yyy/pexels-photo-yyy.jpeg"
     },
     "opacity": 0.3
   }

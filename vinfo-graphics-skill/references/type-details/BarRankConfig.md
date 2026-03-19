@@ -17,7 +17,10 @@ export type BarRankConfig = {
   style?: {
     /** 字体大小 */
     fontSize?: number;
-    /** 字体颜色 */
+    /**
+     * 字体颜色
+     * 注意：当 position 为 'yAxis' 时，背景色和柱子的颜色默认一致，字体的颜色需要考虑能够在柱子上保持分辨度
+     */
     fill?: string;
     /** 字体粗细 */
     fontWeight?: number | string;

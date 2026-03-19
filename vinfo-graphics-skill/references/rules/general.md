@@ -154,7 +154,7 @@
 // ✅ 也正确：主题 + 背景图（独立视觉层）
 {
   "theme": "energy",
-  "background": { "image": "https://images.pexels.com/photos/xxx?w=1920&h=1080&fit=crop" }
+  "background": { "image": "https://images.pexels.com/photos/xxx" }
 }
 ```
 
@@ -294,7 +294,7 @@
     "secondaryTextColor": "#94A3B8"
   },
   "background": {
-    "image": "https://images.pexels.com/photos/xxx?w=1920&h=1080&fit=crop",
+    "image": "https://images.pexels.com/photos/xxx",
     "opacity": 0.4
   }
 }

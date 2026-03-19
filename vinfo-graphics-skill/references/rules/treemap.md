@@ -5,9 +5,21 @@
 
 ---
 
-## 规则 1：推荐生成 nodeBackground 节点背景图
+## 规则 1：优先生成 nodeBackground 节点背景图
 
-矩阵树图的 `nodeBackground` 是核心特色功能，能大幅提升视觉冲击力。**推荐默认为至少前 1~3 名的节点配置背景图**。
+矩阵树图的 `nodeBackground` 是核心视觉特色，能大幅提升冲击力。**应默认为前 1~3 名的节点配置背景图**，除非图片库中确实没有语义匹配的图片。
+
+### 何时使用
+
+```
+数据项是否为可识别的实体（国家、品牌、城市等）？
+  ├─ 是 → 读取 images.json，用数据项名称（中英文）搜索 tags
+  │       ├─ 有匹配 → 配置 nodeBackground（至少前 3 个大节点）
+  │       └─ 无匹配 → 跳过 nodeBackground
+  └─ 否（抽象类目如"投资""其他"）→ 可选纹理图（type 含 "texture"），或跳过
+```
+
+> **关键**：搜索 tags 时用数据项的**具体名称**，不只用宏观主题。例如数据项 "U.S." 应搜索 tags 含 "美国"；"Singapore" 应搜索 "新加坡"。详见 **背景图片子流程** 的「实体级匹配」。
 
 ### 配置方式
 
@@ -17,36 +29,24 @@
 {
   "nodeBackground": {
     "visible": true,
-    "field": "bgKey",
+    "field": "country",
     "map": {
-      "Bitcoin": "https://images.pexels.com/photos/xxx/pexels-photo-xxx.jpeg?w=600&h=400&fit=crop",
-      "Ethereum": "https://images.pexels.com/photos/yyy/pexels-photo-yyy.jpeg?w=600&h=400&fit=crop"
+      "UK": "https://images.unsplash.com/photo-1735989647938-056f5a438ef6",
+      "U.S.": "https://images.unsplash.com/photo-1729089264257-adc4f9c9d256",
+      "Singapore": "https://images.unsplash.com/photo-1722704656660-6c6be0b90eec"
     },
     "opacity": 0.3
   }
 }
 ```
 
-### 图片选择策略
-
-通过 **背景图片子流程** (`references/workflows/subprocess-select-background.md`) 从预置背景图片库 (`references/images/images.json`) 按 keywords/tags 语义匹配选择：
-
-| 数据类型                | 背景图来源                          | 说明                               |
-| ----------------------- | ----------------------------------- | ---------------------------------- |
-| 品牌/产品（如加密货币） | 按 keywords/tags 匹配数据项主题     | 如 Bitcoin → tags 含“金色”“科技”等 |
-| 人物/组织（如裁员原因） | 按 keywords/tags 匹配商务主题       | 如 DOGE → tags 含“建筑”“城市”等    |
-| 具体实体（城市、食物）  | 按 keywords/tags 匹配对应主题       | 从自然、食品等相关 tags 选择       |
-| 抽象类目（部门、类型）  | 选择纹理类图片（type 含 "texture"） | 使用抽象装饰图片                   |
-
 ### 注意事项
 
-- `opacity` 推荐 `0.2` ~ `0.4`，大节点可适当高一些（0.3~0.5），小节点调低或不设背景
-- 不必为所有节点都设置背景图 — **前 3~5 个大节点设置即可**，小节点背景图缩得太小反而影响观感
-- data 中需要添加 `bgKey` 字段（或直接复用 categoryField 的值作为 map key）
-- **nodeBackground 中每个节点的图片必须与该数据项语义相关**（如 NVIDIA → chip/GPU 相关图片，而非通用科技图片）
-- **nodeBackground 中的图片不可与 background.image 重复**
-- **不同节点之间的图片也不可重复**
-- 如预置图片库中没有匹配的图片，可跳过 nodeBackground 配置
+- `field` 可直接使用 `categoryField` 的字段名，无需额外添加 `bgKey` 字段
+- `opacity` 推荐 `0.2` ~ `0.4`，大节点可适当高一些（0.3~0.5）
+- **前 3~5 个大节点设置即可**，小节点背景图缩得太小反而影响观感
+- nodeBackground 中**每个节点的图片必须与该数据项语义相关**
+- **图片不可与 background.image 重复，节点之间也不可重复**
 
 ---
 
@@ -191,7 +191,7 @@
   "rank": { "visible": true, "position": "top-left" },
   "icon": { "visible": true, "position": "top-right", "field": "iconKey", "map": {...} },
   "label": { "visible": true, "format": "{name}\n{value}", "showPercent": true, "minVisible": 30 },
-  "nodeBackground": { "visible": true, "field": "bgKey", "map": {...}, "opacity": 0.3 },
+  "nodeBackground": { "visible": true, "field": "name", "map": {...}, "opacity": 0.3 },
   "footnote": { "text": "数据来源：xxx" }
 }
 ```
