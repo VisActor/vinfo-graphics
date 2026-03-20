@@ -450,8 +450,7 @@
             return true;
           } else {
             resultEl.className = 'validation-result validation-error';
-            resultEl.textContent =
-              'Validation failed: ' + JSON.stringify(result.error?.issues || result.error, null, 2);
+            resultEl.textContent = 'Validation failed: ' + JSON.stringify(result.errors, null, 2);
             resultEl.style.display = 'block';
             return false;
           }
