@@ -1,6 +1,6 @@
 ---
 name: vinfo-graphics-skill
-description: VInfo Graphics 信息图专家助手，基于结构化知识库（top-keys 字段索引 + type-details 类型定义）生成、编辑与诊断信息图。支持 pie/bar/column/area/treemap/circlePacking 六种图表类型，自动配置语义化 Icon（Iconify API）和预置背景图片/插图。当用户需要创建信息图、修改图表配置、诊断图表问题、搜索图标、配置背景图时使用此技能。即使用户没有明确提到"信息图"，只要涉及数据可视化图表、图表schema配置、Iconify图标、信息图样式定制等任务就应该触发。
+description: VInfo Graphics 信息图专家助手，基于结构化知识库（top-keys 字段索引 + type-details 类型定义）生成、编辑与诊断信息图。支持 pie/bar/column/area/treemap/circlePacking 六种图表类型，自动配置语义化 Icon（Iconify API）、品牌官方 Logo（Brandfetch API）和预置背景图片/插图。当用户需要创建信息图、修改图表配置、诊断图表问题、搜索图标、获取品牌Logo、配置背景图时使用此技能。即使用户没有明确提到"信息图"，只要涉及数据可视化图表、图表schema配置、Iconify图标、品牌Logo、信息图样式定制等任务就应该触发。
 ---
 
 # VInfo Graphics Skill
@@ -17,7 +17,7 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
 
 信息图质量取决于三个环节，每个环节都有专用脚本保障一致性，因此不能跳过或手动替代：
 
-1. **图标通过脚本获取**：`scripts/fetch_icons.py` 从 Iconify API 搜索语义匹配的图标，保证同一图标集、风格统一。手动拼接 URL 容易产生不存在的图标名或混用图标集，导致渲染失败或风格不一致。详见 `references/workflows/subprocess-icon-generation.md`。
+1. **图标通过脚本获取**：`scripts/fetch_icons.py` 从 Iconify API 搜索语义匹配的图标，保证同一图标集、风格统一。`scripts/fetch_brand_logos.py` 从 Brandfetch API 获取品牌官方 Logo（品牌/公司类数据优先使用）。手动拼接 URL 容易产生不存在的图标名或混用图标集，导致渲染失败或风格不一致。详见 `references/workflows/subprocess-icon-generation.md` 和 `references/workflows/subprocess-brand-logo.md`。
 
 2. **HTML 通过脚本生成**：`scripts/generate_demo_html.py` 基于模板生成可运行页面，包含正确的依赖引用和渲染逻辑。手写 HTML 容易遗漏依赖或模板结构。
 
@@ -37,6 +37,7 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
 | **场景二：编辑** | 有现有配置 + 修改动词（加/改/删/换/调整）       | `references/workflows/scenario-2-editing.md`    |
 | **场景三：诊断** | 反馈问题（"不显示"、"报错"、"不生效"）          | `references/workflows/scenario-3-diagnosis.md`  |
 | **Icon 查询**    | 用户单独搜索/替换图标                           | `references/workflows/scenario-icon-query.md`   |
+| **品牌 Logo**    | 品牌/公司数据需要官方 Logo                      | `references/workflows/subprocess-brand-logo.md` |
 
 ---
 
@@ -60,15 +61,16 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
 
 ### 层级 3：工作流文档（workflows）
 
-| 文档               | 路径                                                   | 何时查阅           |
-| ------------------ | ------------------------------------------------------ | ------------------ |
-| **生成流程**       | `references/workflows/scenario-1-generation.md`        | 从零创建信息图     |
-| **编辑流程**       | `references/workflows/scenario-2-editing.md`           | 修改现有图表配置   |
-| **诊断流程**       | `references/workflows/scenario-3-diagnosis.md`         | 排查图表显示问题   |
-| **Icon 子流程**    | `references/workflows/subprocess-icon-generation.md`   | 需要配置语义化图标 |
-| **背景图片子流程** | `references/workflows/subprocess-select-background.md` | 需要背景图片       |
-| **装饰插图子流程** | `references/workflows/subprocess-select-decoration.md` | 需要装饰插图       |
-| **Icon 查询**      | `references/workflows/scenario-icon-query.md`          | 单独搜索/替换图标  |
+| 文档                 | 路径                                                   | 何时查阅                     |
+| -------------------- | ------------------------------------------------------ | ---------------------------- |
+| **生成流程**         | `references/workflows/scenario-1-generation.md`        | 从零创建信息图               |
+| **编辑流程**         | `references/workflows/scenario-2-editing.md`           | 修改现有图表配置             |
+| **诊断流程**         | `references/workflows/scenario-3-diagnosis.md`         | 排查图表显示问题             |
+| **Icon 子流程**      | `references/workflows/subprocess-icon-generation.md`   | 需要配置语义化图标           |
+| **品牌 Logo 子流程** | `references/workflows/subprocess-brand-logo.md`        | 品牌/公司类数据需要官方 Logo |
+| **背景图片子流程**   | `references/workflows/subprocess-select-background.md` | 需要背景图片                 |
+| **装饰插图子流程**   | `references/workflows/subprocess-select-decoration.md` | 需要装饰插图                 |
+| **Icon 查询**        | `references/workflows/scenario-icon-query.md`          | 单独搜索/替换图标            |
 
 ### 层级 4：生成规则（rules）
 
@@ -90,9 +92,10 @@ description: VInfo Graphics 信息图专家助手，基于结构化知识库（t
 | 脚本                    | 路径                            | 用途                                |
 | ----------------------- | ------------------------------- | ----------------------------------- |
 | `fetch_icons.py`        | `scripts/fetch_icons.py`        | 从 Iconify API 批量获取统一风格图标 |
+| `fetch_brand_logos.py`  | `scripts/fetch_brand_logos.py`  | 从 Brandfetch API 获取品牌官方 Logo |
 | `generate_demo_html.py` | `scripts/generate_demo_html.py` | 根据 schema 生成可运行 HTML         |
 
-脚本的详细用法和参数见各 workflow 文档（`subprocess-icon-generation.md` 和 `scenario-1-generation.md` 步骤 8）。
+脚本的详细用法和参数见各 workflow 文档（`subprocess-icon-generation.md`、`subprocess-brand-logo.md` 和 `scenario-1-generation.md` 步骤 8）。
 
 ---
 
