@@ -158,7 +158,7 @@ default 推荐：`800 x 600`。竖版信息图可用 `600 x 800` 或 `400 x 700`
 ```json
 {
   "background": {
-    "image": "https://images.pexels.com/photos/xxx/pexels-photo-xxx.jpeg?w=1920&h=1080&fit=crop"
+    "image": "https://images.pexels.com/photos/xxx/pexels-photo-xxx.jpeg"
   }
 }
 ```
@@ -239,23 +239,27 @@ default 推荐：`800 x 600`。竖版信息图可用 `600 x 800` 或 `400 x 700`
 
 > 🚨 **必须读取规则文件**：配置特有字段前，先阅读 `references/rules/general.md`（通用规则）和 `references/rules/{chartType}.md`（如存在），按规则调整字段配置，确保元素位置不冲突。
 
+**装饰图片**：bar/column/area 支持 `brandImage`，pie 支持 `centerImage`。执行 **装饰插图子流程** (`references/workflows/subprocess-select-decoration.md`) 从预置库匹配或生成内联 SVG。
+
 #### Pie 饼图 / 环形图
 
-| 特有字段      | 类型                 | 说明                    |
-| ------------- | -------------------- | ----------------------- |
-| `innerRadius` | number (0-1)         | 内半径比例，>0 为环形图 |
-| `outerRadius` | number (0-1)         | 外半径比例，默认 0.8    |
-| `label`       | PieLabelConfig       | 扇区标签                |
-| `centerImage` | PieCenterImageConfig | 环形图中心图片          |
+| 特有字段      | 类型                 | 说明                               |
+| ------------- | -------------------- | ---------------------------------- |
+| `innerRadius` | number (0-1)         | 内半径比例，>0 为环形图（必须 >0） |
+| `outerRadius` | number (0-1)         | 外半径比例，默认 0.8               |
+| `icon`        | PieIconConfig        | 扇区语义图标（→ Icon 子流程）      |
+| `label`       | PieLabelConfig       | 扇区标签                           |
+| `centerImage` | PieCenterImageConfig | 环形图中心图片（→ 装饰插图子流程） |
 
 #### Bar 条形图
 
-| 特有字段 | 类型            | 说明                     |
-| -------- | --------------- | ------------------------ |
-| `sort`   | 'asc' \| 'desc' | 排序方式                 |
-| `bar`    | BarStyleConfig  | 条形样式（圆角、渐变等） |
-| `rank`   | BarRankConfig   | 排名标签                 |
-| `label`  | BarLabelConfig  | 数值标签                 |
+| 特有字段     | 类型             | 说明                         |
+| ------------ | ---------------- | ---------------------------- |
+| `sort`       | 'asc' \| 'desc'  | 排序方式                     |
+| `bar`        | BarStyleConfig   | 条形样式（圆角、渐变等）     |
+| `rank`       | BarRankConfig    | 排名标签                     |
+| `label`      | BarLabelConfig   | 数值标签                     |
+| `brandImage` | BrandImageConfig | 装饰图片（→ 装饰插图子流程） |
 
 #### Column 柱状图
 
@@ -268,24 +272,26 @@ default 推荐：`800 x 600`。竖版信息图可用 `600 x 800` 或 `400 x 700`
 
 #### Area 面积图
 
-| 特有字段                   | 类型                           | 说明       |
-| -------------------------- | ------------------------------ | ---------- |
-| `area`                     | AreaStyleConfig                | 面积样式   |
-| `line`                     | AreaLineConfig                 | 线条样式   |
-| `point`                    | AreaPointConfig                | 数据点样式 |
-| `annotationPoint`          | AnnotationPointConfig          | 标注点     |
-| `annotationArea`           | AnnotationAreaConfig           | 标注区域   |
-| `annotationVerticalLine`   | AnnotationVerticalLineConfig   | 垂直标注线 |
-| `annotationHorizontalLine` | AnnotationHorizontalLineConfig | 水平标注线 |
+| 特有字段                   | 类型                           | 说明                         |
+| -------------------------- | ------------------------------ | ---------------------------- |
+| `area`                     | AreaStyleConfig                | 面积样式                     |
+| `line`                     | AreaLineConfig                 | 线条样式                     |
+| `point`                    | AreaPointConfig                | 数据点样式                   |
+| `brandImage`               | BrandImageConfig               | 装饰图片（→ 装饰插图子流程） |
+| `annotationPoint`          | AnnotationPointConfig          | 标注点                       |
+| `annotationArea`           | AnnotationAreaConfig           | 标注区域                     |
+| `annotationVerticalLine`   | AnnotationVerticalLineConfig   | 垂直标注线                   |
+| `annotationHorizontalLine` | AnnotationHorizontalLineConfig | 水平标注线                   |
 
 #### Treemap 矩阵树图
 
-| 特有字段     | 类型               | 说明       |
-| ------------ | ------------------ | ---------- |
-| `groupField` | string             | 分组字段名 |
-| `node`       | TreemapNodeConfig  | 节点配置   |
-| `rank`       | TreemapRankConfig  | 排名标签   |
-| `label`      | TreemapLabelConfig | 标签配置   |
+| 特有字段         | 类型                        | 说明                           |
+| ---------------- | --------------------------- | ------------------------------ |
+| `groupField`     | string                      | 分组字段名                     |
+| `node`           | TreemapNodeConfig           | 节点配置                       |
+| `rank`           | TreemapRankConfig           | 排名标签                       |
+| `label`          | TreemapLabelConfig          | 标签配置                       |
+| `nodeBackground` | TreemapNodeBackgroundConfig | 节点背景图（→ 背景图片子流程） |
 
 #### CirclePacking 圆形闭包图
 

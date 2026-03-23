@@ -56,7 +56,7 @@ export class CirclePackingChartConverter extends BaseConverter<CirclePackingChar
     }
 
     // 排名标签（仅单层模式有效）
-    if (!schema.groupField && schema.rank?.visible !== false) {
+    if (!schema.groupField && schema.rank && schema.rank.visible !== false) {
       this.processRank(schema, spec);
     }
 

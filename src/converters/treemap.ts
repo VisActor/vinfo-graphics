@@ -421,7 +421,7 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
 
     // 背景图需要在底层，使用 unshift 添加到数组开头
     (spec.extensionMark as Record<string, unknown>[]).unshift({
-      type: 'image',
+      type: 'rect',
       dataIndex: 0,
       style: {
         visible: (datum: any) => {
@@ -449,12 +449,17 @@ export class TreemapChartConverter extends BaseConverter<TreemapChartSchema> {
           const bounds = this.getNodeBounds(datum, ctx);
           return bounds ? bounds.height : 0;
         },
-        image: (datum: any) => {
+        fill: 'transparent',
+        background: (datum: any) => {
           const originalDatum = datum.datum[datum.datum.length - 1];
           const bgKey = String(originalDatum[schema.nodeBackground!.field!] ?? '');
           return schema.nodeBackground!.map![bgKey] ?? '';
         },
+        backgroundKeepAspectRatio: true,
+        // backgroundFit: false,
+
         cornerRadius: schema.node?.cornerRadius ?? 0,
+        backgroundCornerRadius: schema.node?.cornerRadius ?? 0,
         opacity,
       },
     });

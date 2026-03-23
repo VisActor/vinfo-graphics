@@ -205,7 +205,7 @@ python <SKILL_DIR>/scripts/generate_demo_html.py \
 ```json
 {
   "background": {
-    "image": "https://images.pexels.com/photos/xxx/pexels-photo-xxx.jpeg?w=1920&h=1080&fit=crop"
+    "image": "https://images.pexels.com/photos/xxx/pexels-photo-xxx.jpeg"
   }
 }
 ```

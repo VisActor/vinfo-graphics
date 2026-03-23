@@ -1,8 +1,8 @@
 # 装饰插图选择子流程
 
 > **何时使用**：需要为信息图配置装饰插图时——包括 area/bar/column 的 `brandImage.url`、pie 的 `centerImage.url`。
-> **图片来源**：预置装饰插图库 (`references/images/decorations.json`)。
-> **核心原则**：通过 `tags` 语义匹配数据主题，选择与内容相关的矢量插图。
+> **图片来源**：预置装饰插图库 (`references/images/decorations.json`) 或内联生成 SVG。
+> **核心原则**：通过 `tags` 语义匹配数据主题，选择与内容相关的矢量插图；无匹配时可生成 SVG 装饰图。
 
 ---
 
@@ -14,17 +14,6 @@
 | ------ | -------- | ----------------------------------------------------------- |
 | `url`  | string   | Unsplash 矢量插图 URL（**不含尺寸参数，使用时必须追加**）   |
 | `tags` | string[] | 语义标签，用于匹配数据主题（如 `["工作", "女性", "电脑"]`） |
-
----
-
-## 使用场景与尺寸参数
-
-选择插图后，**必须在 URL 末尾追加尺寸参数**：
-
-| 使用场景                          | URL 后缀                | 示例                         |
-| --------------------------------- | ----------------------- | ---------------------------- |
-| `brandImage.url`（装饰图片）      | `?w=400&h=400&fit=crop` | `{url}?w=400&h=400&fit=crop` |
-| `centerImage.url`（饼图中心图片） | `?w=300&h=300&fit=crop` | `{url}?w=300&h=300&fit=crop` |
 
 ---
 
@@ -69,7 +58,7 @@
 {
   "brandImage": {
     "visible": true,
-    "url": "https://images.unsplash.com/vector-1769600501923-924c765e35fd?w=400&h=400&fit=crop",
+    "url": "https://images.unsplash.com/vector-1769600501923-924c765e35fd",
     "width": 200,
     "height": 200,
     "align": "right",
@@ -85,7 +74,7 @@
 {
   "centerImage": {
     "visible": true,
-    "url": "https://images.unsplash.com/vector-1772002388669-31a6f0205c01?w=300&h=300&fit=crop",
+    "url": "https://images.unsplash.com/vector-1772002388669-31a6f0205c01",
     "width": 80,
     "height": 80
   }
@@ -94,24 +83,173 @@
 
 ---
 
-## 无匹配时的回退策略
+## 无匹配时的回退策略：生成内联 SVG
 
-当数据主题在插图库中找不到精确匹配时：
+当数据主题在插图库中找不到精确匹配时，可以**生成内联 SVG 装饰图**作为 `brandImage.url`，以 `data:image/svg+xml` URI 格式嵌入。
 
-1. **centerImage 回退**：如果无匹配，**必须跳过 centerImage**，不要使用语义不相关的插图。例如数据主题是「原油产量」，而插图库中没有能源/石油相关插图，则不应选择「商业/增长」等弱相关插图。仍保留环形图样式，中心区域空白即可。
-2. **brandImage 回退**：同理，如果无精确匹配，**优先跳过 brandImage**，而不是使用弱相关插图。只有当主题可以合理地覆盖到「商务/数据/工作」等通用場景时，才可使用通用商务类插图。
-3. **保底规则**：`background` 与 `brandImage` 不可同时缺失，至少有一项视觉装饰。当 brandImage/centerImage 都因无匹配而跳过时，必须确保 `background` 存在。
-
-### 匹配决策流程
+### 回退决策流程
 
 ```
 数据主题 → 扫描插图库的 tags
-  ├─ 找到精确匹配（tags 与数据主题直接相关） → 使用该插图
-  ├─ 只找到弱相关匹配（tags 仅模糊关联，如“商业”“增长”） → 跳过，不使用
-  └─ 无任何匹配 → 跳过
+  ├─ 找到精确匹配 → 使用该插图
+  ├─ 无匹配 → brandImage: 生成内联 SVG（见下方「SVG 生成规范」）
+  │           centerImage: 生成简化内联 SVG 主题图标（见下方「centerImage SVG 生成」）
+  └─ 保底规则：background 与 brandImage/centerImage 不可同时缺失
 ```
 
-> **核心原则**：宁可不用装饰图片，也不要用语义不匹配的装饰图片，否则会让用户困惑「这张图和数据有什么关系？」
+### SVG 生成规范
+
+生成的 SVG 用作 `brandImage.url`，需满足以下约束：
+
+**尺寸与格式**：
+
+- 画布尺寸：`200×200`（正方形，与 brandImage.width/height 匹配）
+- 输出格式：`data:image/svg+xml,` + URL 编码的 SVG 字符串
+- 不使用 base64 编码（URL 编码更短、可读）
+
+**风格约束**：
+
+- **抽象几何风格**：使用几何形状（圆、矩形、线条、多边形）组合，不要尝试画写实图形
+- **配色来源**：从当前 schema 的 `colors` 或 `theme` 色板中取色，确保与图表视觉统一
+- **低透明度叠加**：形状使用 `opacity="0.15"` ~ `opacity="0.4"`，因为 brandImage 是装饰层不应喧宾夺主
+- **语义关联**：图案应与数据主题有抽象关联（如金融→上升箭头+圆点；健康→十字+脉搏线；地理→经纬网格）
+
+**禁止**：
+
+- 含文字的 SVG（文字由图表 title/label 负责）
+- 超过 2KB 的 SVG（避免 data URI 过长）
+- 使用外部引用（`<image href="...">`、`<use>`）
+
+### SVG 模板示例
+
+**金融/增长主题**：
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="150" cy="50" r="40" fill="#3370eb" opacity="0.2"/>
+  <circle cx="60" cy="140" r="30" fill="#1bcebf" opacity="0.15"/>
+  <polyline points="20,160 60,120 100,140 140,80 180,40" fill="none" stroke="#3370eb" stroke-width="3" opacity="0.3"/>
+  <polygon points="180,40 180,55 165,40" fill="#3370eb" opacity="0.3"/>
+</svg>
+```
+
+**健康/医疗主题**：
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect x="85" y="40" width="30" height="80" rx="4" fill="#22C55E" opacity="0.2"/>
+  <rect x="60" y="65" width="80" height="30" rx="4" fill="#22C55E" opacity="0.2"/>
+  <polyline points="20,160 50,160 60,130 80,170 100,140 120,160 200,160" fill="none" stroke="#22C55E" stroke-width="2.5" opacity="0.3"/>
+</svg>
+```
+
+**地理/国家主题**：
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="80" fill="none" stroke="#6366F1" stroke-width="1.5" opacity="0.2"/>
+  <ellipse cx="100" cy="100" rx="40" ry="80" fill="none" stroke="#6366F1" stroke-width="1" opacity="0.15"/>
+  <line x1="20" y1="100" x2="180" y2="100" stroke="#6366F1" stroke-width="1" opacity="0.15"/>
+  <line x1="100" y1="20" x2="100" y2="180" stroke="#6366F1" stroke-width="1" opacity="0.15"/>
+  <circle cx="100" cy="100" r="3" fill="#6366F1" opacity="0.3"/>
+</svg>
+```
+
+### 集成到 Schema
+
+将 SVG 编码为 data URI 后，直接填入 `brandImage.url`：
+
+```json
+{
+  "brandImage": {
+    "visible": true,
+    "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='200' height='200'%3E%3Ccircle cx='150' cy='50' r='40' fill='%233370eb' opacity='0.2'/%3E%3Ccircle cx='60' cy='140' r='30' fill='%231bcebf' opacity='0.15'/%3E%3Cpolyline points='20,160 60,120 100,140 140,80 180,40' fill='none' stroke='%233370eb' stroke-width='3' opacity='0.3'/%3E%3C/svg%3E",
+    "width": 200,
+    "height": 200,
+    "align": "right",
+    "verticalAlign": "bottom",
+    "asForeground": false
+  }
+}
+```
+
+> **URL 编码要点**：`<` → `%3C`，`>` → `%3E`，`#` → `%23`，`"` → `'`（SVG 内部统一用单引号避免编码）
+
+---
+
+## centerImage SVG 生成
+
+当 pie 环形图的 centerImage 在插图库中无匹配时，生成**简化的内联 SVG 主题图标**作为 `centerImage.url`。
+
+### 与 brandImage SVG 的区别
+
+| 属性     | brandImage SVG        | centerImage SVG           |
+| -------- | --------------------- | ------------------------- |
+| 画布尺寸 | `200×200`             | `100×100`                 |
+| 风格     | 抽象几何组合          | **单一主题图标**          |
+| 复杂度   | 多个形状叠加          | 1~3 个形状，极简          |
+| 透明度   | `0.15~0.4`（装饰层）  | `0.6~1.0`（作为焦点图片） |
+| 配色     | 从 schema colors 取色 | 从 schema colors 取主色   |
+
+### centerImage SVG 模板示例
+
+**能源/石油**（油滴）：
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <path d="M50 10 C50 10 20 50 20 65 A30 30 0 1 0 80 65 C80 50 50 10 50 10Z" fill="#4CAF50" opacity="0.8"/>
+</svg>
+```
+
+**地理/全球**（地球网格）：
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <circle cx="50" cy="50" r="40" fill="none" stroke="#3370eb" stroke-width="2" opacity="0.7"/>
+  <ellipse cx="50" cy="50" rx="20" ry="40" fill="none" stroke="#3370eb" stroke-width="1.5" opacity="0.5"/>
+  <line x1="10" y1="50" x2="90" y2="50" stroke="#3370eb" stroke-width="1" opacity="0.4"/>
+</svg>
+```
+
+**金融/投资**（上升趋势线）：
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <polyline points="15,75 35,55 55,65 75,30 85,25" fill="none" stroke="#3370eb" stroke-width="3" opacity="0.8"/>
+  <polygon points="85,25 85,35 75,25" fill="#3370eb" opacity="0.8"/>
+</svg>
+```
+
+**科技/AI**（电路节点）：
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <circle cx="50" cy="50" r="12" fill="#6366F1" opacity="0.8"/>
+  <circle cx="20" cy="30" r="5" fill="#6366F1" opacity="0.5"/>
+  <circle cx="80" cy="30" r="5" fill="#6366F1" opacity="0.5"/>
+  <circle cx="20" cy="70" r="5" fill="#6366F1" opacity="0.5"/>
+  <circle cx="80" cy="70" r="5" fill="#6366F1" opacity="0.5"/>
+  <line x1="50" y1="50" x2="20" y2="30" stroke="#6366F1" stroke-width="1.5" opacity="0.4"/>
+  <line x1="50" y1="50" x2="80" y2="30" stroke="#6366F1" stroke-width="1.5" opacity="0.4"/>
+  <line x1="50" y1="50" x2="20" y2="70" stroke="#6366F1" stroke-width="1.5" opacity="0.4"/>
+  <line x1="50" y1="50" x2="80" y2="70" stroke="#6366F1" stroke-width="1.5" opacity="0.4"/>
+</svg>
+```
+
+### 集成到 Schema
+
+```json
+{
+  "centerImage": {
+    "visible": true,
+    "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='100' height='100'%3E%3Cpath d='M50 10 C50 10 20 50 20 65 A30 30 0 1 0 80 65 C80 50 50 10 50 10Z' fill='%234CAF50' opacity='0.8'/%3E%3C/svg%3E",
+    "width": 80,
+    "height": 80
+  }
+}
+```
+
+> centerImage SVG 同样遵循 URL 编码规则：`<` → `%3C`，`>` → `%3E`，`#` → `%23`，内部用单引号。
 
 ---
 

@@ -5,9 +5,9 @@
 
 ---
 
-## 规则 1：优先使用环形图（donut），配合 centerImage
+## 规则 1：必须使用环形图（donut），配合 centerImage
 
-优秀的信息图饼图几乎都是**环形图**（donut chart），中心放置主题相关的图片来增强视觉效果和信息传达。**默认必须生成环形图 + centerImage**。
+优秀的信息图饼图几乎都是**环形图**（donut chart），中心放置主题相关的图片来增强视觉效果和信息传达。**必须生成环形图 + centerImage**，即使用户未明确要求环形图或指定了 `innerRadius: 0`，也应默认使用环形图布局（`innerRadius: 0.55`）。
 
 ### 配置方式
 
@@ -17,7 +17,7 @@
   "outerRadius": 0.85,
   "centerImage": {
     "visible": true,
-    "url": "https://images.unsplash.com/vector-xxx?w=300&h=300&fit=crop",
+    "url": "https://images.unsplash.com/vector-xxx",
     "width": 80,
     "height": 80
   }
@@ -28,36 +28,37 @@
 
 通过 **装饰插图子流程** (`references/workflows/subprocess-select-decoration.md`) 从预置装饰插图库 (`references/images/decorations.json`) 按 tags 语义匹配选择：
 
-| 数据类型                      | centerImage 来源             | 说明                                |
-| ----------------------------- | ---------------------------- | ----------------------------------- | --- | -------------- | -------------------- | -------------------------------- |
-| 行业/市场份额（航空、汽车等） | 从装饰插图库选择对应主题插图 | 如航空市场 → tags 含“商业”“增长” 等 |
-| 国家/地区数据                 | 从装饰插图库选择主题相关插图 | 如橄榄产量 → tags 含“农村”“森林” 等 |
-| 品牌/产品份额                 | 从装饰插图库选择行业相关插图 | 体现行业特征                        |
-| 抽象数据（用户分布、预算等）  | 从装饰插图库选择通用插图     | 如用户分布 → tags 含“商业”“数据” 等 |     | **无匹配主题** | **跳过 centerImage** | 宁可不用，不要用语义不相关的插图 |
+| 数据类型                      | centerImage 来源             | 说明                                                                |
+| ----------------------------- | ---------------------------- | ------------------------------------------------------------------- |
+| 行业/市场份额（航空、汽车等） | 从装饰插图库选择对应主题插图 | 如航空市场 → tags 含"商业""增长" 等                                 |
+| 国家/地区数据                 | 从装饰插图库选择主题相关插图 | 如橄榄产量 → tags 含"农村""森林" 等                                 |
+| 品牌/产品份额                 | 从装饰插图库选择行业相关插图 | 体现行业特征                                                        |
+| 抽象数据（用户分布、预算等）  | 从装饰插图库选择通用插图     | 如用户分布 → tags 含"商业""数据" 等                                 |
+| **无匹配主题**                | **生成内联 SVG 主题图标**    | 通过装饰插图子流程生成简化 SVG（→ subprocess-select-decoration.md） |
 
-> ⚠️ **关键原则**：centerImage 必须与数据主题精确匹配。当插图库中没有与数据主题（如能源、石油、军事）直接相关的插图时，**必须跳过 centerImage**，不要退而使用"商业/增长/数据"等弱相关通用插图。中心空白的环形图仍然美观。
+> ⚠️ **关键原则**：centerImage 必须与数据主题匹配。优先从装饰插图库选择精确匹配的插图；当插图库无匹配时，通过 **装饰插图子流程** 生成内联 SVG 主题图标作为 centerImage（如能源→油滴形状、地理→地球网格、金融→上升折线）。**禁止**使用"商业/增长/数据"等弱相关通用插图替代。
 
 ### innerRadius / outerRadius 推荐值
 
-| 场景                   | innerRadius | outerRadius | 说明                           |
-| ---------------------- | ----------- | ----------- | ------------------------------ |
-| 带 centerImage         | `0.50~0.60` | `0.80~0.85` | 中心留够空间放图片             |
-| centerImage 较大       | `0.55~0.65` | `0.80~0.85` | 图片较大时，内半径适当加大     |
-| 无 centerImage         | `0.40~0.50` | `0.80`      | 纯环形装饰效果                 |
-| 想要实心饼图（不推荐） | `0`         | `0.80`      | 信息图风格不推荐，缺少视觉层次 |
+| 场景             | innerRadius | outerRadius | 说明                             |
+| ---------------- | ----------- | ----------- | -------------------------------- |
+| 带 centerImage   | `0.50~0.60` | `0.80~0.85` | 中心留够空间放图片               |
+| centerImage 较大 | `0.55~0.65` | `0.80~0.85` | 图片较大时，内半径适当加大       |
+| 无 centerImage   | `0.40~0.50` | `0.80`      | 纯环形装饰效果                   |
+| 实心饼图（禁止） | `0`         | —           | 信息图风格不允许，必须使用环形图 |
 
 ### 注意事项
 
 - centerImage 的 `width` 和 `height` 不能超过内圆直径，推荐为内圆直径的 60%~80%
 - centerImage 仅在 `innerRadius > 0` 时才会渲染
 - **centerImage 不可与 background.image 使用同一张图片**，应从预置图片库中分别选择
-- 如预置图片库中没有匹配的图片，可跳过 centerImage 配置
+- 如预置图片库中没有匹配的图片，通过装饰插图子流程生成内联 SVG 主题图标（不可跳过 centerImage）
 
 ---
 
 ## 规则 2：为每个扇区配置语义化 icon
 
-优秀的信息图饼图每个扇区都有对应的品牌 logo、国旗或语义图标，让用户快速识别每个分类。**推荐默认生成 icon**。
+优秀的信息图饼图每个扇区都有对应的品牌 logo、国旗或语义图标，让用户快速识别每个分类。**必须生成 icon**（仅当 Icon 子流程判定为 C 类「语义不可区分」时才可跳过）。
 
 ### 配置方式
 
@@ -248,54 +249,49 @@
 
 ---
 
-## 规则 7：推荐使用 background + brandImage 装饰
+## 规则 7：必须使用 background.image 增强视觉层次
 
-优秀的信息图饼图通常搭配主题化背景和装饰元素来提升视觉吸引力。
+饼图不支持 `brandImage`，视觉装饰主要靠 **background.image**（背景图片）和 **centerImage**（环形图中心图片）。**必须为饼图配置背景图片**，避免纯色背景导致画面单调。
 
-### background（整体背景）
+### 决策流程
+
+```
+数据主题 → 执行 背景图片子流程（subprocess-select-background.md）
+  ├─ 匹配到合适图片 → 配置 background.image + opacity
+  ├─ 无精确匹配 → 选择中性纹理图（grey gradient、grey sky 等）
+  └─ 保底 → 至少使用 background.color 设置非白色背景色
+```
+
+### background.image 示例
 
 ```json
 {
   "background": {
+    "image": "https://images.pexels.com/photos/2098427/pexels-photo-2098427.jpeg",
+    "opacity": 0.15,
     "color": "#0D1B2A"
-  }
-}
-```
-
-### brandImage（装饰插图）
-
-通过 **装饰插图子流程** (`references/workflows/subprocess-select-decoration.md`) 从预置装饰插图库 (`references/images/decorations.json`) 按 tags 语义匹配选择：
-
-```json
-{
-  "brandImage": {
-    "visible": true,
-    "url": "https://images.unsplash.com/vector-xxx?w=400&h=400&fit=crop",
-    "width": 200,
-    "height": 200,
-    "align": "right",
-    "verticalAlign": "bottom",
-    "asForeground": false
   }
 }
 ```
 
 ### 背景搭配策略
 
-| 数据主题      | 推荐 background        | 推荐 brandImage          |
-| ------------- | ---------------------- | ------------------------ |
-| 航空/交通     | 浅灰/白色 + 云朵纹理   | 飞机、机场等装饰图       |
-| 食品/农业     | 浅色纹理背景           | 农作物、食材等           |
-| 金融/投资     | 深色（深蓝、深灰）     | 硬币、图表、城市天际线等 |
-| 科技/互联网   | 深色渐变（深蓝、深紫） | 设备、代码等             |
-| 地理/国家数据 | 浅色 + 世界地图轮廓    | 地球仪、指南针等         |
+| 数据主题      | 推荐 background.color | 推荐 images.json 搜索关键词         |
+| ------------- | --------------------- | ----------------------------------- |
+| 能源/石油     | 深色（`#0D1B2A`）     | `石油`、`深绿`、tags 含"煤""能源"   |
+| 航空/交通     | 浅灰（`#f0f0f5`）     | `car`、`blue sea`、tags 含"天空"    |
+| 食品/农业     | 浅色（`#f5f5f5`）     | `深绿`、`浅绿`、tags 含"植物""自然" |
+| 金融/投资     | 深蓝（`#0D1B2A`）     | `深蓝`、tags 含"夜景""建筑"         |
+| 科技/互联网   | 深紫（`#1a0a2e`）     | `紫色`、tags 含"科技""光线"         |
+| 地理/国家数据 | 浅色（`#f0f0f5`）     | `grey gradient`、`blue sea`、纹理类 |
+| 通用/抽象     | 中性（`#f0f0f5`）     | `grey gradient`、`grey sky`         |
 
 ### 注意事项
 
 - 深色背景时，label 和 title 用白色/浅色文字；浅色背景时用深色文字
-- brandImage 推荐 `asForeground: false`，放在背景层不遮挡图表
-- brandImage 可与 centerImage 呼应，形成统一的视觉主题
-- 避免 brandImage 与环形图重叠太多，推荐放在角落或留白区域
+- 背景图片 opacity 必须遵循 `subprocess-select-background.md` 的色调匹配规则
+- **background.image 不可与 centerImage 使用同一张图片**（不同图片库，通常不会冲突）
+- 饼图的装饰层次：background.image（底层）+ centerImage（中心）+ icon（扇区），三者配合形成丰富视觉
 
 ---
 
@@ -320,12 +316,33 @@
 
 ### title 推荐
 
-信息图饼图的标题应**描述性强**、包含关键信息：
+信息图饼图的标题应**描述性强**、简洁有力。必须对用户提供的文字做信息图化处理：
+
+**禁止**：
+
+- 标题中包含图表类型名称（如「饼图」「环形图」「Pie Chart」）
+- 直接照搬用户的原始描述文字作为标题
+- 标题包含单位说明（单位放在 `subtext` 或 `footnote` 中）
+
+**转换示例**：
+
+| 用户原始描述                             | ❌ 错误标题                                | ✅ 正确标题                              |
+| ---------------------------------------- | ------------------------------------------ | ---------------------------------------- |
+| 2025年全球原油及液体燃料产量份额（饼图） | "2025年全球原油及液体燃料产量份额（饼图）" | "Global Crude Oil Production Share 2025" |
+| 各地区 GDP 占比数据                      | "各地区 GDP 占比数据"                      | "Regional GDP Distribution"              |
+| 航空公司国内市场份额统计                 | "航空公司国内市场份额统计"                 | "Indian Domestic Airline Market Leaders" |
+
+**标题设计原则**：
+
+- 简洁有力，突出数据的**核心洞察或主题**
+- 数据含英文类目名时，优先使用英文标题增强国际化视觉效果
+- 可使用 `subtext` 补充时间范围、数据口径等辅助信息
 
 ```json
 {
   "title": {
-    "text": "Indian Domestic Airline Market Leaders",
+    "text": "Global Crude Oil Production Share 2025",
+    "subtext": "Share of Global Total (%)",
     "position": "center"
   }
 }
@@ -400,7 +417,11 @@
   "valueField": "value",
   "innerRadius": 0.55,
   "outerRadius": 0.85,
-  "background": { "color": "#f0f0f5" },
+  "background": {
+    "image": "https://images.pexels.com/photos/xxxxx/pexels-photo-xxxxx.jpeg",
+    "opacity": 0.15,
+    "color": "#f0f0f5"
+  },
   "colors": ["#0033A0", "#E4002B", "#6A1B9A", "#FF8F00"],
   "legend": { "visible": false },
   "icon": {
@@ -412,15 +433,6 @@
   },
   "label": { "visible": true, "position": "outside", "format": "{name} {percent}" },
   "centerImage": { "visible": true, "url": "airplane-image-url", "width": 80, "height": 80 },
-  "brandImage": {
-    "visible": true,
-    "url": "cloud-decoration-url",
-    "width": 200,
-    "height": 150,
-    "align": "right",
-    "verticalAlign": "bottom",
-    "asForeground": false
-  },
   "footnote": { "text": "Source: Wikipedia, livemint" }
 }
 ```
@@ -446,7 +458,11 @@
   "valueField": "value",
   "innerRadius": 0.5,
   "outerRadius": 0.85,
-  "background": { "color": "#f5f5f5" },
+  "background": {
+    "image": "https://images.pexels.com/photos/yyyyy/pexels-photo-yyyyy.jpeg",
+    "opacity": 0.12,
+    "color": "#f5f5f5"
+  },
   "colors": ["#1a535c", "#4ecdc4", "#2a9d8f", "#264653", "#287271", "#3d5a80", "#9AA3AD"],
   "legend": { "visible": false },
   "icon": {
@@ -480,7 +496,11 @@
   "valueField": "value",
   "innerRadius": 0.45,
   "outerRadius": 0.85,
-  "background": { "color": "#0D1B2A" },
+  "background": {
+    "image": "https://images.pexels.com/photos/zzzzz/pexels-photo-zzzzz.jpeg",
+    "opacity": 0.15,
+    "color": "#0D1B2A"
+  },
   "theme": "dark",
   "colors": [
     "#2ecc71",
