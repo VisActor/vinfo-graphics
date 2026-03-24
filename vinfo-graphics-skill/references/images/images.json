@@ -280,5 +280,306 @@
     "type": ["background"],
     "keywords": "中国",
     "tags": ["中国", "长城", "建筑", "奇迹"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/7395944/pexels-photo-7395944.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "科技",
+    "tags": ["深蓝", "光线", "放射状", "抽象", "科技感"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2182863/pexels-photo-2182863.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "科技",
+    "tags": ["深蓝", "电路板", "微距", "工业", "科技"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/7230895/pexels-photo-7230895.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "科技",
+    "tags": ["黑色", "青色条纹", "对角线", "抽象", "科技感"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/4862957/pexels-photo-4862957.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "科技",
+    "tags": ["深青", "粒子", "闪烁", "抽象", "科技"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/3612932/pexels-photo-3612932.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "科技",
+    "tags": ["深蓝", "六边形", "点阵", "纹理", "科技"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/353045/pexels-photo-353045.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "科技",
+    "tags": ["暗红棕", "金属网格", "光影", "工业", "科技"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/4065437/pexels-photo-4065437.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "科技",
+    "tags": ["深灰", "蜂窝网格", "微距", "极简", "科技"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1460230/pexels-photo-1460230.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "自然风景",
+    "tags": ["深灰", "山峦", "暴风云", "荒野", "自然"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/6062833/pexels-photo-6062833.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "自然风景",
+    "tags": ["暖棕", "山路", "雾气", "荒漠", "自然风景"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/15722329/pexels-photo-15722329.jpeg",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "自然风景",
+    "tags": ["金色", "山脊", "阳光", "草地", "自然风景"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/5117942/pexels-photo-5117942.jpeg",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "自然风景",
+    "tags": ["浅灰蓝", "森林", "薄雾", "俯瞰", "自然"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/2768641/pexels-photo-2768641.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "自然风景",
+    "tags": ["深绿", "森林", "雾", "公路", "自然风景"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1787044/pexels-photo-1787044.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "城市建筑",
+    "tags": ["深灰", "城市天际线", "阴天", "电影感", "城市建筑"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/3063411/pexels-photo-3063411.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "城市建筑",
+    "tags": ["深蓝灰", "城市夜景", "暴风云", "灯光", "城市建筑"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/378512/pexels-photo-378512.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "城市建筑",
+    "tags": ["深蓝", "城市剪影", "光线", "云层", "城市建筑"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/11827014/pexels-photo-11827014.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "城市建筑",
+    "tags": ["暖灰", "城市剪影", "日落", "霓虹", "城市建筑"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/1193808/pexels-photo-1193808.jpeg",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "城市建筑",
+    "tags": ["冷灰", "城市全景", "极简", "单色", "城市建筑"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/7135050/pexels-photo-7135050.jpeg",
+    "isDark": false,
+    "type": ["background", "texture"],
+    "keywords": "抽象纹理",
+    "tags": ["浅米色", "薄荷绿", "渐变", "极简", "抽象纹理"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/7135043/pexels-photo-7135043.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "抽象纹理",
+    "tags": ["红色", "紫色", "深蓝", "渐变", "抽象纹理"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/6985132/pexels-photo-6985132.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "抽象纹理",
+    "tags": ["深紫", "靛蓝", "模糊渐变", "抽象", "抽象纹理"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/6985268/pexels-photo-6985268.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "抽象纹理",
+    "tags": ["深蓝", "品红", "弧形光", "抽象", "抽象纹理"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/6985042/pexels-photo-6985042.jpeg",
+    "isDark": true,
+    "type": ["background", "texture"],
+    "keywords": "抽象纹理",
+    "tags": ["青色", "深蓝", "品红", "软焦", "抽象纹理"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/5998739/pexels-photo-5998739.jpeg",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "商务办公",
+    "tags": ["浅灰", "办公桌", "极简", "家居", "商务办公"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/6177574/pexels-photo-6177574.jpeg",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "商务办公",
+    "tags": ["白色", "显示器", "键盘", "极简", "商务办公"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/6177606/pexels-photo-6177606.jpeg",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "商务办公",
+    "tags": ["白色", "笔记本电脑", "文件夹", "极简", "商务办公"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/5726032/pexels-photo-5726032.jpeg",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "商务办公",
+    "tags": ["浅灰", "大理石", "文具", "极简", "商务办公"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/5712123/pexels-photo-5712123.jpeg",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "商务办公",
+    "tags": ["米白", "笔记本", "玻璃桌", "绿植", "商务办公"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/6203473/pexels-photo-6203473.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "医疗健康",
+    "tags": ["深蓝", "网格", "心电图", "数据线", "医疗健康"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/5998521/pexels-photo-5998521.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "医疗健康",
+    "tags": ["灰色", "注射器", "医疗器械", "光影", "医疗健康"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/5998519/pexels-photo-5998519.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "医疗健康",
+    "tags": ["深灰", "注射器", "蓝色", "极简", "医疗健康"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/5726037/pexels-photo-5726037.jpeg",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "教育学术",
+    "tags": ["薄荷绿", "书籍", "桌面", "极简", "教育学术"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/3747555/pexels-photo-3747555.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "教育学术",
+    "tags": ["暖棕", "书架", "阳光", "金色光影", "教育学术"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/4219043/pexels-photo-4219043.jpeg",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "教育学术",
+    "tags": ["浅灰", "书页", "彩色边缘", "极简", "教育学术"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/4069090/pexels-photo-4069090.jpeg",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "教育学术",
+    "tags": ["米白", "翻开的书", "木质", "温暖", "教育学术"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/234527/pexels-photo-234527.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "暗色商务",
+    "tags": ["黑色", "手机", "笔记本", "极简", "暗色商务"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/5827826/pexels-photo-5827826.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "暗色商务",
+    "tags": ["深棕", "木纹", "笔记本", "钢笔", "暗色商务"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/7130235/pexels-photo-7130235.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "暗色商务",
+    "tags": ["暖棕", "键盘", "眼镜", "电影感", "暗色商务"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/5827772/pexels-photo-5827772.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "暗色商务",
+    "tags": ["深棕", "木纹", "笔记本", "耳机", "暗色商务"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/36365426/pexels-photo-36365426.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "环保绿色",
+    "tags": ["深绿", "野花", "微距", "散景", "环保绿色"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/5040759/pexels-photo-5040759.jpeg",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "环保绿色",
+    "tags": ["浅灰", "白色", "绿叶", "极简", "环保绿色"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/7185828/pexels-photo-7185828.jpeg",
+    "isDark": false,
+    "type": ["background"],
+    "keywords": "环保绿色",
+    "tags": ["白色", "赤陶", "绿叶", "极简", "环保绿色"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/6275177/pexels-photo-6275177.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "食品餐饮",
+    "tags": ["深灰", "碗盘", "中东美食", "俯拍", "食品餐饮"]
+  },
+  {
+    "url": "https://images.pexels.com/photos/3212810/pexels-photo-3212810.jpeg",
+    "isDark": true,
+    "type": ["background"],
+    "keywords": "食品餐饮",
+    "tags": ["黑色", "碗", "谷物", "极简", "食品餐饮"]
   }
 ]
